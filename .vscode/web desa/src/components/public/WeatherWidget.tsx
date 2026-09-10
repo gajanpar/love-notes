@@ -352,31 +352,65 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
     return () => clearInterval(timer);
   }, []);
 
-  // Fetch Open-Meteo High-Resolution Realtime & Expansive Data
+  // Fetch Open-Meteo High-Resolution Realtime & Expansive Data + BMKG API
   const fetchLiveWeather = useCallback(async (manual = false) => {
     if (manual) setIsRefreshing(true);
 
     try {
-      const response = await fetch(WEATHER_API_URL);
-      if (!response.ok) throw new Error('Gagal mengambil data telemetri cuaca');
-      const json = await response.json();
+      const [omResponse, bmkgResponse] = await Promise.all([
+        fetch(WEATHER_API_URL).catch(() => null),
+        fetch('https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=32.10.04.2001').catch(() => null)
+      ]);
 
-      const current = json.current;
-      const daily = json.daily;
-      const hourly = json.hourly;
-      const minutely = json.minutely_15;
+      if (!omResponse?.ok && !bmkgResponse?.ok) throw new Error('Gagal mengambil data telemetri cuaca');
+      
+      const omJson = omResponse?.ok ? await omResponse.json() : null;
+      const bmkgJson = bmkgResponse?.ok ? await bmkgResponse.json() : null;
+
+      // Extract BMKG current data (if available)
+      let bmkgCurrent: any = null;
+      if (bmkgJson?.data?.[0]?.cuaca) {
+         const firstArray = bmkgJson.data[0].cuaca[0];
+         if (firstArray && firstArray.length > 0) {
+             bmkgCurrent = firstArray[0];
+         }
+      }
+
+      // Default to Open-Meteo if BMKG is down
+      const current = omJson?.current || {};
+      const daily = omJson?.daily || {};
+      const hourly = omJson?.hourly || {};
+      const minutely = omJson?.minutely_15 || {};
 
       const hour = new Date().getHours();
       const isDay = current.is_day === 1 || (hour >= 6 && hour < 18);
 
-      const currentMapped = mapWmoToMonochromeWeather(current.weather_code, isDay);
-      const temp = Math.round(current.temperature_2m);
-      const humidity = Math.round(current.relative_humidity_2m);
-      const feelsLike = Math.round(current.apparent_temperature);
-      const windSpeed = Math.round(current.wind_speed_10m);
-      const windGusts = Math.round(current.wind_gusts_10m || current.wind_speed_10m * 1.35);
+      // Sinkronisasi data utama menggunakan BMKG sebagai Source of Truth, fallback ke Open-Meteo
+      const temp = bmkgCurrent ? bmkgCurrent.t : Math.round(current.temperature_2m || 0);
+      const humidity = bmkgCurrent ? bmkgCurrent.hu : Math.round(current.relative_humidity_2m || 0);
+      const windSpeed = bmkgCurrent ? Math.round(bmkgCurrent.ws) : Math.round(current.wind_speed_10m || 0);
+      const cloudCover = bmkgCurrent ? bmkgCurrent.tcc : Math.round(current.cloud_cover || 0);
+      
+      const bmkgCodeToWmo = (code: number) => {
+        if (code === 0) return 0;
+        if (code === 1 || code === 2) return 2;
+        if (code === 3 || code === 4) return 3;
+        if (code === 5 || code === 10 || code === 45) return 45;
+        if (code === 60) return 61;
+        if (code === 61) return 63;
+        if (code === 63) return 65;
+        if (code >= 95) return 95;
+        return code;
+      };
+
+      const currentMapped = mapWmoToMonochromeWeather(bmkgCurrent ? bmkgCodeToWmo(bmkgCurrent.weather) : current.weather_code, isDay);
+      if (bmkgCurrent && bmkgCurrent.weather_desc) {
+          currentMapped.condition = bmkgCurrent.weather_desc; // Use BMKG's exact phrasing
+      }
+
+      const feelsLike = Math.round(current.apparent_temperature || temp);
+      const windGusts = Math.round(current.wind_gusts_10m || windSpeed * 1.35);
       const surfacePressure = Math.round(current.surface_pressure || 918);
-      const cloudCover = Math.round(current.cloud_cover || 0);
 
       // Suhu Titik Embun & Jarak Pandang Horisontal
       const dewPoint = minutely?.dew_point_2m?.[0] !== undefined
