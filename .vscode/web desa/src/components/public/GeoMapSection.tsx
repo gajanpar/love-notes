@@ -36,8 +36,11 @@ export const GeoMapSection: React.FC = () => {
       if (typeof window === 'undefined' || !mapContainerRef.current) return;
 
       try {
+
         // Dynamically import Leaflet
         const L = (await import('leaflet')).default;
+        const esri = (await import('esri-leaflet'));
+
         if (!isMounted || !mapContainerRef.current) return;
 
         // If map already initialized, remove it
@@ -63,19 +66,36 @@ export const GeoMapSection: React.FC = () => {
 
         // Village Boundary Polygon
         if (showBoundaries) {
+          // Fallback static polygon if ESRI fails to load visually
           const villageCoords: [number, number][] = [
             [-6.8900, 108.3050],
             [-6.8880, 108.3280],
             [-6.9080, 108.3300],
             [-6.9100, 108.3070]
           ];
-          L.polygon(villageCoords, {
+          const fallbackPolygon = L.polygon(villageCoords, {
             color: '#2563EB',
             fillColor: '#3B82F6',
             fillOpacity: 0.1,
             weight: 2,
             dashArray: '6, 6'
-          }).addTo(map).bindPopup('<strong>Batas Wilayah Resmi Desa Sukadana</strong><br>Kecamatan Argapura, Kab. Majalengka<br>Luas Wilayah: 485 Hektar (Kawasan Lereng Ciremai)');
+          }).addTo(map).bindPopup('<strong>Batas Wilayah Perkiraan (Fallback)</strong>');
+          
+          // Use BIG Peta Desa WMS / MapServer
+          try {
+            const bigLayer = esri.dynamicMapLayer({
+              url: 'http://petadesa.big.go.id:6080/arcgis/rest/services/IGT_Perdesaan/MapServer',
+              opacity: 0.7
+            });
+            bigLayer.addTo(map);
+            
+            // If esri layer added successfully, we can hide the fallback (or keep both)
+            map.removeLayer(fallbackPolygon);
+            
+            // To ensure we center properly, BIG bounds for the area might be needed.
+          } catch (e) {
+            console.error("Failed to load BIG MapServer", e);
+          }
         }
 
         // Add Facility Markers
