@@ -288,6 +288,62 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
   const [selectedCrop, setSelectedCrop] = useState<'bawang' | 'kubis' | 'kentang'>('bawang');
   const [activeDomainTab, setActiveDomainTab] = useState<'iklim' | 'tanah' | 'mingguan' | 'hourly'>('iklim');
 
+  // Drag-to-scroll for nav tabs
+  const navRef = React.useRef<HTMLDivElement>(null);
+  const isDragging = React.useRef(false);
+  const startX = React.useRef(0);
+  const scrollLeft = React.useRef(0);
+
+  const handleNavMouseDown = (e: React.MouseEvent) => {
+    if (!navRef.current) return;
+    isDragging.current = true;
+    navRef.current.style.cursor = 'grabbing';
+    navRef.current.style.scrollBehavior = 'auto'; // disable smooth scroll during drag
+    startX.current = e.pageX - navRef.current.offsetLeft;
+    scrollLeft.current = navRef.current.scrollLeft;
+  };
+
+  const handleNavMouseLeave = () => {
+    if (!navRef.current) return;
+    isDragging.current = false;
+    navRef.current.style.cursor = 'grab';
+    navRef.current.style.scrollBehavior = 'smooth';
+  };
+
+  const handleNavMouseUp = () => {
+    if (!navRef.current) return;
+    isDragging.current = false;
+    navRef.current.style.cursor = 'grab';
+    navRef.current.style.scrollBehavior = 'smooth';
+  };
+
+  const handleNavMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !navRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - navRef.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5;
+    navRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
+  const scrollToTab = useCallback((tabId: 'iklim' | 'tanah' | 'mingguan' | 'hourly') => {
+    setActiveDomainTab(tabId);
+    const element = document.getElementById(`weather-tab-${tabId}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }, []);
+
+  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const scrollLeft = container.scrollLeft;
+    const width = container.clientWidth;
+    const activeIndex = Math.round(scrollLeft / width);
+    const tabs: Array<'iklim' | 'tanah' | 'mingguan' | 'hourly'> = ['iklim', 'tanah', 'mingguan', 'hourly'];
+    if (tabs[activeIndex] && tabs[activeIndex] !== activeDomainTab) {
+      setActiveDomainTab(tabs[activeIndex]);
+    }
+  }, [activeDomainTab]);
+
   // Real-time clock update setiap detik
   useEffect(() => {
     const timer = setInterval(() => {
@@ -610,12 +666,22 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
       </div>
 
       {/* RANAH CUACA YANG LUAS: DOMAIN NAVIGATION TABS */}
-      <div className="weather-domain-nav" role="tablist" aria-label="Navigasi Ranah Cuaca">
+      <div 
+        className="weather-domain-nav" 
+        role="tablist" 
+        aria-label="Navigasi Ranah Cuaca"
+        ref={navRef}
+        onMouseDown={handleNavMouseDown}
+        onMouseLeave={handleNavMouseLeave}
+        onMouseUp={handleNavMouseUp}
+        onMouseMove={handleNavMouseMove}
+        style={{ cursor: 'grab', scrollBehavior: 'smooth' }}
+      >
         <button
           role="tab"
           aria-selected={activeDomainTab === 'iklim'}
           className={`weather-domain-btn ${activeDomainTab === 'iklim' ? 'active' : ''}`}
-          onClick={() => setActiveDomainTab('iklim')}
+          onClick={() => scrollToTab('iklim')}
         >
           <Activity size={15} />
           <span>Atmosfer &amp; Mikroklimat</span>
@@ -625,7 +691,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
           role="tab"
           aria-selected={activeDomainTab === 'tanah'}
           className={`weather-domain-btn ${activeDomainTab === 'tanah' ? 'active' : ''}`}
-          onClick={() => setActiveDomainTab('tanah')}
+          onClick={() => scrollToTab('tanah')}
         >
           <Layers size={15} />
           <span>Stratifikasi Tanah &amp; Agroklimat</span>
@@ -635,7 +701,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
           role="tab"
           aria-selected={activeDomainTab === 'mingguan'}
           className={`weather-domain-btn ${activeDomainTab === 'mingguan' ? 'active' : ''}`}
-          onClick={() => setActiveDomainTab('mingguan')}
+          onClick={() => scrollToTab('mingguan')}
         >
           <CalendarDays size={15} />
           <span>Prakiraan 7-Hari &amp; Astronomi</span>
@@ -645,18 +711,31 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
           role="tab"
           aria-selected={activeDomainTab === 'hourly'}
           className={`weather-domain-btn ${activeDomainTab === 'hourly' ? 'active' : ''}`}
-          onClick={() => setActiveDomainTab('hourly')}
+          onClick={() => scrollToTab('hourly')}
         >
           <TrendingUp size={15} />
           <span>Dinamika Jam per Jam</span>
         </button>
       </div>
 
+      <div 
+        onScroll={handleScroll}
+        style={{
+          display: 'flex',
+          overflowX: 'auto',
+          scrollSnapType: 'x mandatory',
+          scrollBehavior: 'smooth',
+          width: '100%',
+          gap: '24px',
+          paddingBottom: '8px',
+          scrollbarWidth: 'none', // Firefox
+          WebkitOverflowScrolling: 'touch'
+        }}
+      >
       {/* ========================================================================= */}
       {/* TAB 1: ATMOSFER & MIKROKLIMAT UDARA */}
       {/* ========================================================================= */}
-      {activeDomainTab === 'iklim' && (
-        <div>
+      <div id="weather-tab-iklim" style={{ flex: '0 0 100%', minWidth: '100%', scrollSnapAlign: 'start' }}>
           {/* Main Temperature & Micro Metrics Grid */}
           <div style={{
             display: 'grid',
@@ -920,13 +999,11 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
             </div>
           </div>
         </div>
-      )}
 
       {/* ========================================================================= */}
       {/* TAB 2: STRATIFIKASI TANAH & BIOSFER AGROKLIMAT */}
       {/* ========================================================================= */}
-      {activeDomainTab === 'tanah' && (
-        <div>
+      <div id="weather-tab-tanah" style={{ flex: '0 0 100%', minWidth: '100%', scrollSnapAlign: 'start' }}>
           {/* Header Penjelasan Ranah Tanah */}
           <div style={{ marginBottom: '16px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
@@ -1157,13 +1234,11 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
             );
           })()}
         </div>
-      )}
 
       {/* ========================================================================= */}
       {/* TAB 3: PRAKIRAAN 7-HARI LENGKAP & ASTRONOMI */}
       {/* ========================================================================= */}
-      {activeDomainTab === 'mingguan' && (
-        <div>
+      <div id="weather-tab-mingguan" style={{ flex: '0 0 100%', minWidth: '100%', scrollSnapAlign: 'start' }}>
           {/* Header 7 Hari & Astronomi */}
           <div style={{
             display: 'flex',
@@ -1303,13 +1378,11 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
             </span>
           </div>
         </div>
-      )}
 
       {/* ========================================================================= */}
       {/* TAB 4: DINAMIKA JAM PER JAM (HOURLY TIMELINE) */}
       {/* ========================================================================= */}
-      {activeDomainTab === 'hourly' && (
-        <div>
+      <div id="weather-tab-hourly" style={{ flex: '0 0 100%', minWidth: '100%', scrollSnapAlign: 'start' }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
@@ -1384,8 +1457,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
             })}
           </div>
         </div>
-      )}
-
+      </div>
       {/* Footer Meta & Telemetry Status */}
       <div style={{
         display: 'flex',
