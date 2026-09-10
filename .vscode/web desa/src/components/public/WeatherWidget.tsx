@@ -625,24 +625,6 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
     return () => clearInterval(interval);
   }, [fetchLiveWeather]);
 
-  // Resolving icon url for main condition (100% Monochrome)
-  const hour = currentTime.getHours();
-  const isDay = hour >= 6 && hour < 18;
-  const currentMappedIcon = data.condition.toLowerCase().includes('hujan')
-    ? rainIcon
-    : data.condition.toLowerCase().includes('petir')
-      ? thunderstormsIcon
-      : data.condition.toLowerCase().includes('gerimis')
-        ? drizzleIcon
-        : data.condition.toLowerCase().includes('kabut')
-          ? fogIcon
-          : data.condition.toLowerCase().includes('mendung')
-            ? overcastIcon
-            : isDay
-              ? (data.icon === 'sun' ? clearDayIcon : partlyCloudyDayIcon)
-              : (data.icon === 'sun' ? clearNightIcon : partlyCloudyNightIcon);
-
-
   const targetData = (scrubbedHourIndex !== null && data.hourlyTrends?.[scrubbedHourIndex])
     ? {
         temp: data.hourlyTrends[scrubbedHourIndex].temp,
@@ -685,6 +667,25 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
   const animSoil54 = useAnimatedNumber(targetData.soil54);
 
   const empiricalCalc = calculateEmpiricalMicroclimate(targetData.temp, targetData.humidity, targetData.rainProb, targetData.condition);
+
+  // Resolving icon url for main condition (100% Monochrome)
+  const hour = currentTime.getHours();
+  const isDay = hour >= 6 && hour < 18;
+  const currentMappedIcon = targetData.condition.toLowerCase().includes('hujan')
+    ? rainIcon
+    : targetData.condition.toLowerCase().includes('petir')
+      ? thunderstormsIcon
+      : targetData.condition.toLowerCase().includes('gerimis')
+        ? drizzleIcon
+        : targetData.condition.toLowerCase().includes('kabut')
+          ? fogIcon
+          : targetData.condition.toLowerCase().includes('mendung')
+            ? overcastIcon
+            : isDay
+              ? (targetData.condition.toLowerCase().includes('cerah') ? clearDayIcon : partlyCloudyDayIcon)
+              : (targetData.condition.toLowerCase().includes('cerah') ? clearNightIcon : partlyCloudyNightIcon);
+
+
 
   // Digital clock strings
   
@@ -783,7 +784,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
 
           <button
             onClick={() => fetchLiveWeather(true)}
-            title="Segarkan data telemetri realtime"
+            title="Perbarui data cuaca"
             disabled={isRefreshing}
             style={{
               background: 'var(--color-surface)',
@@ -829,9 +830,9 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
              <Clock size={16} className="animate-spin-slow" style={{ animationDuration: '3s' }} />
-             <span>Prediksi Waktu Berjalan: {scrubbedHourIndex !== null ? data.hourlyTrends?.[scrubbedHourIndex]?.hourStr : ''} WIB</span>
+             <span>Prediksi Cuaca Mendatang: {scrubbedHourIndex !== null ? data.hourlyTrends?.[scrubbedHourIndex]?.hourStr : ''} WIB</span>
           </div>
-          <span style={{ fontSize: '0.7rem', opacity: 0.8, fontFamily: 'var(--font-mono, monospace)' }}>Lepas untuk kembali</span>
+          <span style={{ fontSize: '0.7rem', opacity: 0.8, fontFamily: 'var(--font-mono, monospace)' }}>Lepas untuk kembali ke waktu saat ini</span>
         </div>
       </div>
 
@@ -854,7 +855,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
           onClick={() => scrollToTab('iklim')}
         >
           <Activity size={15} />
-          <span>Atmosfer &amp; Mikroklimat</span>
+          <span>Udara &amp; Cuaca</span>
         </button>
 
         <button
@@ -864,7 +865,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
           onClick={() => scrollToTab('tanah')}
         >
           <Layers size={15} />
-          <span>Stratifikasi Tanah &amp; Agroklimat</span>
+          <span>Tanah &amp; Pertanian</span>
         </button>
 
         <button
@@ -874,7 +875,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
           onClick={() => scrollToTab('mingguan')}
         >
           <CalendarDays size={15} />
-          <span>Prakiraan 7-Hari &amp; Astronomi</span>
+          <span>Prakiraan 7 Hari</span>
         </button>
 
         <button
@@ -884,7 +885,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
           onClick={() => scrollToTab('hourly')}
         >
           <TrendingUp size={15} />
-          <span>Dinamika Jam per Jam</span>
+          <span>Prakiraan per Jam</span>
         </button>
       </div>
 
@@ -932,7 +933,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
               }}>
                 <img
                   src={currentMappedIcon}
-                  alt={data.condition}
+                  alt={targetData.condition}
                   width={72}
                   height={72}
                   className="weather-monochrome-icon"
@@ -942,7 +943,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
 
               <div>
                 <div className="weather-temp-badge" style={{ fontFamily: 'var(--font-mono, monospace)', letterSpacing: '-0.02em' }}>
-                  {data.temp}
+                  {Math.round(animTemp)}
                   <sup>&deg;C</sup>
                 </div>
                 <div style={{
@@ -951,7 +952,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
                   color: 'var(--color-brand-primary)',
                   marginTop: '1px'
                 }}>
-                  {data.condition}
+                  {targetData.condition}
                 </div>
                 <div style={{
                   fontSize: '0.75rem',
@@ -986,7 +987,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
                   Angin
                 </span>
                 <span className="stat-val" style={{ fontFamily: 'var(--font-mono, monospace)' }}>
-                  {data.windSpeed} <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>km/j (G:{data.windGusts || data.windSpeed})</span>
+                  {Math.round(animWindSpeed)} <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>km/j (G:{data.windGusts || data.windSpeed})</span>
                 </span>
               </div>
 
@@ -1008,7 +1009,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
                   Indeks UV
                 </span>
                 <span className="stat-val" style={{ fontFamily: 'var(--font-mono, monospace)' }}>
-                  {data.uvIndex} <span style={{ fontSize: '0.68rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>
+                  {Math.round(animUvIndex)} <span style={{ fontSize: '0.68rem', fontWeight: 600, color: 'var(--color-text-muted)' }}>
                     {data.uvIndex <= 2 ? '(Rendah)' : data.uvIndex <= 5 ? '(Sedang)' : '(Tinggi)'}
                   </span>
                 </span>
@@ -1200,7 +1201,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
                 gap: '6px'
               }}>
                 <Droplets size={14} />
-                <span>Evapotranspirasi ET₀: {data.soilTelemetry?.evapotranspiration || 2.8} mm/hari</span>
+                <span>Evapotranspirasi ET₀: {animEt0.toFixed(2)} mm/hari</span>
               </div>
             </div>
           </div>
@@ -1221,7 +1222,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
                 Permukaan Bedengan
               </div>
               <div style={{ fontSize: '1.4rem', fontWeight: 800, fontFamily: 'var(--font-mono, monospace)', color: 'var(--color-brand-primary)', margin: '8px 0 4px 0' }}>
-                {data.soilTelemetry?.temp0cm || data.temp}&deg;C
+                {animSoil0.toFixed(1)}&deg;C
               </div>
               <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)', lineHeight: 1.3 }}>
                 Evaporasi langsung; terlindungi mulsa jerami.
