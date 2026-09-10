@@ -39,6 +39,39 @@ import barometerIcon from '@meteocons/svg/monochrome/barometer.svg';
 import sunriseIcon from '@meteocons/svg/monochrome/sunrise.svg';
 import sunsetIcon from '@meteocons/svg/monochrome/sunset.svg';
 
+
+function useAnimatedNumber(value: number, duration: number = 300): number {
+  const [current, setCurrent] = React.useState(value);
+  const targetRef = React.useRef(value);
+  const requestRef = React.useRef<number>();
+
+  React.useEffect(() => {
+    if (value === targetRef.current) return;
+    const startValue = current;
+    targetRef.current = value;
+    const startTime = performance.now();
+
+    const animate = (time: number) => {
+      const elapsed = time - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+
+      setCurrent(startValue + (value - startValue) * ease);
+
+      if (progress < 1) {
+        requestRef.current = requestAnimationFrame(animate);
+      }
+    };
+
+    requestRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+    };
+  }, [value, duration]);
+
+  return current;
+}
+
 interface WeatherWidgetProps {
   weatherData?: WeatherData;
 }
@@ -48,7 +81,7 @@ const LATITUDE = -6.903578;
 const LONGITUDE = 108.331809;
 
 // URL Open-Meteo Resolusi Tinggi Ranah Luas (Atmosfer, Tanah, Astronomi, 7 Hari, 24 Jam)
-const WEATHER_API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,sunrise,sunset,daylight_duration,sunshine_duration,moonrise,moonset,moon_phase,rain_sum,showers_sum,precipitation_sum,precipitation_hours,precipitation_probability_max&hourly=temperature_2m,wind_speed_10m,temperature_80m,wind_direction_10m,cloud_cover,visibility,et0_fao_evapotranspiration,precipitation_probability,apparent_temperature,precipitation,rain,showers,weather_code,surface_pressure,soil_temperature_0cm,soil_temperature_6cm,soil_temperature_18cm,soil_temperature_54cm,is_day,uv_index,sunshine_duration&models=best_match&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,wind_speed_10m,wind_direction_10m,wind_gusts_10m,rain,precipitation,showers,weather_code,cloud_cover,pressure_msl,surface_pressure&minutely_15=temperature_2m,dew_point_2m,apparent_temperature,precipitation,wind_gusts_10m,visibility,is_day,sunshine_duration,weather_code,wind_speed_10m&timezone=Asia%2FJakarta&forecast_days=7`;
+const WEATHER_API_URL = `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,uv_index_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,sunrise,sunset,daylight_duration,sunshine_duration,moonrise,moonset,moon_phase,rain_sum,showers_sum,precipitation_sum,precipitation_hours,precipitation_probability_max&hourly=temperature_2m,wind_speed_10m,temperature_80m,wind_direction_10m,cloud_cover,visibility,et0_fao_evapotranspiration,precipitation_probability,apparent_temperature,precipitation,rain,showers,weather_code,surface_pressure,soil_temperature_0cm,soil_temperature_6cm,soil_temperature_18cm,soil_temperature_54cm,is_day,uv_index,sunshine_duration,relative_humidity_2m,wind_gusts_10m&models=best_match&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,wind_speed_10m,wind_direction_10m,wind_gusts_10m,rain,precipitation,showers,weather_code,cloud_cover,pressure_msl,surface_pressure&minutely_15=temperature_2m,dew_point_2m,apparent_temperature,precipitation,wind_gusts_10m,visibility,is_day,sunshine_duration,weather_code,wind_speed_10m&timezone=Asia%2FJakarta&forecast_days=7`;
 
 // Data Komoditas Pertanian Unggulan Terasering Desa Sukadana
 const CROPS_INFO = {
@@ -286,6 +319,25 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedCrop, setSelectedCrop] = useState<'bawang' | 'kubis' | 'kentang'>('bawang');
+  
+  const [scrubbedHourIndex, setScrubbedHourIndex] = useState<number | null>(null);
+  const timelineRef = React.useRef<HTMLDivElement>(null);
+  
+  const handleTimelinePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.buttons !== 1 || !timelineRef.current) return;
+    const rect = timelineRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left + timelineRef.current.scrollLeft;
+    // Each item is approx 55px wide (padding + width + gap). Let's calculate exactly based on scroll width.
+    const items = timelineRef.current.children;
+    for (let i = 0; i < items.length; i++) {
+        const child = items[i] as HTMLElement;
+        if (x >= child.offsetLeft && x <= child.offsetLeft + child.offsetWidth) {
+            if (scrubbedHourIndex !== i) setScrubbedHourIndex(i);
+            break;
+        }
+    }
+  };
+
   const [activeDomainTab, setActiveDomainTab] = useState<'iklim' | 'tanah' | 'mingguan' | 'hourly'>('iklim');
 
   // Drag-to-scroll for nav tabs
@@ -483,13 +535,24 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
           const d = new Date(hourly.time[i]);
           hourlyTrends.push({
             time: hourly.time[i],
-            hourStr: d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
+            hourStr: d.getHours().toString().padStart(2, '0') + ':00',
             temp: Math.round(hourly.temperature_2m[i]),
             rainProb: hourly.precipitation_probability[i] || 0,
-            cloudCover: Math.round(hourly.cloud_cover[i] || 0),
-            windSpeed: Math.round(hourly.wind_speed_10m[i] || 0),
+            cloudCover: hourly.cloud_cover[i] || 0,
+            windSpeed: Math.round(hourly.wind_speed_10m[i]),
             isDay: hourly.is_day[i] === 1,
-            weatherCode: hourly.weather_code[i]
+            weatherCode: hourly.weather_code[i],
+            humidity: Math.round(hourly.relative_humidity_2m?.[i] || 0),
+            surfacePressure: Math.round(hourly.surface_pressure?.[i] || 918),
+            soilTemp0cm: hourly.soil_temperature_0cm?.[i] ? Number(hourly.soil_temperature_0cm[i].toFixed(1)) : undefined,
+            soilTemp6cm: hourly.soil_temperature_6cm?.[i] ? Number(hourly.soil_temperature_6cm[i].toFixed(1)) : undefined,
+            soilTemp18cm: hourly.soil_temperature_18cm?.[i] ? Number(hourly.soil_temperature_18cm[i].toFixed(1)) : undefined,
+            soilTemp54cm: hourly.soil_temperature_54cm?.[i] ? Number(hourly.soil_temperature_54cm[i].toFixed(1)) : undefined,
+            et0: hourly.et0_fao_evapotranspiration?.[i] ? Number(hourly.et0_fao_evapotranspiration[i].toFixed(2)) : undefined,
+            visibility: hourly.visibility?.[i] ? Number((hourly.visibility[i]/1000).toFixed(1)) : undefined,
+            uvIndex: hourly.uv_index?.[i] ? Number(hourly.uv_index[i].toFixed(1)) : undefined,
+            windGusts: hourly.wind_gusts_10m?.[i] ? Math.round(hourly.wind_gusts_10m[i]) : undefined,
+            windDirection: hourly.wind_direction_10m?.[i]
           });
         }
       }
@@ -579,9 +642,52 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
               ? (data.icon === 'sun' ? clearDayIcon : partlyCloudyDayIcon)
               : (data.icon === 'sun' ? clearNightIcon : partlyCloudyNightIcon);
 
-  // Perhitungan bukti empiris terkini
-  const empiricalCalc = calculateEmpiricalMicroclimate(data.temp, data.humidity, 20, data.condition);
 
+  const targetData = (scrubbedHourIndex !== null && data.hourlyTrends?.[scrubbedHourIndex])
+    ? {
+        temp: data.hourlyTrends[scrubbedHourIndex].temp,
+        humidity: data.hourlyTrends[scrubbedHourIndex].humidity ?? data.humidity,
+        windSpeed: data.hourlyTrends[scrubbedHourIndex].windSpeed,
+        windGusts: data.hourlyTrends[scrubbedHourIndex].windGusts ?? data.windGusts ?? data.windSpeed * 1.35,
+        uvIndex: data.hourlyTrends[scrubbedHourIndex].uvIndex ?? data.uvIndex,
+        et0: data.hourlyTrends[scrubbedHourIndex].et0 ?? data.soilTelemetry?.evapotranspiration ?? 2.8,
+        soil0: data.hourlyTrends[scrubbedHourIndex].soilTemp0cm ?? data.soilTelemetry?.temp0cm ?? data.temp,
+        soil6: data.hourlyTrends[scrubbedHourIndex].soilTemp6cm ?? data.soilTelemetry?.temp6cm ?? data.temp - 1,
+        soil18: data.hourlyTrends[scrubbedHourIndex].soilTemp18cm ?? data.soilTelemetry?.temp18cm ?? data.temp - 2,
+        soil54: data.hourlyTrends[scrubbedHourIndex].soilTemp54cm ?? data.soilTelemetry?.temp54cm ?? data.temp - 3,
+        rainProb: data.hourlyTrends[scrubbedHourIndex].rainProb,
+        condition: mapWmoToMonochromeWeather(data.hourlyTrends[scrubbedHourIndex].weatherCode, data.hourlyTrends[scrubbedHourIndex].isDay).condition
+      }
+    : {
+        temp: data.temp,
+        humidity: data.humidity,
+        windSpeed: data.windSpeed,
+        windGusts: data.windGusts ?? data.windSpeed * 1.35,
+        uvIndex: data.uvIndex,
+        et0: data.soilTelemetry?.evapotranspiration ?? 2.8,
+        soil0: data.soilTelemetry?.temp0cm ?? data.temp,
+        soil6: data.soilTelemetry?.temp6cm ?? data.temp - 1,
+        soil18: data.soilTelemetry?.temp18cm ?? data.temp - 2,
+        soil54: data.soilTelemetry?.temp54cm ?? data.temp - 3,
+        rainProb: data.hourlyTrends?.[0]?.rainProb ?? 0,
+        condition: data.condition
+      };
+
+  const animTemp = useAnimatedNumber(targetData.temp);
+  const animHumidity = useAnimatedNumber(targetData.humidity);
+  const animWindSpeed = useAnimatedNumber(targetData.windSpeed);
+  const animWindGusts = useAnimatedNumber(targetData.windGusts);
+  const animUvIndex = useAnimatedNumber(targetData.uvIndex);
+  const animEt0 = useAnimatedNumber(targetData.et0);
+  const animSoil0 = useAnimatedNumber(targetData.soil0);
+  const animSoil6 = useAnimatedNumber(targetData.soil6);
+  const animSoil18 = useAnimatedNumber(targetData.soil18);
+  const animSoil54 = useAnimatedNumber(targetData.soil54);
+
+  const empiricalCalc = calculateEmpiricalMicroclimate(targetData.temp, targetData.humidity, targetData.rainProb, targetData.condition);
+
+  // Digital clock strings
+  
   // Digital clock strings
   const timeStr = currentTime.toLocaleTimeString('id-ID', {
     hour: '2-digit',
@@ -696,6 +802,36 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
           >
             <RefreshCw size={15} className={isRefreshing ? 'animate-spin' : ''} />
           </button>
+        </div>
+      </div>
+
+      
+      {/* ? OVERDRIVE: Time-Travel Banner */}
+      <div style={{
+        overflow: 'hidden',
+        height: scrubbedHourIndex !== null ? '36px' : '0px',
+        opacity: scrubbedHourIndex !== null ? 1 : 0,
+        transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+        marginBottom: scrubbedHourIndex !== null ? '16px' : '0px',
+        marginTop: scrubbedHourIndex !== null ? '8px' : '0px'
+      }}>
+        <div style={{
+          background: 'linear-gradient(90deg, var(--color-brand-primary), var(--color-brand-dark))',
+          color: 'white',
+          borderRadius: 'var(--radius-full)',
+          padding: '6px 16px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          fontSize: '0.8rem',
+          fontWeight: 700,
+          boxShadow: '0 4px 12px rgba(26, 144, 32, 0.3)',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+             <Clock size={16} className="animate-spin-slow" style={{ animationDuration: '3s' }} />
+             <span>Prediksi Waktu Berjalan: {scrubbedHourIndex !== null ? data.hourlyTrends?.[scrubbedHourIndex]?.hourStr : ''} WIB</span>
+          </div>
+          <span style={{ fontSize: '0.7rem', opacity: 0.8, fontFamily: 'var(--font-mono, monospace)' }}>Lepas untuk kembali</span>
         </div>
       </div>
 
@@ -840,7 +976,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
                   <img src={humidityIcon} width={18} height={18} alt="Kelembaban" className="weather-monochrome-icon" />
                   Kelembaban
                 </span>
-                <span className="stat-val" style={{ fontFamily: 'var(--font-mono, monospace)' }}>{data.humidity}%</span>
+                <span className="stat-val" style={{ fontFamily: 'var(--font-mono, monospace)' }}>{Math.round(animHumidity)}%</span>
               </div>
 
               {/* Angin & Hembusan */}
@@ -1437,11 +1573,25 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({
           </div>
 
           {/* Horizontal Hourly Strip */}
-          <div className="weather-hourly-timeline">
+          <div 
+            className="weather-hourly-timeline"
+            ref={timelineRef}
+            onPointerDown={(e) => {
+               timelineRef.current?.setPointerCapture(e.pointerId);
+               handleTimelinePointerMove(e);
+            }}
+            onPointerMove={handleTimelinePointerMove}
+            onPointerUp={(e) => {
+               timelineRef.current?.releasePointerCapture(e.pointerId);
+               setScrubbedHourIndex(null);
+            }}
+            onPointerCancel={() => setScrubbedHourIndex(null)}
+            style={{ touchAction: 'pan-x' }}
+          >
             {(data.hourlyTrends && data.hourlyTrends.length > 0 ? data.hourlyTrends : []).map((hr, idx) => {
               const hrMapped = mapWmoToMonochromeWeather(hr.weatherCode, hr.isDay);
               return (
-                <div key={idx} className="weather-hourly-item">
+                <div key={idx} className={`weather-hourly-item ${scrubbedHourIndex === idx ? 'scrubbed-active' : ''}`} style={{ opacity: scrubbedHourIndex !== null && scrubbedHourIndex !== idx ? 0.4 : 1, transition: "all 0.2s" }}>
                   <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--color-text-muted)', fontFamily: 'var(--font-mono, monospace)' }}>
                     {hr.hourStr}
                   </span>
