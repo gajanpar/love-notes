@@ -1,5 +1,8 @@
 // src/components/public/GeoMapSection.tsx
+import 'leaflet/dist/leaflet.css';
 import React, { useEffect, useRef, useState } from 'react';
+import * as L from 'leaflet';
+import * as esri from 'esri-leaflet';
 import { 
   MapPin, 
   Layers, 
@@ -37,9 +40,6 @@ export const GeoMapSection: React.FC = () => {
 
       try {
 
-        // Dynamically import Leaflet
-        const L = (await import('leaflet')).default;
-        const esri = (await import('esri-leaflet'));
 
         if (!isMounted || !mapContainerRef.current) return;
 
