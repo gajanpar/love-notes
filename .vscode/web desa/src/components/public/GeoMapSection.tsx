@@ -251,27 +251,17 @@ export const GeoMapSection: React.FC = () => {
         </div>
 
         {/* Leaflet Map & Info Split Pane */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: selectedFacility ? '1fr 340px' : '1fr',
-          border: '1px solid var(--color-border)',
-          borderRadius: '0 0 var(--radius-xl) var(--radius-xl)',
-          overflow: 'hidden',
-          boxShadow: 'var(--shadow-lg)',
-          background: 'var(--color-surface)',
-          minHeight: '520px'
-        }}>
+        <div className={`geomap-split-container ${selectedFacility ? 'has-facility' : ''}`}>
           {/* Leaflet DOM container */}
           <div 
             ref={mapContainerRef} 
-            style={{ width: '100%', height: '520px', zIndex: 1 }}
+            style={{ width: '100%', minHeight: '520px', height: '100%', zIndex: 1 }}
           />
 
           {/* Selected facility detail panel */}
           {selectedFacility && (
-            <div style={{
+            <div className="geomap-facility-panel" style={{
               background: 'var(--color-surface)',
-              borderLeft: '1px solid var(--color-border)',
               padding: '24px',
               display: 'flex',
               flexDirection: 'column',

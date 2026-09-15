@@ -2772,3 +2772,35 @@ img, video {
   background: var(--color-surface-raised);
 }
 
+
+
+/* Responsive Adapts */
+.geomap-split-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid var(--color-border);
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: var(--color-surface);
+  min-height: 520px;
+}
+
+.geomap-split-container.has-facility {
+  grid-template-columns: 1fr;
+}
+
+.geomap-facility-panel {
+  border-left: none;
+  border-top: 1px solid var(--color-border);
+}
+
+@media (min-width: 992px) {
+  .geomap-split-container.has-facility {
+    grid-template-columns: 1fr 340px;
+  }
+  .geomap-facility-panel {
+    border-left: 1px solid var(--color-border);
+    border-top: none;
+  }
+}
