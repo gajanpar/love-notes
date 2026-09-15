@@ -207,16 +207,56 @@ export const ProfileSection: React.FC = () => {
     <section id="profil" style={{ padding: '72px 0', background: 'var(--color-bg)' }}>
       <div className="container">
 
-        {/* ── Section Header ─────────────────────────────────── */}
+        {/* ── Logo Desa Sukadana ─────────────────────────────── */}
         <div ref={heroRef} className={`reveal${heroVisible ? ' visible' : ''}`}
+          style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{
+            width: '120px', height: '120px',
+            margin: '0 auto 16px',
+            borderRadius: '50%',
+            border: '3px solid var(--color-gold-300)',
+            boxShadow: '0 8px 32px rgba(207,162,61,0.25), 0 0 0 6px var(--color-brand-50)',
+            background: 'var(--color-surface)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            overflow: 'hidden'
+          }}>
+            <img
+              src="/logo-desa-sukadana.png"
+              alt="Lambang Resmi Desa Sukadana"
+              style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '8px' }}
+              onError={(e) => {
+                // Fallback jika logo belum tersedia
+                (e.currentTarget as HTMLImageElement).style.display = 'none';
+                const parent = e.currentTarget.parentElement;
+                if (parent) {
+                  parent.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-brand-600)"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>';
+                }
+              }}
+            />
+          </div>
+          <div style={{
+            fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase',
+            letterSpacing: '0.1em', color: 'var(--color-brand-600)', marginBottom: '4px'
+          }}>
+            Lambang Resmi
+          </div>
+          <div style={{
+            fontSize: '0.8125rem', color: 'var(--color-text-muted)', fontWeight: 500
+          }}>
+            Desa Sukadana, Kec. Argapura, Kab. Majalengka
+          </div>
+        </div>
+
+        {/* ── Section Header ─────────────────────────────── */}
+        <div className={`reveal${heroVisible ? ' visible' : ''}`}
           style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 48px' }}>
           <span className="badge-animated" style={{ marginBottom: '16px' }}>
             Mengenal Desa Kami
           </span>
-          <h2 className="text-title" style={{ marginBottom: '14px', lineHeight: 'var(--leading-snug)' }}>
+          <h2 className="text-title" style={{ marginBottom: '14px', lineHeight: 1.25, fontFamily: 'var(--font-serif)', letterSpacing: '-0.01em' }}>
             Profil Desa Sukadana — Agamis, Mandiri & Berdaya Saing
           </h2>
-          <p style={{ color: 'var(--color-text-secondary)', fontSize: 'var(--text-md)', lineHeight: 'var(--leading-loose)' }}>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.0625rem', lineHeight: 1.75 }}>
             Desa agrowisata unggulan lereng Ciremai, Kecamatan Argapura — mewujudkan tata kelola yang akuntabel, transparan, dan layanan publik digital prima.
           </p>
         </div>
@@ -254,7 +294,7 @@ export const ProfileSection: React.FC = () => {
               display: 'flex', gap: '16px', flexWrap: 'wrap', flexShrink: 0
             }}>
               {[
-                { label: 'APBDes 2026', value: 'Rp 2,1 M' },
+                { label: 'Ketinggian', value: '750-1.200 mdpl' },
                 { label: 'Produk Unggulan', value: 'Bawang Daun' },
                 { label: 'Status Desa', value: 'Mandiri' },
               ].map(item => (
@@ -439,6 +479,158 @@ export const ProfileSection: React.FC = () => {
             </p>
           </div>
 
+          {/* ── Executive Showcase Card: Kuwu Sukadana ── */}
+          <div style={{
+            background: 'linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-raised) 100%)',
+            border: '2px solid var(--color-brand-500)',
+            borderRadius: 'var(--radius-xl)',
+            padding: '28px 32px',
+            marginBottom: '36px',
+            boxShadow: '0 8px 30px rgba(26, 144, 32, 0.12)',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            gap: '28px',
+            position: 'relative',
+            overflow: 'hidden'
+          }}>
+            {/* Emerald-Gold Top Rim */}
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: '4px',
+              background: 'linear-gradient(90deg, #cfa23d 0%, #1a9020 50%, #cfa23d 100%)'
+            }} />
+
+            {/* Kuwu Avatar with Royal Rim */}
+            <div style={{
+              width: '104px',
+              height: '104px',
+              borderRadius: '50%',
+              padding: '3px',
+              background: 'linear-gradient(135deg, #cfa23d 0%, #1a9020 100%)',
+              boxShadow: '0 6px 20px rgba(26, 144, 32, 0.25)',
+              flexShrink: 0
+            }}>
+              <img
+                src={VILLAGE_OFFICIALS[0].avatar}
+                alt={VILLAGE_OFFICIALS[0].name}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '3px solid #ffffff'
+                }}
+              />
+            </div>
+
+            {/* Info and Quote */}
+            <div style={{ flex: 1, minWidth: '260px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '6px' }}>
+                <span style={{
+                  background: 'linear-gradient(135deg, var(--color-brand-600), var(--color-brand-800))',
+                  color: '#ffffff',
+                  padding: '3px 12px',
+                  borderRadius: 'var(--radius-full)',
+                  fontSize: '0.72rem',
+                  fontWeight: 800,
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase'
+                }}>
+                  Pimpinan Pemerintahan Desa
+                </span>
+                <span style={{
+                  fontSize: '0.75rem',
+                  color: 'var(--color-text-muted)',
+                  fontFamily: 'var(--font-mono)'
+                }}>
+                  NIP: {VILLAGE_OFFICIALS[0].nip}
+                </span>
+              </div>
+
+              <h3 style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: '1.45rem',
+                fontWeight: 800,
+                color: 'var(--color-text-primary)',
+                margin: '0 0 3px 0',
+                letterSpacing: '-0.01em'
+              }}>
+                {VILLAGE_OFFICIALS[0].name}
+              </h3>
+              <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--color-brand-700)', marginBottom: '12px' }}>
+                Kuwu / Kepala Desa Sukadana &bull; Masa Bakti 2024–2030
+              </div>
+
+              <p style={{
+                fontSize: '0.92rem',
+                color: 'var(--color-text-secondary)',
+                fontStyle: 'italic',
+                lineHeight: 1.7,
+                margin: 0,
+                position: 'relative',
+                paddingLeft: '18px'
+              }}>
+                <Quote size={13} style={{ position: 'absolute', left: 0, top: '4px', opacity: 0.6, color: 'var(--color-brand-600)' }} />
+                "{VILLAGE_OFFICIALS[0].quote}"
+              </p>
+            </div>
+
+            {/* Direct Contact Button */}
+            <div style={{ flexShrink: 0 }}>
+              <a
+                href={`tel:${VILLAGE_OFFICIALS[0].phone}`}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: 'var(--color-brand-600)',
+                  color: '#ffffff',
+                  padding: '10px 18px',
+                  borderRadius: 'var(--radius-lg)',
+                  textDecoration: 'none',
+                  fontSize: '0.82rem',
+                  fontWeight: 700,
+                  boxShadow: '0 4px 14px rgba(26, 144, 32, 0.25)',
+                  transition: 'all var(--transition-fast)'
+                }}
+              >
+                <Phone size={14} /> Hubungi Kuwu
+              </a>
+            </div>
+          </div>
+
+          {/* Subheader: Sekretariat, Kasi & Kadus */}
+          <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+            <div>
+              <h4 style={{
+                fontSize: '1.05rem',
+                fontWeight: 800,
+                color: 'var(--color-text-primary)',
+                margin: 0
+              }}>
+                Aparatur Sekretariat, Kepala Seksi & Kepala Dusun
+              </h4>
+              <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', margin: '2px 0 0 0' }}>
+                Pamong pelaksana teknis pelayanan administrasi kependudukan dan kewilayahan.
+              </p>
+            </div>
+            <span style={{
+              fontSize: '0.72rem',
+              color: 'var(--color-text-muted)',
+              background: 'var(--color-surface-raised)',
+              border: '1px solid var(--color-border)',
+              padding: '3px 10px',
+              borderRadius: 'var(--radius-full)',
+              fontWeight: 600
+            }}>
+              {VILLAGE_OFFICIALS.length - 1} Aparatur Desa
+            </span>
+          </div>
+
           <div
             className={`reveal-stagger${officialVisible ? ' visible' : ''}`}
             style={{
@@ -447,7 +639,7 @@ export const ProfileSection: React.FC = () => {
               gap: '16px'
             }}
           >
-            {VILLAGE_OFFICIALS.map(official => (
+            {VILLAGE_OFFICIALS.slice(1).map(official => (
               <OfficialFlipCard key={official.id} official={official} />
             ))}
           </div>

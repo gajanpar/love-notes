@@ -5,7 +5,6 @@ import {
   FileText, 
   Search, 
   MapPin, 
-  PieChart, 
   Users, 
   MessageSquare, 
   Shield, 
@@ -29,7 +28,7 @@ import { HeroSection } from './components/public/HeroSection';
 import { ServiceCatalog } from './components/public/ServiceCatalog';
 import { TrackingSection } from './components/public/TrackingSection';
 import { GeoMapSection } from './components/public/GeoMapSection';
-import { APBDesSection } from './components/public/APBDesSection';
+// APBDesSection removed — transparansi segment discontinued
 import { PerdesSection } from './components/public/PerdesSection';
 import { ProfileSection } from './components/public/ProfileSection';
 import { LaporSection } from './components/public/LaporSection';
@@ -46,7 +45,7 @@ import { RBACMatrix } from './components/admin/RBACMatrix';
 import { PengajuanSurat, Role, SuratType } from './types';
 import { INITIAL_PENGAJUAN } from './data/mockData';
 
-export type PublicSegment = 'beranda' | 'layanan' | 'transparansi' | 'profil' | 'lapor';
+export type PublicSegment = 'beranda' | 'layanan' | 'profil' | 'lapor';
 
 const MainApp: React.FC = () => {
   const toast = useToast();
@@ -60,8 +59,7 @@ const MainApp: React.FC = () => {
 
   // Sub-tabs inside multi-section segments
   const [layananSubTab, setLayananSubTab] = useState<'katalog' | 'tracking'>('katalog');
-  const [transparansiSubTab, setTransparansiSubTab] = useState<'apbdes' | 'perdes'>('apbdes');
-  const [profilSubTab, setProfilSubTab] = useState<'profil' | 'peta'>('profil');
+  const [profilSubTab, setProfilSubTab] = useState<'profil' | 'peta' | 'perdes'>('profil');
 
   // Data Store
   const [pengajuanList, setPengajuanList] = useState<PengajuanSurat[]>(INITIAL_PENGAJUAN);
@@ -88,11 +86,12 @@ const MainApp: React.FC = () => {
         setActiveSegment('layanan');
         setLayananSubTab('tracking');
       } else if (hash === 'transparansi' || hash === 'apbdes') {
-        setActiveSegment('transparansi');
-        setTransparansiSubTab('apbdes');
+        // Legacy: redirect to profil
+        setActiveSegment('profil');
+        setProfilSubTab('profil');
       } else if (hash === 'perdes' || hash === 'regulasi') {
-        setActiveSegment('transparansi');
-        setTransparansiSubTab('perdes');
+        setActiveSegment('profil');
+        setProfilSubTab('perdes');
       } else if (hash === 'profil') {
         setActiveSegment('profil');
         setProfilSubTab('profil');
@@ -140,12 +139,13 @@ const MainApp: React.FC = () => {
       setLayananSubTab('tracking');
       window.location.hash = '#tracking';
     } else if (segmentId === 'transparansi' || segmentId === 'apbdes') {
-      setActiveSegment('transparansi');
-      setTransparansiSubTab('apbdes');
-      window.location.hash = '#transparansi';
+      // Legacy: redirect to profil
+      setActiveSegment('profil');
+      setProfilSubTab('profil');
+      window.location.hash = '#profil';
     } else if (segmentId === 'perdes') {
-      setActiveSegment('transparansi');
-      setTransparansiSubTab('perdes');
+      setActiveSegment('profil');
+      setProfilSubTab('perdes');
       window.location.hash = '#perdes';
     } else if (segmentId === 'profil') {
       setActiveSegment('profil');
@@ -267,42 +267,8 @@ const MainApp: React.FC = () => {
               </div>
             )}
 
-            {/* SEGMEN 3: TRANSPARANSI APBDES & REGULASI DESA */}
-            {activeSegment === 'transparansi' && (
-              <div className="segment-view" style={{ padding: '32px 0 64px 0' }}>
-                <div className="container">
-                  {/* Sub-segment Tab Switcher */}
-                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-                    <div className="sub-segment-tabs">
-                      <button
-                        id="subtab-transparansi-apbdes"
-                        className={`sub-segment-btn${transparansiSubTab === 'apbdes' ? ' active' : ''}`}
-                        onClick={() => { setTransparansiSubTab('apbdes'); window.location.hash = '#transparansi'; }}
-                      >
-                        <PieChart size={16} />
-                        <span>Realisasi APBDes 2026</span>
-                      </button>
-                      <button
-                        id="subtab-transparansi-perdes"
-                        className={`sub-segment-btn${transparansiSubTab === 'perdes' ? ' active' : ''}`}
-                        onClick={() => { setTransparansiSubTab('perdes'); window.location.hash = '#perdes'; }}
-                      >
-                        <BookOpen size={16} />
-                        <span>Katalog Peraturan Desa (Perdes)</span>
-                      </button>
-                    </div>
-                  </div>
 
-                  {transparansiSubTab === 'apbdes' ? (
-                    <APBDesSection />
-                  ) : (
-                    <PerdesSection />
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* SEGMEN 4: PROFIL DESA & PETA GEOSPASIAL WILAYAH */}
+            {/* SEGMEN 3: PROFIL DESA, PETA & PERATURAN DESA */}
             {activeSegment === 'profil' && (
               <div className="segment-view" style={{ padding: '32px 0 64px 0' }}>
                 <div className="container">
@@ -325,13 +291,23 @@ const MainApp: React.FC = () => {
                         <MapPin size={16} />
                         <span>Peta Fasilitas & Proyek</span>
                       </button>
+                      <button
+                        id="subtab-profil-perdes"
+                        className={`sub-segment-btn${profilSubTab === 'perdes' ? ' active' : ''}`}
+                        onClick={() => { setProfilSubTab('perdes'); window.location.hash = '#perdes'; }}
+                      >
+                        <BookOpen size={16} />
+                        <span>Peraturan Desa</span>
+                      </button>
                     </div>
                   </div>
 
                   {profilSubTab === 'profil' ? (
                     <ProfileSection />
-                  ) : (
+                  ) : profilSubTab === 'peta' ? (
                     <GeoMapSection />
+                  ) : (
+                    <PerdesSection />
                   )}
                 </div>
               </div>

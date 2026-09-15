@@ -628,7 +628,7 @@ export const MOCK_BERITA: BeritaItem[] = [
     slug: 'peluncuran-e-persuratan-digital-desa-sukadana-argapura',
     kategori: 'Pemerintahan & Digital',
     ringkasan: 'Warga Desa Sukadana kini dapat mengajukan SKU, SKTM, SKCK Pengantar secara mandiri 24 jam dengan verifikasi barcode legalitas BSrE BSSN tanpa antrean panjang.',
-    konten: '<p>Pemerintah Desa Sukadana, Kecamatan Argapura, Kabupaten Majalengka resmi meluncurkan platform terintegrasi E-Government Web Desa untuk memudahkan warga dalam mengajukan berkas persuratan dan melacak statusnya secara real-time.</p><p>Kuwu Desa Sukadana, H. Asep Saepudin, S.Pd., M.Si menyampaikan bahwa inovasi ini dirancang dengan standar <em>Government as a Service</em> (GaaS), mengedepankan kecepatan layanan tanpa calo dan transparansi penuh APBDes. Melalui sistem barcode bersertifikasi BSrE BSSN, surat keterangan yang diterbitkan berkekuatan hukum penuh dan diakui instansi perbankan maupun kedinasan.</p><p>Warga cukup memasukkan NIK atau nomor tiket untuk memantau tahapan verifikasi mulai dari operator, sekretaris desa, hingga pengesahan digital kepala desa secara transparan.</p>',
+    konten: '<p>Pemerintah Desa Sukadana, Kecamatan Argapura, Kabupaten Majalengka resmi meluncurkan platform terintegrasi E-Government Web Desa untuk memudahkan warga dalam mengajukan berkas persuratan dan melacak statusnya secara real-time.</p><p>Kuwu Desa Sukadana, H. Asep Saepudin, S.Pd., M.Si menyampaikan bahwa inovasi ini dirancang dengan standar <em>Government as a Service</em> (GaaS), mengedepankan kecepatan layanan tanpa calo dan transparansi penuh pelayanan publik. Melalui sistem barcode bersertifikasi BSrE BSSN, surat keterangan yang diterbitkan berkekuatan hukum penuh dan diakui instansi perbankan maupun kedinasan.</p><p>Warga cukup memasukkan NIK atau nomor tiket untuk memantau tahapan verifikasi mulai dari operator, sekretaris desa, hingga pengesahan digital kepala desa secara transparan.</p>',
     gambar: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&auto=format&fit=crop&q=80',
     penulis: 'Sekretariat Desa Sukadana',
     tanggal: '28 Agustus 2026',
@@ -643,7 +643,7 @@ export const MOCK_BERITA: BeritaItem[] = [
     slug: 'panen-raya-hortikultura-bawang-daun-sukadana-2026',
     kategori: 'Pertanian & Agrowisata',
     ringkasan: 'Hasil panen daun bawang dan sayuran terasering petani Desa Sukadana berhasil mencatatkan peningkatan produksi 28% dengan kemitraan jalur logistik pasar induk terpadu.',
-    konten: '<p>Kelompok Tani (Gapoktan) Sukadana Mandiri bersama BUMDes sukses menggelar panen raya komoditas unggulan daun bawang dan sayuran hortikultura lereng Gunung Ciremai. Kualitas bawang daun Sukadana yang beraroma kuat dan berbatang tebal menjadi primadona pasar agribisnis Jawa Barat.</p><p>Program pompanisasi air irigasi tenaga gravitasi yang didanai melalui APBDes 2026 terbukti berhasil menjaga kelembaban lahan terasering pada musim kemarau basah tahun ini. Ketua BUMDes mengungkapkan bahwa para petani kini dapat menjual hasil panen dengan harga stabil tanpa tertekan perantara tengkulak.</p>',
+    konten: '<p>Kelompok Tani (Gapoktan) Sukadana Mandiri bersama BUMDes sukses menggelar panen raya komoditas unggulan daun bawang dan sayuran hortikultura lereng Gunung Ciremai. Kualitas bawang daun Sukadana yang beraroma kuat dan berbatang tebal menjadi primadona pasar agribisnis Jawa Barat.</p><p>Program pompanisasi air irigasi tenaga gravitasi yang didanai melalui program pembangunan desa terbukti berhasil menjaga kelembaban lahan terasering pada musim kemarau basah tahun ini. Ketua BUMDes mengungkapkan bahwa para petani kini dapat menjual hasil panen dengan harga stabil tanpa tertekan perantara tengkulak.</p>',
     gambar: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800&auto=format&fit=crop&q=80',
     penulis: 'BUMDes Sukadana Mandiri',
     tanggal: '27 Agustus 2026',
@@ -751,7 +751,7 @@ export const VILLAGE_OFFICIALS: VillageOfficial[] = [
     nip: '19910619 201502 2 001',
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&auto=format&fit=crop&q=80',
     phone: '+62 877-4433-2211',
-    quote: 'Pengelolaan APBDes yang akuntabel, transparan, dan tepat sasaran bagi seluruh warga.',
+    quote: 'Pengelolaan administrasi keuangan desa yang akuntabel, transparan, dan tepat sasaran.',
     reportTo: 'sekdes'
   },
   {
@@ -916,6 +916,6 @@ export const MAP_FACILITIES = [
   { id: 'f-4', name: 'Masjid Jami Al-Barokah Sukadana', category: 'Ibadah', lat: -6.8980, lng: 108.3140, desc: 'Pusat kegiatan keagamaan, pengajian akbar, dan peringatan hari besar Islam', icon: 'MoonStar' },
   { id: 'f-5', name: 'Sentra Daun Bawang & Pasar BUMDes Sukadana Mandiri', category: 'Ekonomi', lat: -6.8965, lng: 108.3185, desc: 'Sentra penampungan & perdagangan hasil hortikultura lereng Ciremai', icon: 'Store' },
   { id: 'f-6', name: 'Agrowisata Lembah Terasering & Kopi Ciremai Sukadana', category: 'Wisata', lat: -6.9020, lng: 108.3220, desc: 'Panorama keindahan terasering perbukitan dan sentra petik sayur & kopi Argapura', icon: 'Compass' },
-  { id: 'f-7', name: 'Proyek Pengaspalan Jalan Usaha Tani Terasering Cikondang', category: 'Proyek', lat: -6.9015, lng: 108.3105, desc: 'Peningkatan jalan hotmix usaha tani 950m APBDes 2026 (Status: Selesai 100%)', icon: 'CheckCircle2' },
-  { id: 'f-8', name: 'Proyek Saluran Pipanisasi Irigasi Pertanian Sayur Hulu Ciremai', category: 'Proyek', lat: -6.8950, lng: 108.3190, desc: 'Pembangunan pipa air gravitasi irigasi pertanian APBDes 2026 (Anggaran: Rp 180 Jt)', icon: 'Hammer' }
+  { id: 'f-7', name: 'Proyek Pengaspalan Jalan Usaha Tani Terasering Cikondang', category: 'Proyek', lat: -6.9015, lng: 108.3105, desc: 'Peningkatan jalan hotmix usaha tani 950m T.A. 2026 (Status: Selesai 100%)', icon: 'CheckCircle2' },
+  { id: 'f-8', name: 'Proyek Saluran Pipanisasi Irigasi Pertanian Sayur Hulu Ciremai', category: 'Proyek', lat: -6.8950, lng: 108.3190, desc: 'Pembangunan pipa air gravitasi irigasi pertanian lereng Ciremai T.A. 2026', icon: 'Hammer' }
 ];

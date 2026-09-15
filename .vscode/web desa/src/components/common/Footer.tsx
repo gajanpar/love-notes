@@ -112,7 +112,6 @@ export const Footer: React.FC = () => {
                 { href: '#layanan', label: 'Pengajuan Surat Keterangan Usaha (SKU)' },
                 { href: '#layanan', label: 'Pengajuan SKTM &amp; Beasiswa' },
                 { href: '#tracking', label: 'Cek Status Berkas Real-time' },
-                { href: '#apbdes', label: 'Data Keterbukaan APBDes 2026' },
                 { href: '#perdes', label: 'Peraturan Desa (Perdes)' },
                 { href: '#lapor', label: 'Lapor Masalah Infrastruktur' },
               ].map((item, i) => (

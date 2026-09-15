@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   FileText,
   Search,
-  PieChart,
   MessageSquare,
   Shield,
   Sun,
@@ -154,7 +153,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const navLinks = [
     { id: 'beranda',     label: 'Beranda Utama',  badge: '',  icon: <Home size={19} /> },
     { id: 'layanan',     label: 'E-Persuratan',   badge: '6', icon: <FileText size={19} /> },
-    { id: 'transparansi',label: 'Transparansi',   badge: '',  icon: <PieChart size={19} /> },
     { id: 'profil',      label: 'Profil Desa',    badge: '',  icon: <Users size={19} /> },
     { id: 'lapor',       label: 'Aspirasi Warga', badge: '',  icon: <MessageSquare size={19} /> },
   ];

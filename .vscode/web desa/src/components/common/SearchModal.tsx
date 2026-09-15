@@ -4,7 +4,6 @@ import {
   Search,
   FileText,
   MapPin,
-  PieChart,
   Users,
   MessageSquare,
   ArrowRight,
@@ -163,21 +162,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
       targetSection: 'layanan',
       icon: <FileText size={18} />
     },
-    // 7. APBDes
-    {
-      id: 'transparansi-apbdes',
-      title: 'Transparansi Realisasi APBDes 2026',
-      category: 'transparansi',
-      categoryLabel: 'Transparansi',
-      description: 'Laporan rinci penerimaan Dana Desa, Pendapatan Asli Desa, serta alokasi belanja infrastruktur Rp 1,84 M.',
-      keywords: [
-        'apbdes', 'dana desa', 'anggaran', 'uang', 'keuangan', 'pendapatan', 'belanja',
-        'silpa', 'transparansi', 'biaya desa', 'laporan keuangan', 'pemberdayaan', 'grafik anggaran'
-      ],
-      targetSection: 'transparansi',
-      icon: <PieChart size={18} />
-    },
-    // 8. Perdes
+    // 7. Perdes
     {
       id: 'regulasi-perdes',
       title: 'Katalog Produk Hukum & Peraturan Desa (Perdes)',
@@ -188,7 +173,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({
         'perdes', 'peraturan', 'hukum', 'aturan', 'kebijakan', 'undang undang', 'sk kades',
         'peraturan desa', 'bpd', 'peraturan desa sukadana', 'regulasi'
       ],
-      targetSection: 'transparansi',
+      targetSection: 'perdes',
       icon: <Scale size={18} />
     },
     // 9. Profil Desa & Pamong

@@ -20,7 +20,10 @@ import {
   ShieldCheck,
   UserCheck,
   FileSignature,
-  Download
+  Download,
+  AlertTriangle,
+  Crown,
+  CheckCircle2
 } from 'lucide-react';
 import { MOCK_AUDIT_LOGS } from '../../data/mockData';
 import { Role, Permission, AuditLog } from '../../types';
@@ -33,8 +36,12 @@ interface RoleCardInfo {
   color: string;
   bgGradient: string;
   description: string;
-  userCount: number;
+  personnel: { name: string; nip?: string; note?: string }[];
   clearanceLevel: number;
+  clearanceLabel: string;
+  authorityScope: string[];
+  restrictionNote: string;
+  legalBasis: string;
   icon: React.ReactNode;
 }
 
@@ -44,54 +51,97 @@ export const RBACMatrix: React.FC = () => {
   const [searchLog, setSearchLog] = useState('');
   const [roleHighlight, setRoleHighlight] = useState<Role | null>(null);
 
-  // Role metadata
+  // Role metadata - Implementasi Nyata (Struktur Otoritas Kedinasan Resmi)
   const rolesList: RoleCardInfo[] = [
     {
       role: 'superadmin',
       name: 'Superadmin',
-      title: 'Administrator Teknis Sistem',
-      badge: 'Sistem Root',
+      title: 'Administrator Teknis & Keamanan Sistem',
+      badge: 'Level IV • Akses Root IT',
       color: '#cfa23d',
       bgGradient: 'linear-gradient(135deg, #28211c 0%, #3d2f25 100%)',
-      description: 'Pengelola teknis database, audit keamanan, konfigurasi server, dan pemeliharaan akun.',
-      userCount: 2,
+      description: 'Pengelola teknis database, audit forensik keamanan, konfigurasi server cloud, dan tata kelola akun aparatur desa.',
+      personnel: [
+        { name: 'Tim Pranata Komputer', note: 'Diskominfo Kab. Majalengka' },
+        { name: 'Admin Teknis IT', note: 'Pemerintah Desa Sukadana' }
+      ],
       clearanceLevel: 4,
+      clearanceLabel: 'Level IV (Akses Root & Audit)',
+      authorityScope: [
+        'Konfigurasi server, database, dan arsitektur backup berkala',
+        'Audit jejak forensik seluruh aktivitas administratif aparatur',
+        'Manajemen hak akses, reset kredensial, dan otentikasi 2FA aparatur'
+      ],
+      restrictionNote: 'Terkunci dari penerbitan surat/TTE kedinasan ke warga. Wajib menjaga integritas log forensik.',
+      legalBasis: 'Permendagri No. 47/2016 & Standar Keamanan Informasi BSSN',
       icon: <Key size={20} color="#cfa23d" />
     },
     {
       role: 'kepala_desa',
       name: 'Kepala Desa (Kuwu)',
-      title: 'Pejabat Otorisator Tertinggi',
-      badge: 'Pemegang TTE',
+      title: 'Pejabat Penandatangan Elektronik (TTE) Tunggal',
+      badge: 'Level III • Otorisator TTE',
       color: '#1a9020',
       bgGradient: 'linear-gradient(135deg, #1a9020 0%, #105c14 100%)',
-      description: 'Pemegang sertifikat digital BSrE BSSN. Berhak penuh menerbitkan TTE dan disposisi resmi.',
-      userCount: 1,
+      description: 'Pemegang sertifikat digital resmi BSrE BSSN. Memiliki hak prerogatif tertinggi untuk menerbitkan TTE dan disposisi kebijakan.',
+      personnel: [
+        { name: 'H. Asep Saepudin, S.Pd., M.Si.', nip: '19750814 200212 1 002', note: 'Kuwu Desa Sukadana' }
+      ],
       clearanceLevel: 3,
+      clearanceLabel: 'Level III (Otoritas TTE Tertinggi)',
+      authorityScope: [
+        'Pembubuhan Tanda Tangan Elektronik (TTE) tersertifikasi BSrE BSSN',
+        'Persetujuan final penerbitan seluruh surat keterangan resmi',
+        'Penetapan Peraturan Desa (Perdes) dan disposisi kebijakan pembangunan'
+      ],
+      restrictionNote: 'Hak TTE mutlak melekat pada Kuwu dan tidak dapat dipindahtangankan tanpa SK penunjukan Plt resmi.',
+      legalBasis: 'UU Desa No. 6/2014 & Peraturan BSSN No. 10/2019 tentang TTE Instansi',
       icon: <FileSignature size={20} color="#acdbb0" />
     },
     {
       role: 'sekretaris',
-      name: 'Sekretaris Desa',
-      title: 'Koordinator Verifikasi & APBDes',
-      badge: 'Verifikator Utama',
+      name: 'Sekretaris Desa (Sekdes)',
+      title: 'Koordinator Verifikasi & Administrasi Kependudukan',
+      badge: 'Level II • Verifikator Utama',
       color: '#4f9f54',
       bgGradient: 'linear-gradient(135deg, #2f5432 0%, #1e3820 100%)',
-      description: 'Memeriksa keabsahan berkas, administrasi kependudukan, penganggaran APBDes, dan data mutasi.',
-      userCount: 1,
+      description: 'Koordinator utama alur administrasi kependudukan (SIAK Desa), validasi persyaratan berkas, dan verifikasi draf persuratan.',
+      personnel: [
+        { name: 'Dadan Ramdani, S.AP', nip: '19840321 200903 1 004', note: 'Sekretaris Desa Sukadana' }
+      ],
       clearanceLevel: 2,
+      clearanceLabel: 'Level II (Verifikasi Berkas & SIAK)',
+      authorityScope: [
+        'Verifikasi keabsahan berkas permohonan warga sebelum naik ke Kuwu',
+        'Pencatatan mutasi kependudukan (pindah, datang, lahir, wafat) di SIAK',
+        'Penolakan berkas tidak lengkap disertai catatan revisi resmi'
+      ],
+      restrictionNote: 'Tidak memiliki kewenangan membubuhkan TTE akhir pada lembar output dokumen publik.',
+      legalBasis: 'Permendagri No. 84/2015 tentang Tata Kelola Pemerintah Desa',
       icon: <ShieldCheck size={20} color="#acdbb0" />
     },
     {
       role: 'operator',
-      name: 'Operator Loket',
-      title: 'Pelayanan Front-Office',
-      badge: 'Petugas Loket',
+      name: 'Operator Loket Pelayanan',
+      title: 'Petugas Front-Office & Registrasi Berkas',
+      badge: 'Level I • Front-Office Loket',
       color: '#6f747a',
       bgGradient: 'linear-gradient(135deg, #373b40 0%, #25282c 100%)',
-      description: 'Penerimaan berkas fisik warga, verifikasi NIK awal, dan panduan asistensi permohonan mandiri.',
-      userCount: 3,
+      description: 'Garda depan pelayanan warga di Balai Desa Sukadana untuk penerimaan berkas fisik, verifikasi identitas NIK, dan asistensi mandiri.',
+      personnel: [
+        { name: 'Siti Aminah, S.Kom', note: 'Loket 1 — SKU & Keterangan Umum' },
+        { name: 'Ahmad Fauzi', note: 'Loket 2 — Kependudukan & Pindah Datang' },
+        { name: 'Rina Marlina', note: 'Loket 3 — Asistensi Permohonan Mandiri' }
+      ],
       clearanceLevel: 1,
+      clearanceLabel: 'Level I (Penerimaan & Registrasi)',
+      authorityScope: [
+        'Penerimaan berkas fisik dan pencocokan KTP/KK pemohon di loket',
+        'Pendaftaran nomor tiket antrean dan asistensi warga lansia/disabilitas',
+        'Pencetakan fisik surat yang telah disahkan dan ber-barcode resmi'
+      ],
+      restrictionNote: 'Dilarang mengubah data induk kependudukan tanpa persetujuan Sekdes. Tidak berhak memvalidasi akhir.',
+      legalBasis: 'SOP Pelayanan Terpadu Satu Pintu (PTSP) Desa Sukadana 2026',
       icon: <UserCheck size={20} color="#acdbb0" />
     }
   ];
@@ -138,7 +188,7 @@ export const RBACMatrix: React.FC = () => {
     },
     {
       module: 'Transparansi, CMS & Ekspor Data',
-      description: 'Pengelolaan warta kabar desa, publikasi realisasi APBDes, dan ekspor laporan berkala.',
+      description: 'Pengelolaan warta kabar desa, publikasi informasi publik, dan ekspor laporan berkala.',
       permissions: [
         {
           id: 'cms:publish' as Permission,
@@ -148,7 +198,7 @@ export const RBACMatrix: React.FC = () => {
         {
           id: 'data:export' as Permission,
           label: 'Ekspor Data Rekapitulasi (CSV/Excel)',
-          desc: 'Mengunduh rekapitulasi data demografi, arsip persuratan, dan pembukuan APBDes'
+          desc: 'Mengunduh rekapitulasi data demografi, arsip persuratan, dan laporan pelayanan'
         }
       ]
     },
@@ -306,12 +356,61 @@ export const RBACMatrix: React.FC = () => {
         </div>
       </div>
 
-      {/* 4 Interactive Visual Role Cards */}
+      {/* PRODUCTION STATUS NOTICE */}
+      <div style={{
+        background: 'linear-gradient(135deg, rgba(26, 144, 32, 0.08) 0%, rgba(207, 162, 61, 0.08) 100%)',
+        border: '1px solid rgba(207, 162, 61, 0.3)',
+        borderRadius: 'var(--radius-xl)',
+        padding: '16px 20px',
+        marginBottom: '28px',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '14px'
+      }}>
+        <div style={{
+          width: '36px',
+          height: '36px',
+          borderRadius: '10px',
+          background: 'linear-gradient(135deg, #cfa23d 0%, #1a9020 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#ffffff',
+          flexShrink: 0,
+          marginTop: '2px'
+        }}>
+          <Lock size={18} />
+        </div>
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '4px' }}>
+            <h4 style={{ fontSize: '0.92rem', fontWeight: 800, color: 'var(--color-text-primary)', margin: 0 }}>
+              Struktur Otoritas Kedinasan Permanen &bull; Implementasi Nyata (Non-Civilian Verified)
+            </h4>
+            <span style={{
+              fontSize: '0.66rem',
+              fontWeight: 800,
+              padding: '2px 8px',
+              borderRadius: 'var(--radius-full)',
+              background: 'var(--color-brand-primary)',
+              color: '#ffffff',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase'
+            }}>
+              Produksi Definitif
+            </span>
+          </div>
+          <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', margin: 0, lineHeight: 1.6 }}>
+            Setiap peran aparatur terikat secara mutlak pada <strong>Surat Keputusan (SK) Pengangkatan Kuwu Sukadana</strong> dan <strong>Sertifikasi Kriptografi BSrE BSSN</strong>. Pemindahan peran dibatasi secara ketat dan diaudit permanen demi validitas hukum berkas warga dan integritas kependudukan SIAK.
+          </p>
+        </div>
+      </div>
+
+      {/* 2x2 Zone Grid: 4 Special Administrative Roles */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '16px',
-        marginBottom: '32px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+        gap: '20px',
+        marginBottom: '36px'
       }}>
         {rolesList.map(item => {
           const isHighlighted = roleHighlight === item.role;
@@ -323,95 +422,179 @@ export const RBACMatrix: React.FC = () => {
               style={{
                 background: 'var(--color-surface)',
                 border: '2px solid',
-                borderColor: isHighlighted ? 'var(--color-brand-600)' : 'var(--color-border)',
+                borderColor: isHighlighted ? item.color : 'var(--color-border)',
                 borderRadius: 'var(--radius-xl)',
-                padding: '20px',
-                boxShadow: isHighlighted ? '0 8px 24px rgba(26, 144, 32, 0.2)' : 'var(--shadow-sm)',
+                padding: '24px',
+                boxShadow: isHighlighted ? `0 10px 30px ${item.color}25` : 'var(--shadow-sm)',
                 cursor: 'pointer',
-                transition: 'all var(--transition-fast)',
+                transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
                 position: 'relative',
-                overflow: 'hidden'
-              }}
-              onMouseEnter={e => {
-                if (!isHighlighted) e.currentTarget.style.borderColor = 'var(--color-brand-300)';
-              }}
-              onMouseLeave={e => {
-                if (!isHighlighted) e.currentTarget.style.borderColor = 'var(--color-border)';
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between'
               }}
             >
-              {/* Top Row: Icon + Badge */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+              <div>
+                {/* Header Row: Role Icon, Badge & Permanent Lock */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '12px',
+                      background: item.bgGradient,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                      flexShrink: 0
+                    }}>
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h4 style={{
+                        fontSize: '1.05rem',
+                        fontWeight: 800,
+                        color: 'var(--color-text-primary)',
+                        fontFamily: 'var(--font-serif)',
+                        margin: 0,
+                        lineHeight: 1.2
+                      }}>
+                        {item.name}
+                      </h4>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 600, marginTop: '2px' }}>
+                        {item.title}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{
+                      fontSize: '0.6875rem',
+                      fontWeight: 700,
+                      padding: '3px 8px',
+                      borderRadius: 'var(--radius-full)',
+                      background: 'var(--color-surface-raised)',
+                      color: item.color,
+                      border: '1px solid var(--color-border)'
+                    }}>
+                      {item.badge}
+                    </span>
+                    <span title="Role Terkunci Permanen" style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '3px',
+                      fontSize: '0.65rem',
+                      fontWeight: 700,
+                      padding: '3px 7px',
+                      borderRadius: 'var(--radius-full)',
+                      background: 'rgba(207, 162, 61, 0.12)',
+                      color: '#cfa23d',
+                      border: '1px solid rgba(207, 162, 61, 0.25)'
+                    }}>
+                      <Lock size={10} /> Terkunci
+                    </span>
+                  </div>
+                </div>
+
+                {/* Deskripsi Tupoksi */}
+                <p style={{
+                  fontSize: '0.82rem',
+                  color: 'var(--color-text-secondary)',
+                  lineHeight: 1.6,
+                  marginBottom: '16px'
+                }}>
+                  {item.description}
+                </p>
+
+                {/* Pejabat / Personil Definitif */}
                 <div style={{
-                  width: '40px',
-                  height: '40px',
+                  background: 'var(--color-surface-raised)',
                   borderRadius: 'var(--radius-lg)',
-                  background: item.bgGradient,
+                  padding: '12px 14px',
+                  border: '1px solid var(--color-border)',
+                  marginBottom: '14px'
+                }}>
+                  <div style={{
+                    fontSize: '0.6875rem',
+                    fontWeight: 800,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                    color: 'var(--color-text-muted)',
+                    marginBottom: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px'
+                  }}>
+                    <UserCheck size={13} color="var(--color-brand-primary)" /> Personil Pemegang Akun Resmi:
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    {item.personnel.map((p, pIdx) => (
+                      <div key={pIdx} style={{ fontSize: '0.78rem', color: 'var(--color-text-primary)' }}>
+                        <strong style={{ color: 'var(--color-text-primary)' }}>{p.name}</strong>
+                        {p.nip && <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.72rem', color: 'var(--color-text-muted)', marginLeft: '6px' }}>(NIP: {p.nip})</span>}
+                        {p.note && <span style={{ fontSize: '0.72rem', color: 'var(--color-brand-primary)', marginLeft: '6px', fontWeight: 600 }}>&bull; {p.note}</span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Kewenangan Utama (Bullet points) */}
+                <div style={{ marginBottom: '14px' }}>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px' }}>
+                    Kewenangan Kedinasan Utama:
+                  </div>
+                  <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.78rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+                    {item.authorityScope.map((scope, sIdx) => (
+                      <li key={sIdx} style={{ marginBottom: '3px' }}>{scope}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Batasan Kewenangan (Notice Box) */}
+                <div style={{
+                  background: 'rgba(239, 68, 68, 0.05)',
+                  border: '1px solid rgba(239, 68, 68, 0.2)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '8px 12px',
+                  marginBottom: '14px',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                  gap: '8px',
+                  fontSize: '0.74rem',
+                  color: 'var(--color-text-secondary)'
                 }}>
-                  {item.icon}
+                  <AlertTriangle size={14} color="#ef4444" style={{ flexShrink: 0 }} />
+                  <span><strong>Batasan:</strong> {item.restrictionNote}</span>
                 </div>
-                <span style={{
-                  fontSize: '0.6875rem',
-                  fontWeight: 700,
-                  padding: '2px 8px',
-                  borderRadius: 'var(--radius-full)',
-                  background: 'var(--color-surface-raised)',
-                  color: item.color,
-                  border: '1px solid var(--color-border)',
-                  fontFamily: 'var(--font-sans)'
-                }}>
-                  {item.badge}
-                </span>
               </div>
 
-              {/* Title & Role Name */}
-              <h4 style={{
-                fontSize: '1rem',
-                fontWeight: 800,
-                color: 'var(--color-text-primary)',
-                fontFamily: 'var(--font-serif)',
-                marginBottom: '2px'
-              }}>
-                {item.name}
-              </h4>
-              <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 600, marginBottom: '10px' }}>
-                {item.title}
-              </div>
-
-              <p style={{
-                fontSize: '0.78rem',
-                color: 'var(--color-text-secondary)',
-                lineHeight: 1.4,
-                marginBottom: '16px',
-                minHeight: '44px'
-              }}>
-                {item.description}
-              </p>
-
-              {/* Card Footer: Clearance Level & Permission Count */}
+              {/* Card Footer: Dasar Hukum, Personil Count, Hak Akses */}
               <div style={{
+                paddingTop: '12px',
+                borderTop: '1px solid var(--color-border)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                paddingTop: '12px',
-                borderTop: '1px solid var(--color-border)',
-                fontSize: '0.75rem'
+                flexWrap: 'wrap',
+                gap: '8px',
+                fontSize: '0.72rem'
               }}>
-                <span style={{ color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <User size={12} /> {item.userCount} Pengguna
+                <span style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
+                  {item.legalBasis}
                 </span>
-                <span style={{
-                  fontWeight: 700,
-                  color: 'var(--color-brand-600)',
-                  background: 'rgba(26, 144, 32, 0.08)',
-                  padding: '2px 8px',
-                  borderRadius: 'var(--radius-full)'
-                }}>
-                  {assignedPermCount} Hak Akses
-                </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{
+                    fontWeight: 800,
+                    color: item.color,
+                    background: 'var(--color-surface-raised)',
+                    border: '1px solid var(--color-border)',
+                    padding: '2px 8px',
+                    borderRadius: 'var(--radius-full)'
+                  }}>
+                    {assignedPermCount} Hak Akses
+                  </span>
+                </div>
               </div>
             </div>
           );

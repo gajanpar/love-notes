@@ -80,46 +80,71 @@ export const RoleSelector: React.FC<RoleSelectorProps> = ({
       </div>
 
       {/* Interactive Role Switcher Tabs */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-        <div style={{ fontSize: '0.75rem', color: '#94A3B8', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <KeyRound size={12} /> Simulasi Role-Based Access Control (RBAC):
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+          <div style={{ fontSize: '0.75rem', color: '#94A3B8', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <Lock size={12} color="#cfa23d" /> Sesi Otoritas Kedinasan Definitif:
+          </div>
+          <span style={{
+            fontSize: '0.65rem',
+            color: '#cfa23d',
+            background: 'rgba(207, 162, 61, 0.15)',
+            border: '1px solid rgba(207, 162, 61, 0.3)',
+            padding: '2px 7px',
+            borderRadius: 'var(--radius-full)',
+            fontWeight: 700
+          }}>
+            Implementasi Nyata
+          </span>
         </div>
         <div style={{
-          display: 'flex',
-          background: 'rgba(255, 255, 255, 0.08)',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          background: 'rgba(255, 255, 255, 0.06)',
           padding: '4px',
           borderRadius: 'var(--radius-lg)',
-          border: '1px solid rgba(255, 255, 255, 0.1)'
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          gap: '4px'
         }}>
           {(['superadmin', 'kepala_desa', 'sekretaris', 'operator'] as Role[]).map(r => {
             const isSelected = currentRole === r;
             const roleInfo = MOCK_ROLES[r];
+            const roleColor = r === 'superadmin' ? '#cfa23d' : r === 'kepala_desa' ? '#22c55e' : r === 'sekretaris' ? '#38bdf8' : '#94a3b8';
             return (
               <button
                 key={r}
                 onClick={() => onRoleChange(r)}
                 style={{
-                  background: isSelected ? '#3B82F6' : 'transparent',
-                  color: isSelected ? '#ffffff' : '#CBD5E1',
-                  border: 'none',
+                  background: isSelected ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+                  color: isSelected ? '#ffffff' : '#94A3B8',
+                  border: isSelected ? `1.5px solid ${roleColor}` : '1.5px solid transparent',
                   borderRadius: 'var(--radius-md)',
-                  padding: '6px 12px',
+                  padding: '8px 12px',
                   fontSize: '0.75rem',
-                  fontWeight: isSelected ? 700 : 500,
+                  fontWeight: isSelected ? 800 : 500,
                   cursor: 'pointer',
                   transition: 'all var(--transition-fast)',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px'
+                  gap: '6px',
+                  boxShadow: isSelected ? '0 2px 8px rgba(0,0,0,0.2)' : 'none'
                 }}
+                title={`Beralih ke sesi ${roleInfo.name}`}
               >
-                {r === 'kepala_desa' ? <Crown size={13} /> :
-                 r === 'superadmin' ? <Shield size={13} /> :
-                 r === 'sekretaris' ? <Edit3 size={13} /> : <UserCheck size={13} />}
-                <span>{roleInfo.title.split(' ')[0]} {roleInfo.title.split(' ')[1] || ''}</span>
+                {r === 'kepala_desa' ? <Crown size={14} color={roleColor} /> :
+                 r === 'superadmin' ? <Shield size={14} color={roleColor} /> :
+                 r === 'sekretaris' ? <Edit3 size={14} color={roleColor} /> : <UserCheck size={14} color={roleColor} />}
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ lineHeight: 1.1, color: isSelected ? '#ffffff' : '#CBD5E1' }}>
+                    {r === 'kepala_desa' ? 'Kuwu (Kades)' : r === 'superadmin' ? 'Superadmin' : r === 'sekretaris' ? 'Sekdes' : 'Operator'}
+                  </div>
+                </div>
               </button>
             );
           })}
+        </div>
+        <div style={{ fontSize: '0.68rem', color: '#64748B', textAlign: 'right' }}>
+          Terkunci per NIP aparatur &bull; Rotasi peran diaudit ke log forensik
         </div>
       </div>
     </div>

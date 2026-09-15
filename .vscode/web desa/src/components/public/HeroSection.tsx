@@ -302,7 +302,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             fontWeight: 400,
             textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
           }}>
-            Website resmi Desa Sukadana, Argapura, Majalengka. Urus surat kependudukan, pantau realisasi APBDes, dan sampaikan keluhan warga langsung dari rumah tanpa antre.
+            Website resmi Desa Sukadana, Argapura, Majalengka. Urus surat kependudukan, pantau progres permohonan, dan sampaikan keluhan warga langsung dari rumah tanpa antre.
           </p>
 
           {/* Search Bar with Glassmorphic styling */}

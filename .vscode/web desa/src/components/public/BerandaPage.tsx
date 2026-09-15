@@ -2,7 +2,7 @@
 import React from 'react';
 import {
   FileText,
-  PieChart,
+  MessageSquare,
   Users,
   ArrowRight,
   PhoneCall
@@ -37,20 +37,20 @@ export const BerandaPage: React.FC<BerandaPageProps> = ({
       accentColor: '#acdbb0'
     },
     {
-      id: 'transparansi',
-      title: 'Transparansi APBDes & Perdes',
-      desc: 'Pantau grafik realisasi anggaran desa Rp 1,84 Miliar & katalog peraturan desa.',
-      icon: <PieChart size={22} color="#ffffff" />,
-      tag: 'Keterbukaan Publik',
-      bgGradient: 'linear-gradient(135deg, #cfa23d 0%, #6a5724 100%)',
-      accentColor: '#f7eed8'
-    },
-    {
       id: 'profil',
       title: 'Profil Desa & Peta Wilayah',
       desc: 'Kenali susunan perangkat desa, demografi 3.420 jiwa, dan peta fasilitas interaktif.',
       icon: <Users size={22} color="#ffffff" />,
       tag: 'Informasi Wilayah',
+      bgGradient: 'linear-gradient(135deg, #cfa23d 0%, #6a5724 100%)',
+      accentColor: '#f7eed8'
+    },
+    {
+      id: 'lapor',
+      title: 'Aspirasi & Lapor Warga',
+      desc: 'Sampaikan aduan infrastruktur, usulan pembangunan, atau keluhan layanan publik langsung.',
+      icon: <MessageSquare size={22} color="#ffffff" />,
+      tag: 'Layanan Terbuka',
       bgGradient: 'linear-gradient(135deg, #28211c 0%, #382f28 100%)',
       accentColor: '#d5b47c'
     }
@@ -74,8 +74,8 @@ export const BerandaPage: React.FC<BerandaPageProps> = ({
         onNavigateSection={sectionId => {
           if (sectionId === 'layanan' || sectionId === 'tracking') {
             onNavigateSegment('layanan');
-          } else if (sectionId === 'apbdes' || sectionId === 'perdes') {
-            onNavigateSegment('transparansi');
+          } else if (sectionId === 'perdes') {
+            onNavigateSegment('perdes');
           } else if (sectionId === 'profil' || sectionId === 'peta') {
             onNavigateSegment('profil');
           } else if (sectionId === 'lapor') {
