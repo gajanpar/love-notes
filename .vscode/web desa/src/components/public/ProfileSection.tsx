@@ -49,46 +49,50 @@ const VILLAGE_STATS = [
   { icon: <Users size={22} color="var(--color-brand-600)" />, value: 4823, suffix: ' Jiwa', label: 'Penduduk Terdaftar', sub: '1.412 KK dalam Data SIAK Desa' },
   { icon: <MapPin size={22} color="#cfa23d" />, value: 1247, suffix: ' Ha', label: 'Bentang Luas Wilayah', sub: '67,4% Lahan Terasering Produktif' },
   { icon: <Mountain size={22} color="#0ea5e9" />, value: 950, suffix: ' mdpl', label: 'Elevasi Kawasan', sub: 'Rentang 750 – 1.200 mdpl Ciremai' },
-  { icon: <Landmark size={22} color="#8b5cf6" />, value: 4, suffix: ' Dusun', label: 'Dusun Administratif', sub: '16 RT & 8 RW Definitif' },
+  { icon: <Landmark size={22} color="#8b5cf6" />, value: 5, suffix: ' Blok', label: 'Blok Wilayah Definitif', sub: 'Desa, Panyekran, Jingkang, dll' },
 ];
 
-// ─── 4 Dusun Administratif Data ───────────────────────────────────────────────
-const VILLAGE_DUSUNS = [
+// ─── 5 Blok Administratif & Kewilayahan Data ─────────────────────────────────
+const VILLAGE_BLOKS = [
   {
-    id: 'cikondang',
-    name: 'Dusun Cikondang',
-    badge: 'Sentra Hortikultura',
-    rw: 'RW 01',
-    rtCount: '4 RT (RT 01–04)',
-    desc: 'Pusat hamparan terasering tanaman daun bawang, kubis, dan sayuran unggulan lereng Ciremai.',
-    lead: 'Ketua Dusun: Bpk. Maman Sulaeman'
-  },
-  {
-    id: 'sukadana',
-    name: 'Dusun Sukadana',
+    id: 'blok-desa',
+    name: 'Blok Desa',
     badge: 'Pusat Pemerintahan',
-    rw: 'RW 02',
-    rtCount: '4 RT (RT 05–08)',
-    desc: 'Sentra administrasi balai desa, layanan kependudukan terpadu, Pustu, dan Masjid Jami Al-Barokah.',
-    lead: 'Ketua Dusun: Bpk. Nana Suryana'
+    focus: 'Sentra Administrasi',
+    desc: 'Pusat pemerintahan desa, kantor balai desa, pos pelayanan terpadu, fasilitas kesehatan Pustu, dan Masjid Jami.',
+    lead: 'Wilayah Pelayanan Publik Terpadu'
   },
   {
-    id: 'mekarsari',
-    name: 'Dusun Mekarsari',
-    badge: 'Agrowisata & Kopi',
-    rw: 'RW 03',
-    rtCount: '4 RT (RT 09–12)',
-    desc: 'Lembah wisata terasering hijau, hulu jaringan irigasi air pegunungan, dan perkebunan kopi Ciremai.',
-    lead: 'Ketua Dusun: Bpk. Koswara'
+    id: 'blok-panyekran',
+    name: 'Blok Panyekran',
+    badge: 'Pertanian & Irigasi',
+    focus: 'Lumbung Hortikultura',
+    desc: 'Kawasan pertanian terasering subur yang ditopang oleh saluran distribusi irigasi gravitasi mata air pegunungan.',
+    lead: 'Sentra Terasering & Jaringan Irigasi'
   },
   {
-    id: 'babakan',
-    name: 'Dusun Babakan',
-    badge: 'Sentra UMKM & Warga',
-    rw: 'RW 04',
-    rtCount: '4 RT (RT 13–16)',
-    desc: 'Kawasan pemukiman terpadu, sentra kerajinan tangan, dan industri olahan pangan BUMDes.',
-    lead: 'Ketua Dusun: Bpk. Juhana'
+    id: 'blok-jingkang',
+    name: 'Blok Jingkang',
+    badge: 'Sentra Daun Bawang',
+    focus: 'Komoditas Unggulan',
+    desc: 'Sentra budidaya daun bawang kualitas super lereng Gunung Ciremai, pergudangan hasil bumi, dan basis Gapoktan.',
+    lead: 'Pusat Distribusi Komoditas Unggulan'
+  },
+  {
+    id: 'blok-gunung-tengah',
+    name: 'Blok Gunung Tengah',
+    badge: 'Agrowisata & Ketinggian',
+    focus: 'Elevasi & Wisata Alam',
+    desc: 'Kawasan perbukitan agrowisata terasering berundak, perkebunan kopi khas Ciremai, serta bentang panorama alam asri.',
+    lead: 'Kawasan Wisata Alam & Kebun Kopi'
+  },
+  {
+    id: 'blok-balandongan',
+    name: 'Blok Balandongan',
+    badge: 'Pemukiman & UMKM',
+    focus: 'Kemandirian Warga',
+    desc: 'Kawasan pemukiman warga terpadu, pusat kerajinan lokal, dan sentra industri olahan pangan kemasyarakatan.',
+    lead: 'Sentra Kerajinan & Pengolahan Pangan'
   }
 ];
 
@@ -249,48 +253,8 @@ export const ProfileSection: React.FC = () => {
     <section id="profil" style={{ padding: '72px 0', background: 'var(--color-bg)' }}>
       <div className="container">
 
-        {/* ── 1. Official Village Emblem & Dignified Header ── */}
+        {/* ── 1. Dignified Section Header ── */}
         <div ref={heroRef} className={`reveal${heroVisible ? ' visible' : ''}`} style={{ textAlign: 'center', marginBottom: '44px' }}>
-          {/* Emblem Container Khusus */}
-          <div style={{
-            width: '124px',
-            height: '124px',
-            margin: '0 auto 20px',
-            borderRadius: '28px',
-            padding: '4px',
-            background: 'linear-gradient(135deg, #cfa23d 0%, #1a9020 50%, #0d4a12 100%)',
-            boxShadow: '0 12px 36px rgba(26, 144, 32, 0.22), 0 0 0 8px rgba(207, 162, 61, 0.12)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'transform 0.3s ease'
-          }}>
-            <div style={{
-              width: '100%',
-              height: '100%',
-              borderRadius: '24px',
-              background: 'var(--color-surface)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              overflow: 'hidden',
-              padding: '10px'
-            }}>
-              <img
-                src="/logo-desa-sukadana.png"
-                alt="Lambang Resmi Pemerintah Desa Sukadana"
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = 'none';
-                  const parent = e.currentTarget.parentElement;
-                  if (parent) {
-                    parent.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-brand-600)"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>';
-                  }
-                }}
-              />
-            </div>
-          </div>
-
           {/* Institutional Hierarchy Badge */}
           <div style={{
             display: 'inline-flex',
@@ -600,7 +564,7 @@ export const ProfileSection: React.FC = () => {
           </div>
         </div>
 
-        {/* ── 4. Pembagian Wilayah 4 Dusun Administratif ── */}
+        {/* ── 4. Pembagian Wilayah 5 Blok Administratif ── */}
         <div style={{ marginBottom: '56px' }}>
           <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 28px' }}>
             <span style={{
@@ -619,21 +583,21 @@ export const ProfileSection: React.FC = () => {
               color: 'var(--color-text-primary)',
               margin: '6px 0 8px 0'
             }}>
-              4 Dusun Pemerintahan Desa Sukadana
+              5 Blok Wilayah Pemerintahan Desa Sukadana
             </h3>
             <p style={{ fontSize: '0.86rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-              Setiap dusun dipimpin oleh Kepala Dusun (Kadus) yang mengkoordinasikan rukun warga (RW) dan rukun tetangga (RT).
+              Pembagian teritorial desa yang terbagi ke dalam 5 blok definitif untuk koordinasi tata kelola, pembangunan terasering, dan integrasi pelayanan masyarakat.
             </p>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
             gap: '16px'
           }}>
-            {VILLAGE_DUSUNS.map(dusun => (
+            {VILLAGE_BLOKS.map(blok => (
               <div
-                key={dusun.id}
+                key={blok.id}
                 style={{
                   background: 'var(--color-surface)',
                   border: '1px solid var(--color-border)',
@@ -657,25 +621,25 @@ export const ProfileSection: React.FC = () => {
                       padding: '2px 8px',
                       borderRadius: 'var(--radius-full)'
                     }}>
-                      {dusun.rw} &bull; {dusun.rtCount}
+                      {blok.badge}
                     </span>
                     <span style={{ fontSize: '0.68rem', fontWeight: 700, color: 'var(--color-text-muted)' }}>
-                      {dusun.badge}
+                      {blok.focus}
                     </span>
                   </div>
 
                   <h4 style={{
-                    fontSize: '1.05rem',
+                    fontSize: '1.08rem',
                     fontWeight: 800,
                     color: 'var(--color-text-primary)',
                     fontFamily: 'var(--font-serif)',
                     margin: '0 0 8px 0'
                   }}>
-                    {dusun.name}
+                    {blok.name}
                   </h4>
 
                   <p style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', lineHeight: 1.55, margin: 0 }}>
-                    {dusun.desc}
+                    {blok.desc}
                   </p>
                 </div>
 
@@ -687,7 +651,7 @@ export const ProfileSection: React.FC = () => {
                   fontWeight: 600,
                   color: 'var(--color-text-muted)'
                 }}>
-                  {dusun.lead}
+                  {blok.lead}
                 </div>
               </div>
             ))}
