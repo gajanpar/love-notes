@@ -3,7 +3,9 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Users, Target, Award, Phone, Sparkles, Quote,
   MapPin, Calendar, RotateCcw, Mountain, Wheat,
-  Landmark, CheckCircle2, ChevronDown, ChevronUp, TreePine
+  Landmark, CheckCircle2, ChevronDown, ChevronUp, TreePine,
+  Compass, Droplets, SunMedium, Layers, Home, ArrowRight,
+  ShieldCheck, Sprout
 } from 'lucide-react';
 import { VILLAGE_OFFICIALS } from '../../data/mockData';
 
@@ -42,12 +44,52 @@ function useScrollReveal(threshold = 0.18) {
   return { ref, visible };
 }
 
-// ─── Village Stats ────────────────────────────────────────────────────────────
+// ─── 4 Indikator Utama Wilayah ────────────────────────────────────────────────
 const VILLAGE_STATS = [
-  { icon: <Users size={22} />, value: 4823,  suffix: '',   label: 'Jiwa Penduduk',     sub: 'Per Sensus 2025' },
-  { icon: <MapPin size={22} />, value: 1247,  suffix: ' Ha', label: 'Luas Wilayah',    sub: 'Lereng Ciremai' },
-  { icon: <Landmark size={22} />, value: 4,   suffix: '',   label: 'Dusun',            sub: 'Cikondang, Sukadana, dll' },
-  { icon: <Calendar size={22} />, value: 1979, suffix: '',  label: 'Tahun Berdiri',    sub: 'Desa Definitif' },
+  { icon: <Users size={22} color="var(--color-brand-600)" />, value: 4823, suffix: ' Jiwa', label: 'Penduduk Terdaftar', sub: '1.412 KK dalam Data SIAK Desa' },
+  { icon: <MapPin size={22} color="#cfa23d" />, value: 1247, suffix: ' Ha', label: 'Bentang Luas Wilayah', sub: '67,4% Lahan Terasering Produktif' },
+  { icon: <Mountain size={22} color="#0ea5e9" />, value: 950, suffix: ' mdpl', label: 'Elevasi Kawasan', sub: 'Rentang 750 – 1.200 mdpl Ciremai' },
+  { icon: <Landmark size={22} color="#8b5cf6" />, value: 4, suffix: ' Dusun', label: 'Dusun Administratif', sub: '16 RT & 8 RW Definitif' },
+];
+
+// ─── 4 Dusun Administratif Data ───────────────────────────────────────────────
+const VILLAGE_DUSUNS = [
+  {
+    id: 'cikondang',
+    name: 'Dusun Cikondang',
+    badge: 'Sentra Hortikultura',
+    rw: 'RW 01',
+    rtCount: '4 RT (RT 01–04)',
+    desc: 'Pusat hamparan terasering tanaman daun bawang, kubis, dan sayuran unggulan lereng Ciremai.',
+    lead: 'Ketua Dusun: Bpk. Maman Sulaeman'
+  },
+  {
+    id: 'sukadana',
+    name: 'Dusun Sukadana',
+    badge: 'Pusat Pemerintahan',
+    rw: 'RW 02',
+    rtCount: '4 RT (RT 05–08)',
+    desc: 'Sentra administrasi balai desa, layanan kependudukan terpadu, Pustu, dan Masjid Jami Al-Barokah.',
+    lead: 'Ketua Dusun: Bpk. Nana Suryana'
+  },
+  {
+    id: 'mekarsari',
+    name: 'Dusun Mekarsari',
+    badge: 'Agrowisata & Kopi',
+    rw: 'RW 03',
+    rtCount: '4 RT (RT 09–12)',
+    desc: 'Lembah wisata terasering hijau, hulu jaringan irigasi air pegunungan, dan perkebunan kopi Ciremai.',
+    lead: 'Ketua Dusun: Bpk. Koswara'
+  },
+  {
+    id: 'babakan',
+    name: 'Dusun Babakan',
+    badge: 'Sentra UMKM & Warga',
+    rw: 'RW 04',
+    rtCount: '4 RT (RT 13–16)',
+    desc: 'Kawasan pemukiman terpadu, sentra kerajinan tangan, dan industri olahan pangan BUMDes.',
+    lead: 'Ketua Dusun: Bpk. Juhana'
+  }
 ];
 
 // ─── Misi Pillars ─────────────────────────────────────────────────────────────
@@ -207,128 +249,449 @@ export const ProfileSection: React.FC = () => {
     <section id="profil" style={{ padding: '72px 0', background: 'var(--color-bg)' }}>
       <div className="container">
 
-        {/* ── Logo Desa Sukadana ─────────────────────────────── */}
-        <div ref={heroRef} className={`reveal${heroVisible ? ' visible' : ''}`}
-          style={{ textAlign: 'center', marginBottom: '32px' }}>
+        {/* ── 1. Official Village Emblem & Dignified Header ── */}
+        <div ref={heroRef} className={`reveal${heroVisible ? ' visible' : ''}`} style={{ textAlign: 'center', marginBottom: '44px' }}>
+          {/* Emblem Container Khusus */}
           <div style={{
-            width: '120px', height: '120px',
-            margin: '0 auto 16px',
-            borderRadius: '50%',
-            border: '3px solid var(--color-gold-300)',
-            boxShadow: '0 8px 32px rgba(207,162,61,0.25), 0 0 0 6px var(--color-brand-50)',
-            background: 'var(--color-surface)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            overflow: 'hidden'
+            width: '124px',
+            height: '124px',
+            margin: '0 auto 20px',
+            borderRadius: '28px',
+            padding: '4px',
+            background: 'linear-gradient(135deg, #cfa23d 0%, #1a9020 50%, #0d4a12 100%)',
+            boxShadow: '0 12px 36px rgba(26, 144, 32, 0.22), 0 0 0 8px rgba(207, 162, 61, 0.12)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'transform 0.3s ease'
           }}>
-            <img
-              src="/logo-desa-sukadana.png"
-              alt="Lambang Resmi Desa Sukadana"
-              style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '8px' }}
-              onError={(e) => {
-                // Fallback jika logo belum tersedia
-                (e.currentTarget as HTMLImageElement).style.display = 'none';
-                const parent = e.currentTarget.parentElement;
-                if (parent) {
-                  parent.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-brand-600)"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>';
-                }
-              }}
-            />
+            <div style={{
+              width: '100%',
+              height: '100%',
+              borderRadius: '24px',
+              background: 'var(--color-surface)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
+              padding: '10px'
+            }}>
+              <img
+                src="/logo-desa-sukadana.png"
+                alt="Lambang Resmi Pemerintah Desa Sukadana"
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                  const parent = e.currentTarget.parentElement;
+                  if (parent) {
+                    parent.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-brand-600)"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg>';
+                  }
+                }}
+              />
+            </div>
           </div>
-          <div style={{
-            fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase',
-            letterSpacing: '0.1em', color: 'var(--color-brand-600)', marginBottom: '4px'
-          }}>
-            Lambang Resmi
-          </div>
-          <div style={{
-            fontSize: '0.8125rem', color: 'var(--color-text-muted)', fontWeight: 500
-          }}>
-            Desa Sukadana, Kec. Argapura, Kab. Majalengka
-          </div>
-        </div>
 
-        {/* ── Section Header ─────────────────────────────── */}
-        <div className={`reveal${heroVisible ? ' visible' : ''}`}
-          style={{ textAlign: 'center', maxWidth: '700px', margin: '0 auto 48px' }}>
-          <span className="badge-animated" style={{ marginBottom: '16px' }}>
-            Mengenal Desa Kami
-          </span>
-          <h2 className="text-title" style={{ marginBottom: '14px', lineHeight: 1.25, fontFamily: 'var(--font-serif)', letterSpacing: '-0.01em' }}>
-            Profil Desa Sukadana — Agamis, Mandiri & Berdaya Saing
+          {/* Institutional Hierarchy Badge */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'var(--color-surface-raised)',
+            border: '1px solid var(--color-border)',
+            padding: '5px 16px',
+            borderRadius: 'var(--radius-full)',
+            marginBottom: '14px',
+            boxShadow: 'var(--shadow-xs)'
+          }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#cfa23d' }} />
+            <span style={{
+              fontSize: '0.72rem',
+              fontWeight: 800,
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              color: 'var(--color-brand-700)'
+            }}>
+              Pemerintah Kabupaten Majalengka &bull; Kecamatan Argapura
+            </span>
+          </div>
+
+          <h2 style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'clamp(1.75rem, 3.2vw, 2.35rem)',
+            fontWeight: 800,
+            color: 'var(--color-text-primary)',
+            lineHeight: 1.2,
+            letterSpacing: '-0.02em',
+            margin: '0 auto 12px',
+            maxWidth: '820px'
+          }}>
+            Monografi &amp; Profil Kewilayahan Desa Sukadana
           </h2>
-          <p style={{ color: 'var(--color-text-secondary)', fontSize: '1.0625rem', lineHeight: 1.75 }}>
-            Desa agrowisata unggulan lereng Ciremai, Kecamatan Argapura — mewujudkan tata kelola yang akuntabel, transparan, dan layanan publik digital prima.
+
+          <p style={{
+            color: 'var(--color-text-secondary)',
+            fontSize: '1.05rem',
+            lineHeight: 1.75,
+            maxWidth: '680px',
+            margin: '0 auto'
+          }}>
+            Kawasan agropolitan terasering di lereng timur Gunung Ciremai. Menghubungkan tradisi agraris hortikultura yang subur, kesigapan aparatur, dan pelayanan publik desa yang terintegrasi.
           </p>
         </div>
 
-        {/* ── Hero Profile Banner ────────────────────────────── */}
-        <div
-          className={`profile-hero reveal${heroVisible ? ' visible' : ''}`}
-          style={{ marginBottom: '48px', transitionDelay: '100ms' }}
-        >
-          <div style={{
-            display: 'flex', flexWrap: 'wrap', alignItems: 'center',
-            gap: '32px', position: 'relative', zIndex: 1
-          }}>
-            <div style={{ flex: 1, minWidth: '260px' }}>
-              <div style={{
-                fontSize: 'var(--text-xs)', fontWeight: 700, textTransform: 'uppercase',
-                letterSpacing: 'var(--tracking-wider)', opacity: 0.7, marginBottom: '8px'
-              }}>
-                Desa Sukadana • Kec. Argapura • Kab. Majalengka
-              </div>
-              <h3 style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
-                fontWeight: 800, lineHeight: 1.2, marginBottom: '12px',
-                color: '#fff'
-              }}>
-                Portal E-Government<br />Desa Sukadana
-              </h3>
-              <p style={{ opacity: 0.8, fontSize: 'var(--text-base)', lineHeight: 'var(--leading-normal)', maxWidth: '400px' }}>
-                Visi 2024–2030: Desa Mandiri berbasis Agrowisata & Hortikultura Unggulan dengan layanan publik digital yang prima.
-              </p>
-            </div>
-
-            <div style={{
-              display: 'flex', gap: '16px', flexWrap: 'wrap', flexShrink: 0
-            }}>
-              {[
-                { label: 'Ketinggian', value: '750-1.200 mdpl' },
-                { label: 'Produk Unggulan', value: 'Bawang Daun' },
-                { label: 'Status Desa', value: 'Mandiri' },
-              ].map(item => (
-                <div key={item.label} style={{
-                  background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)',
-                  borderRadius: 'var(--radius-lg)', padding: '14px 20px', textAlign: 'center',
-                  backdropFilter: 'blur(8px)'
-                }}>
-                  <div style={{ fontFamily: 'var(--font-sans)', fontSize: '1.25rem', fontWeight: 800, color: '#fff', fontFeatureSettings: '"tnum"' }}>
-                    {item.value}
-                  </div>
-                  <div style={{ fontSize: 'var(--text-xs)', opacity: 0.65, marginTop: '2px' }}>
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ── Animated Stats Grid ────────────────────────────── */}
+        {/* ── 2. 4 Indikator Utama Wilayah (Unified Vital Strip) ── */}
         <div
           ref={statsRef}
           className={`reveal-stagger${statsVisible ? ' visible' : ''}`}
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '20px',
-            marginBottom: '56px'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '18px',
+            marginBottom: '48px'
           }}
         >
           {VILLAGE_STATS.map(s => (
             <StatCard key={s.label} {...s} animate={statsVisible} />
           ))}
+        </div>
+
+        {/* ── 3. Matriks Monografi: Batas Wilayah & Potensi Kawasan ── */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
+          gap: '24px',
+          marginBottom: '48px'
+        }}>
+          {/* Card 1: Geografis & Batas Administrasi */}
+          <div style={{
+            background: 'var(--color-surface)',
+            border: '1px solid var(--color-border)',
+            borderRadius: 'var(--radius-xl)',
+            padding: '28px',
+            boxShadow: 'var(--shadow-sm)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+          }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '10px',
+                    background: 'linear-gradient(135deg, rgba(26, 144, 32, 0.15) 0%, rgba(207, 162, 61, 0.15) 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--color-brand-600)'
+                  }}>
+                    <Compass size={20} />
+                  </div>
+                  <div>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--color-text-primary)', margin: 0 }}>
+                      Batas Wilayah &amp; Geografis
+                    </h3>
+                    <div style={{ fontSize: '0.74rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>
+                      Topografi Kaki Gunung Ciremai
+                    </div>
+                  </div>
+                </div>
+                <span style={{
+                  fontSize: '0.68rem',
+                  fontWeight: 700,
+                  background: 'var(--color-brand-50)',
+                  color: 'var(--color-brand-700)',
+                  padding: '3px 8px',
+                  borderRadius: 'var(--radius-full)',
+                  border: '1px solid var(--color-brand-200)'
+                }}>
+                  Geospasial Definitif
+                </span>
+              </div>
+
+              <p style={{ fontSize: '0.84rem', color: 'var(--color-text-secondary)', lineHeight: 1.65, marginBottom: '20px' }}>
+                Secara fisiografis, Desa Sukadana bertopografi perbukitan terasering dengan tanah vulkanik andosol subur berhawa sejuk di ketinggian 750 hingga 1.200 meter di atas permukaan laut.
+              </p>
+
+              {/* 4 Batas Wilayah Grid */}
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: '10px',
+                marginBottom: '20px'
+              }}>
+                {[
+                  { label: 'Batas Utara', val: 'Desa Haurgelis', desc: 'Akses perhubungan antar-desa' },
+                  { label: 'Batas Selatan', val: 'TNGC (Hutan Lindung)', desc: 'Kawasan konservasi Ciremai' },
+                  { label: 'Batas Timur', val: 'Desa Tejamulya', desc: 'Kawasan agrobisnis sayuran' },
+                  { label: 'Batas Barat', val: 'Desa Sukasari Kaler', desc: 'Jalur wisata lembah Panyaweuyan' }
+                ].map((b, idx) => (
+                  <div key={idx} style={{
+                    background: 'var(--color-surface-raised)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: '10px 12px'
+                  }}>
+                    <div style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--color-brand-600)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      {b.label}
+                    </div>
+                    <div style={{ fontSize: '0.84rem', fontWeight: 700, color: 'var(--color-text-primary)', marginTop: '2px' }}>
+                      {b.val}
+                    </div>
+                    <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginTop: '2px' }}>
+                      {b.desc}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Pemanfaatan Tata Guna Lahan */}
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(26,144,32,0.06) 0%, rgba(207,162,61,0.06) 100%)',
+              border: '1px solid rgba(26,144,32,0.18)',
+              borderRadius: 'var(--radius-lg)',
+              padding: '14px 16px'
+            }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-brand-700)', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Layers size={13} /> Distribusi Pemanfaatan Lahan (1.247 Ha):
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.78rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--color-text-secondary)' }}>Pertanian Terasering Hortikultura:</span>
+                  <strong style={{ color: 'var(--color-text-primary)' }}>840 Ha (67,4%)</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--color-text-secondary)' }}>Hutan Lindung &amp; Resapan Air:</span>
+                  <strong style={{ color: 'var(--color-text-primary)' }}>290 Ha (23,2%)</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--color-text-secondary)' }}>Pemukiman &amp; Sarana Fasilitas:</span>
+                  <strong style={{ color: 'var(--color-text-primary)' }}>117 Ha (9,4%)</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: Potensi Ekonomi & Komoditas Unggulan */}
+          <div style={{
+            background: 'var(--color-surface)',
+            border: '1px solid var(--color-border)',
+            borderRadius: 'var(--radius-xl)',
+            padding: '28px',
+            boxShadow: 'var(--shadow-sm)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+          }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '10px',
+                    background: 'linear-gradient(135deg, rgba(207, 162, 61, 0.18) 0%, rgba(26, 144, 32, 0.12) 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#cfa23d'
+                  }}>
+                    <Wheat size={20} />
+                  </div>
+                  <div>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--color-text-primary)', margin: 0 }}>
+                      Potensi Komoditas &amp; Ekonomi
+                    </h3>
+                    <div style={{ fontSize: '0.74rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>
+                      Kemandirian Agrobisnis &amp; Agrowisata
+                    </div>
+                  </div>
+                </div>
+                <span style={{
+                  fontSize: '0.68rem',
+                  fontWeight: 700,
+                  background: 'rgba(207, 162, 61, 0.12)',
+                  color: '#9c771e',
+                  padding: '3px 8px',
+                  borderRadius: 'var(--radius-full)',
+                  border: '1px solid rgba(207, 162, 61, 0.3)'
+                }}>
+                  Sektor Prioritas
+                </span>
+              </div>
+
+              <p style={{ fontSize: '0.84rem', color: 'var(--color-text-secondary)', lineHeight: 1.65, marginBottom: '20px' }}>
+                Perekonomian Desa Sukadana ditopang oleh ekosistem hortikultura sayuran terpadu yang didukung oleh sistem irigasi gravitasi dan badan usaha milik desa.
+              </p>
+
+              {/* 4 Komoditas / Sektor List */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '18px' }}>
+                {[
+                  {
+                    title: 'Bawang Daun Super Ciremai',
+                    tag: 'Komoditas Utama',
+                    desc: 'Aroma tajam, batang tebal, dan tahan simpan. Menjadi pemasok harian pasar induk Jawa Barat.'
+                  },
+                  {
+                    title: 'Sistem Irigasi Gravitasi Alami',
+                    tag: 'Infrastruktur Tani',
+                    desc: 'Pipanisasi air dari sumber mata air hulu Ciremai mengalirkan air jernih ke seluruh petak terasering.'
+                  },
+                  {
+                    title: 'Agrowisata Lembah Terasering',
+                    tag: 'Pariwisata Desa',
+                    desc: 'Lanskap terasering berundak, petik sayur langsung petani, dan rute trekking pegunungan asri.'
+                  },
+                  {
+                    title: 'BUMDes Sukadana Mandiri',
+                    tag: 'Penggerak Ekonomi',
+                    desc: 'Penyalur pupuk subsidi resmi, fasilitasi logistik pascapanen, dan pembinaan kelompok tani.'
+                  }
+                ].map((item, idx) => (
+                  <div key={idx} style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: '10px',
+                    padding: '8px 12px',
+                    background: 'var(--color-surface-raised)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-md)'
+                  }}>
+                    <div style={{
+                      width: '6px',
+                      height: '6px',
+                      borderRadius: '50%',
+                      background: 'var(--color-brand-primary)',
+                      marginTop: '6px',
+                      flexShrink: 0
+                    }} />
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: '0.84rem', fontWeight: 800, color: 'var(--color-text-primary)' }}>
+                          {item.title}
+                        </span>
+                        <span style={{ fontSize: '0.66rem', fontWeight: 700, color: 'var(--color-brand-600)', background: 'var(--color-brand-50)', padding: '1px 6px', borderRadius: '4px' }}>
+                          {item.tag}
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '0.76rem', color: 'var(--color-text-secondary)', margin: '2px 0 0 0', lineHeight: 1.45 }}>
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div style={{
+              fontSize: '0.72rem',
+              color: 'var(--color-text-muted)',
+              borderTop: '1px solid var(--color-border)',
+              paddingTop: '10px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              <span>Sumber: Profil Pembangunan Desa Sukadana</span>
+              <span style={{ fontWeight: 700, color: 'var(--color-brand-600)' }}>Pembaruan 2026</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ── 4. Pembagian Wilayah 4 Dusun Administratif ── */}
+        <div style={{ marginBottom: '56px' }}>
+          <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 28px' }}>
+            <span style={{
+              fontSize: '0.72rem',
+              fontWeight: 800,
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              color: 'var(--color-brand-primary)'
+            }}>
+              Kewilayahan Administratif
+            </span>
+            <h3 style={{
+              fontFamily: 'var(--font-serif)',
+              fontSize: '1.45rem',
+              fontWeight: 800,
+              color: 'var(--color-text-primary)',
+              margin: '6px 0 8px 0'
+            }}>
+              4 Dusun Pemerintahan Desa Sukadana
+            </h3>
+            <p style={{ fontSize: '0.86rem', color: 'var(--color-text-secondary)', margin: 0 }}>
+              Setiap dusun dipimpin oleh Kepala Dusun (Kadus) yang mengkoordinasikan rukun warga (RW) dan rukun tetangga (RT).
+            </p>
+          </div>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: '16px'
+          }}>
+            {VILLAGE_DUSUNS.map(dusun => (
+              <div
+                key={dusun.id}
+                style={{
+                  background: 'var(--color-surface)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-lg)',
+                  padding: '20px',
+                  boxShadow: 'var(--shadow-xs)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                    <span style={{
+                      fontSize: '0.7rem',
+                      fontWeight: 800,
+                      background: 'var(--color-brand-50)',
+                      color: 'var(--color-brand-700)',
+                      border: '1px solid var(--color-brand-200)',
+                      padding: '2px 8px',
+                      borderRadius: 'var(--radius-full)'
+                    }}>
+                      {dusun.rw} &bull; {dusun.rtCount}
+                    </span>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 700, color: 'var(--color-text-muted)' }}>
+                      {dusun.badge}
+                    </span>
+                  </div>
+
+                  <h4 style={{
+                    fontSize: '1.05rem',
+                    fontWeight: 800,
+                    color: 'var(--color-text-primary)',
+                    fontFamily: 'var(--font-serif)',
+                    margin: '0 0 8px 0'
+                  }}>
+                    {dusun.name}
+                  </h4>
+
+                  <p style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', lineHeight: 1.55, margin: 0 }}>
+                    {dusun.desc}
+                  </p>
+                </div>
+
+                <div style={{
+                  marginTop: '16px',
+                  paddingTop: '10px',
+                  borderTop: '1px solid var(--color-border)',
+                  fontSize: '0.72rem',
+                  fontWeight: 600,
+                  color: 'var(--color-text-muted)'
+                }}>
+                  {dusun.lead}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* ── Visi + Misi Layout ─────────────────────────────── */}
