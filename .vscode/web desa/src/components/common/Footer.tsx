@@ -48,7 +48,7 @@ export const Footer: React.FC = () => {
             <p style={{ lineHeight: '1.65', marginBottom: '16px', color: 'rgba(255,255,255,0.65)', fontFamily: 'var(--font-sans)' }}>
               Platform E-Government Desa Mandiri berbasis{' '}
               <em>Government as a Service</em>. Memudahkan warga Sukadana mengurus persuratan digital,
-              transparansi anggaran, dan pengaduan langsung.
+              memantau telemetri agroklimat pertanian, dan pengaduan langsung.
             </p>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-gold-300)', fontWeight: 600, fontFamily: 'var(--font-sans)' }}>

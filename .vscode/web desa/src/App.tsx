@@ -18,7 +18,8 @@ import {
   BookOpen
 } from 'lucide-react';
 import { ToastProvider, useToast } from './components/common/ToastContext';
-import { Sidebar } from './components/common/Sidebar';
+import { Header } from './components/common/Header';
+import { Home, Moon, Sun } from 'lucide-react';
 import { Footer } from './components/common/Footer';
 import { SearchModal } from './components/common/SearchModal';
 
@@ -56,6 +57,25 @@ const MainApp: React.FC = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    if (!document.startViewTransition) {
+      setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+      return;
+    }
+    document.startViewTransition(() => {
+      setTheme(prev => {
+        const next = prev === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', next);
+        return next;
+      });
+    });
+  };
 
   // Sub-tabs inside multi-section segments
   const [layananSubTab, setLayananSubTab] = useState<'katalog' | 'tracking'>('katalog');
@@ -79,6 +99,12 @@ const MainApp: React.FC = () => {
 
       if (hash === 'beranda' || hash === 'hero') {
         setActiveSegment('beranda');
+      } else if (hash === 'berita' || hash === 'artikel') {
+        setActiveSegment('beranda');
+        setTimeout(() => {
+          const el = document.getElementById('artikel-section');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
       } else if (hash === 'layanan' || hash === 'surat') {
         setActiveSegment('layanan');
         setLayananSubTab('katalog');
@@ -130,6 +156,15 @@ const MainApp: React.FC = () => {
     if (segmentId === 'hero' || segmentId === 'beranda') {
       setActiveSegment('beranda');
       window.location.hash = '#beranda';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (segmentId === 'berita' || segmentId === 'artikel') {
+      setActiveSegment('beranda');
+      window.location.hash = '#berita';
+      setTimeout(() => {
+        const el = document.getElementById('artikel-section');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return;
     } else if (segmentId === 'layanan') {
       setActiveSegment('layanan');
       setLayananSubTab('katalog');
@@ -189,23 +224,91 @@ const MainApp: React.FC = () => {
   };
 
   return (
-    <div className={`app-layout ${isSidebarCollapsed ? 'collapsed' : ''}`}>
-      <Sidebar
-        currentView={currentView}
-        onViewChange={v => {
-          setCurrentView(v);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-        activeSection={activeSegment}
-        onNavigateSection={handleNavigateSegment}
-        adminRole={adminRole}
-        onOpenSearch={() => { setSearchQuery(''); setIsSearchModalOpen(true); }}
-        isCollapsed={isSidebarCollapsed}
-        onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-      />
+    <div className="app-layout">
+      {currentView === 'public' ? (
+        <Header
+          activeSection={activeSegment}
+          onNavigateSection={handleNavigateSegment}
+          onOpenSearch={() => { setSearchQuery(''); setIsSearchModalOpen(true); }}
+          currentView={currentView}
+          onViewChange={v => {
+            setCurrentView(v);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+        />
+      ) : (
+        <div style={{
+          background: 'linear-gradient(90deg, #142214 0%, #1c281c 100%)',
+          borderBottom: '2px solid #cfa23d',
+          padding: '12px 0',
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
+        }}>
+          <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <img src="/logo-desa.jpg" alt="Logo" style={{ width: '38px', height: '38px', borderRadius: '10px', border: '1px solid #cfa23d', objectFit: 'cover' }} />
+              <div>
+                <div style={{ fontSize: '0.68rem', fontWeight: 800, color: 'var(--color-gold-300)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Dasbor Backoffice Khusus
+                </div>
+                <div style={{ fontSize: '1.05rem', fontWeight: 800, fontFamily: 'var(--font-serif)', color: '#ffffff', margin: 0 }}>
+                  Pemerintah Desa Sukadana
+                </div>
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <button
+                onClick={() => {
+                  setCurrentView('public');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                style={{
+                  background: 'rgba(255,255,255,0.12)',
+                  border: '1px solid rgba(255,255,255,0.3)',
+                  color: '#ffffff',
+                  borderRadius: '10px',
+                  padding: '8px 16px',
+                  fontSize: '0.85rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.25)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.12)'}
+              >
+                <Home size={16} />
+                <span>Kembali ke Portal Publik</span>
+              </button>
+              <button
+                onClick={toggleTheme}
+                style={{
+                  background: 'rgba(255,255,255,0.12)',
+                  border: '1px solid rgba(255,255,255,0.3)',
+                  color: '#ffffff',
+                  borderRadius: '10px',
+                  padding: '8px 12px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                {theme === 'light' ? <Moon size={16} color="#cfa23d" /> : <Sun size={16} color="#cfa23d" />}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* MAIN VIEW CONTAINER */}
-      <main id="main-content" className={`main-content ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+      <main id="main-content" className="main-content">
         {currentView === 'public' ? (
           /* ========================================================================= */
           /* PORTAL WARGA & PUBLIK (ARSITEKTUR SEPARASI SEGMEN)                        */

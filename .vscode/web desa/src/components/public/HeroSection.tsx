@@ -268,41 +268,44 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             );
           })()}
 
-          {/* Main Humanized Headline */}
+          {/* Main Dignified Municipal Headline (Ciburial Style with Sukadana Identity) */}
           <h1 style={{
             fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(2.2rem, 4.8vw, 3.6rem)',
-            fontWeight: 700,
-            lineHeight: 1.18,
+            fontSize: 'clamp(2.6rem, 5.8vw, 4.4rem)',
+            fontWeight: 800,
+            lineHeight: 1.1,
             letterSpacing: '-0.025em',
-            marginBottom: '20px',
+            marginBottom: '10px',
             color: '#ffffff',
-            textShadow: '0 4px 20px rgba(0, 0, 0, 0.6)'
+            textShadow: '0 4px 24px rgba(0, 0, 0, 0.7)'
           }}>
-            Layanan Desa Mandiri &amp;{' '}
-            <span style={{
-              background: 'linear-gradient(120deg, #d5b47c 0%, #cfa23d 50%, #ffffff 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              display: 'inline-block'
-            }}>
-              Transparan
-            </span>
+            Desa Sukadana
           </h1>
+
+          <div style={{
+            fontFamily: 'var(--font-sans)',
+            fontSize: 'clamp(1.1rem, 2.2vw, 1.45rem)',
+            fontWeight: 700,
+            color: 'var(--color-gold-300)',
+            marginBottom: '18px',
+            letterSpacing: '0.02em',
+            textShadow: '0 2px 14px rgba(0, 0, 0, 0.6)'
+          }}>
+            Kec. Argapura Kab. Majalengka Prov. Jawa Barat
+          </div>
 
           {/* Warm, welcoming narrative */}
           <p style={{
-            fontSize: 'clamp(1rem, 1.8vw, 1.125rem)',
-            lineHeight: 1.7,
-            color: 'rgba(255, 255, 255, 0.92)',
+            fontSize: 'clamp(0.95rem, 1.6vw, 1.08rem)',
+            lineHeight: 1.65,
+            color: 'rgba(255, 255, 255, 0.9)',
             maxWidth: '68ch',
-            margin: '0 auto 36px',
+            margin: '0 auto 32px',
             fontFamily: 'var(--font-sans)',
             fontWeight: 400,
             textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
           }}>
-            Website resmi Desa Sukadana, Argapura, Majalengka. Urus surat kependudukan, pantau progres permohonan, dan sampaikan keluhan warga langsung dari rumah tanpa antre.
+            Portal resmi pelayanan publik digital, agroklimat terasering, warta pembangunan, dan keterbukaan informasi kemasyarakatan Desa Sukadana lereng Gunung Ciremai.
           </p>
 
           {/* Search Bar with Glassmorphic styling */}
@@ -437,7 +440,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               value={3842}
               suffix="Jiwa"
               label="Warga Sukadana"
-              sub="5 Dusun Guyub &amp; Rukun"
+              sub="5 Blok Definitif Guyub &amp; Rukun"
               icon={<Users size={16} />}
             />
             <FrostedStatCard
