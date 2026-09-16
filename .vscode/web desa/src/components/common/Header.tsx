@@ -2,6 +2,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Home,
+  Wheat,
+  Compass,
+  Building2,
+  Target,
   Users,
   FileText,
   MapPin,
@@ -232,11 +236,13 @@ export const Header: React.FC<HeaderProps> = ({
 
   // Utility quick links (Left side of top bar)
   const utilityLinks = [
-    { label: 'Tentang Desa', target: 'profil' },
-    { label: 'Berita Desa', target: 'berita' },
+    { label: 'Beranda', target: 'beranda' },
+    { label: 'Potensi Desa', target: 'potensi' },
+    { label: 'Peta Desa Ciburial', target: 'peta' },
+    { label: 'BPD Sukadana', target: 'bpd' },
+    { label: 'Pemerintah Desa', target: 'pemdes' },
+    { label: 'Visi & Misi', target: 'visi-misi' },
     { label: 'Layanan Mandiri', target: 'layanan' },
-    { label: 'Regulasi / Perdes', target: 'perdes' },
-    { label: 'Peta Geospasial', target: 'peta' },
     { label: 'Aspirasi Warga', target: 'lapor' }
   ];
 
@@ -585,86 +591,181 @@ export const Header: React.FC<HeaderProps> = ({
                       position: 'absolute',
                       top: '100%',
                       left: 0,
-                      width: '230px',
+                      width: '260px',
                       background: 'var(--color-surface)',
                       border: '1px solid var(--color-border)',
-                      borderRadius: '14px',
+                      borderRadius: '16px',
                       padding: '8px',
-                      boxShadow: '0 12px 36px rgba(0,0,0,0.14)',
+                      boxShadow: '0 16px 40px rgba(0,0,0,0.16)',
                       zIndex: 110,
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '4px'
+                      gap: '3px'
                     }}
                   >
+                    {/* 1. Potensi Desa */}
                     <button
-                      onClick={() => { onNavigateSection('profil'); setProfilDropdownOpen(false); }}
+                      onClick={() => { onNavigateSection('potensi'); setProfilDropdownOpen(false); }}
                       style={{
-                        padding: '9px 12px',
-                        borderRadius: '8px',
+                        padding: '10px 12px',
+                        borderRadius: '10px',
                         border: 'none',
                         background: 'transparent',
                         color: 'var(--color-text-primary)',
                         textAlign: 'left',
-                        fontSize: '0.8125rem',
+                        fontSize: '0.84rem',
                         fontWeight: 600,
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',
+                        gap: '10px',
                         transition: 'background 0.15s'
                       }}
                       onMouseEnter={e => (e.currentTarget.style.background = 'var(--color-surface-raised)')}
                       onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     >
-                      <Users size={14} color="var(--color-brand-primary)" />
-                      <span>Monografi &amp; 5 Blok Wilayah</span>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(26,144,32,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1a9020', flexShrink: 0 }}>
+                        <Wheat size={15} />
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 700 }}>Potensi Desa</div>
+                        <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)' }}>Hortikultura &amp; 5 Blok Wilayah</div>
+                      </div>
                     </button>
+
+                    {/* 2. Peta Desa Ciburial */}
                     <button
                       onClick={() => { onNavigateSection('peta'); setProfilDropdownOpen(false); }}
                       style={{
-                        padding: '9px 12px',
-                        borderRadius: '8px',
+                        padding: '10px 12px',
+                        borderRadius: '10px',
                         border: 'none',
                         background: 'transparent',
                         color: 'var(--color-text-primary)',
                         textAlign: 'left',
-                        fontSize: '0.8125rem',
+                        fontSize: '0.84rem',
                         fontWeight: 600,
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',
+                        gap: '10px',
                         transition: 'background 0.15s'
                       }}
                       onMouseEnter={e => (e.currentTarget.style.background = 'var(--color-surface-raised)')}
                       onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     >
-                      <MapPin size={14} color="#cfa23d" />
-                      <span>Peta Fasilitas &amp; Proyek</span>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(207,162,61,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#cfa23d', flexShrink: 0 }}>
+                        <Compass size={15} />
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 700 }}>Peta Desa Ciburial</div>
+                        <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)' }}>Geospasial Batas &amp; Fasilitas</div>
+                      </div>
                     </button>
+
+                    {/* Divider & Group Header: Profil Aparatur */}
+                    <div style={{
+                      padding: '8px 12px 4px',
+                      fontSize: '0.68rem',
+                      fontWeight: 800,
+                      color: 'var(--color-text-muted)',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.06em',
+                      borderTop: '1px solid var(--color-border)',
+                      marginTop: '4px'
+                    }}>
+                      Profil Aparatur
+                    </div>
+
+                    {/* 3a. BPD */}
                     <button
-                      onClick={() => { onNavigateSection('perdes'); setProfilDropdownOpen(false); }}
+                      onClick={() => { onNavigateSection('bpd'); setProfilDropdownOpen(false); }}
                       style={{
                         padding: '9px 12px',
-                        borderRadius: '8px',
+                        borderRadius: '10px',
                         border: 'none',
                         background: 'transparent',
                         color: 'var(--color-text-primary)',
                         textAlign: 'left',
-                        fontSize: '0.8125rem',
+                        fontSize: '0.84rem',
                         fontWeight: 600,
                         cursor: 'pointer',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',
+                        gap: '10px',
                         transition: 'background 0.15s'
                       }}
                       onMouseEnter={e => (e.currentTarget.style.background = 'var(--color-surface-raised)')}
                       onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     >
-                      <BookOpen size={14} color="#0ea5e9" />
-                      <span>Katalog Peraturan Desa (Perdes)</span>
+                      <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(207,162,61,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#cfa23d', flexShrink: 0 }}>
+                        <Shield size={15} />
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 700 }}>BPD</div>
+                        <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)' }}>Badan Permusyawaratan Desa</div>
+                      </div>
+                    </button>
+
+                    {/* 3b. Pemerintah Desa */}
+                    <button
+                      onClick={() => { onNavigateSection('pemdes'); setProfilDropdownOpen(false); }}
+                      style={{
+                        padding: '9px 12px',
+                        borderRadius: '10px',
+                        border: 'none',
+                        background: 'transparent',
+                        color: 'var(--color-text-primary)',
+                        textAlign: 'left',
+                        fontSize: '0.84rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        transition: 'background 0.15s'
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.background = 'var(--color-surface-raised)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                    >
+                      <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(26,144,32,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1a9020', flexShrink: 0 }}>
+                        <Building2 size={15} />
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 700 }}>Pemerintah Desa</div>
+                        <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)' }}>Kuwu &amp; Pamong 5 Blok</div>
+                      </div>
+                    </button>
+
+                    {/* 4. Visi dan Misi */}
+                    <div style={{ borderTop: '1px solid var(--color-border)', marginTop: '4px' }} />
+                    <button
+                      onClick={() => { onNavigateSection('visi-misi'); setProfilDropdownOpen(false); }}
+                      style={{
+                        padding: '10px 12px',
+                        borderRadius: '10px',
+                        border: 'none',
+                        background: 'transparent',
+                        color: 'var(--color-text-primary)',
+                        textAlign: 'left',
+                        fontSize: '0.84rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        transition: 'background 0.15s'
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.background = 'var(--color-surface-raised)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                    >
+                      <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(139,92,246,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8b5cf6', flexShrink: 0 }}>
+                        <Target size={15} />
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 700 }}>Visi dan Misi</div>
+                        <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)' }}>Rencana Pembangunan 2024–2030</div>
+                      </div>
                     </button>
                   </div>
                 )}
@@ -970,24 +1071,109 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>Beranda Utama</span>
               </button>
 
+              {/* Profil Desa Section in Mobile */}
+              <div style={{ padding: '6px 14px 2px', fontSize: '0.72rem', fontWeight: 800, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Profil Desa
+              </div>
+
               <button
-                onClick={() => { onNavigateSection('profil'); setMobileMenuOpen(false); }}
+                onClick={() => { onNavigateSection('potensi'); setMobileMenuOpen(false); }}
                 style={{
-                  padding: '10px 14px',
+                  padding: '8px 14px 8px 24px',
                   borderRadius: '10px',
                   border: 'none',
-                  background: activeSection === 'profil' ? 'rgba(26,144,32,0.1)' : 'transparent',
-                  color: activeSection === 'profil' ? 'var(--color-brand-primary)' : 'var(--color-text-primary)',
-                  fontWeight: 700,
+                  background: 'transparent',
+                  color: 'var(--color-text-primary)',
+                  fontWeight: 600,
                   textAlign: 'left',
-                  fontSize: '0.9rem',
+                  fontSize: '0.85rem',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '10px'
                 }}
               >
-                <Users size={17} />
-                <span>Profil &amp; 5 Blok Wilayah</span>
+                <Wheat size={16} color="#1a9020" />
+                <span>Potensi Desa</span>
+              </button>
+
+              <button
+                onClick={() => { onNavigateSection('peta'); setMobileMenuOpen(false); }}
+                style={{
+                  padding: '8px 14px 8px 24px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: 'transparent',
+                  color: 'var(--color-text-primary)',
+                  fontWeight: 600,
+                  textAlign: 'left',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}
+              >
+                <Compass size={16} color="#cfa23d" />
+                <span>Peta Desa Ciburial</span>
+              </button>
+
+              <button
+                onClick={() => { onNavigateSection('bpd'); setMobileMenuOpen(false); }}
+                style={{
+                  padding: '8px 14px 8px 24px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: 'transparent',
+                  color: 'var(--color-text-primary)',
+                  fontWeight: 600,
+                  textAlign: 'left',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}
+              >
+                <Shield size={16} color="#cfa23d" />
+                <span>BPD (Badan Permusyawaratan)</span>
+              </button>
+
+              <button
+                onClick={() => { onNavigateSection('pemdes'); setMobileMenuOpen(false); }}
+                style={{
+                  padding: '8px 14px 8px 24px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: 'transparent',
+                  color: 'var(--color-text-primary)',
+                  fontWeight: 600,
+                  textAlign: 'left',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}
+              >
+                <Building2 size={16} color="#1a9020" />
+                <span>Pemerintah Desa</span>
+              </button>
+
+              <button
+                onClick={() => { onNavigateSection('visi-misi'); setMobileMenuOpen(false); }}
+                style={{
+                  padding: '8px 14px 8px 24px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  background: 'transparent',
+                  color: 'var(--color-text-primary)',
+                  fontWeight: 600,
+                  textAlign: 'left',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px'
+                }}
+              >
+                <Target size={16} color="#8b5cf6" />
+                <span>Visi dan Misi</span>
               </button>
 
               <button

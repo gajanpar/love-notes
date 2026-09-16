@@ -31,7 +31,7 @@ import { TrackingSection } from './components/public/TrackingSection';
 import { GeoMapSection } from './components/public/GeoMapSection';
 // APBDesSection removed — transparansi segment discontinued
 import { PerdesSection } from './components/public/PerdesSection';
-import { ProfileSection } from './components/public/ProfileSection';
+import { ProfileSection, ProfileCategoryType, AparaturSubType } from './components/public/ProfileSection';
 import { LaporSection } from './components/public/LaporSection';
 
 // Admin Components
@@ -80,6 +80,8 @@ const MainApp: React.FC = () => {
   // Sub-tabs inside multi-section segments
   const [layananSubTab, setLayananSubTab] = useState<'katalog' | 'tracking'>('katalog');
   const [profilSubTab, setProfilSubTab] = useState<'profil' | 'peta' | 'perdes'>('profil');
+  const [profileCategory, setProfileCategory] = useState<ProfileCategoryType>('potensi');
+  const [profileAparaturSub, setProfileAparaturSub] = useState<AparaturSubType>('bpd');
 
   // Data Store
   const [pengajuanList, setPengajuanList] = useState<PengajuanSurat[]>(INITIAL_PENGAJUAN);
@@ -111,9 +113,31 @@ const MainApp: React.FC = () => {
       } else if (hash === 'tracking' || hash === 'lacak') {
         setActiveSegment('layanan');
         setLayananSubTab('tracking');
-      } else if (hash === 'transparansi' || hash === 'apbdes') {
-        // Legacy: redirect to profil
+      } else if (hash === 'potensi') {
         setActiveSegment('profil');
+        setProfileCategory('potensi');
+        setProfilSubTab('profil');
+      } else if (hash === 'peta') {
+        setActiveSegment('profil');
+        setProfileCategory('peta');
+        setProfilSubTab('profil');
+      } else if (hash === 'aparatur') {
+        setActiveSegment('profil');
+        setProfileCategory('aparatur');
+        setProfilSubTab('profil');
+      } else if (hash === 'bpd') {
+        setActiveSegment('profil');
+        setProfileCategory('aparatur');
+        setProfileAparaturSub('bpd');
+        setProfilSubTab('profil');
+      } else if (hash === 'pemdes' || hash === 'pamong') {
+        setActiveSegment('profil');
+        setProfileCategory('aparatur');
+        setProfileAparaturSub('pemdes');
+        setProfilSubTab('profil');
+      } else if (hash === 'visi-misi' || hash === 'visimisi' || hash === 'visi') {
+        setActiveSegment('profil');
+        setProfileCategory('visi-misi');
         setProfilSubTab('profil');
       } else if (hash === 'perdes' || hash === 'regulasi') {
         setActiveSegment('profil');
@@ -121,9 +145,6 @@ const MainApp: React.FC = () => {
       } else if (hash === 'profil') {
         setActiveSegment('profil');
         setProfilSubTab('profil');
-      } else if (hash === 'peta') {
-        setActiveSegment('profil');
-        setProfilSubTab('peta');
       } else if (hash === 'lapor') {
         setActiveSegment('lapor');
       }
@@ -173,11 +194,38 @@ const MainApp: React.FC = () => {
       setActiveSegment('layanan');
       setLayananSubTab('tracking');
       window.location.hash = '#tracking';
-    } else if (segmentId === 'transparansi' || segmentId === 'apbdes') {
-      // Legacy: redirect to profil
+    } else if (segmentId === 'potensi') {
       setActiveSegment('profil');
+      setProfileCategory('potensi');
       setProfilSubTab('profil');
-      window.location.hash = '#profil';
+      window.location.hash = '#potensi';
+    } else if (segmentId === 'peta') {
+      setActiveSegment('profil');
+      setProfileCategory('peta');
+      setProfilSubTab('profil');
+      window.location.hash = '#peta';
+    } else if (segmentId === 'aparatur') {
+      setActiveSegment('profil');
+      setProfileCategory('aparatur');
+      setProfilSubTab('profil');
+      window.location.hash = '#aparatur';
+    } else if (segmentId === 'bpd') {
+      setActiveSegment('profil');
+      setProfileCategory('aparatur');
+      setProfileAparaturSub('bpd');
+      setProfilSubTab('profil');
+      window.location.hash = '#bpd';
+    } else if (segmentId === 'pemdes' || segmentId === 'pamong') {
+      setActiveSegment('profil');
+      setProfileCategory('aparatur');
+      setProfileAparaturSub('pemdes');
+      setProfilSubTab('profil');
+      window.location.hash = '#pemdes';
+    } else if (segmentId === 'visi-misi' || segmentId === 'visimisi' || segmentId === 'visi') {
+      setActiveSegment('profil');
+      setProfileCategory('visi-misi');
+      setProfilSubTab('profil');
+      window.location.hash = '#visi-misi';
     } else if (segmentId === 'perdes') {
       setActiveSegment('profil');
       setProfilSubTab('perdes');
@@ -186,10 +234,6 @@ const MainApp: React.FC = () => {
       setActiveSegment('profil');
       setProfilSubTab('profil');
       window.location.hash = '#profil';
-    } else if (segmentId === 'peta') {
-      setActiveSegment('profil');
-      setProfilSubTab('peta');
-      window.location.hash = '#peta';
     } else if (segmentId === 'lapor') {
       setActiveSegment('lapor');
       window.location.hash = '#lapor';
@@ -371,48 +415,39 @@ const MainApp: React.FC = () => {
             )}
 
 
-            {/* SEGMEN 3: PROFIL DESA, PETA & PERATURAN DESA */}
+            {/* SEGMEN 3: PROFIL DESA (POTENSI, PETA, APARATUR BPD & PEMDES, VISI MISI) */}
             {activeSegment === 'profil' && (
-              <div className="segment-view" style={{ padding: '32px 0 64px 0' }}>
-                <div className="container">
-                  {/* Sub-segment Tab Switcher */}
-                  <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-                    <div className="sub-segment-tabs">
+              <div className="segment-view">
+                {profilSubTab === 'perdes' ? (
+                  <div className="container" style={{ padding: '32px 0 64px 0' }}>
+                    <div style={{ marginBottom: '20px' }}>
                       <button
-                        id="subtab-profil-desa"
-                        className={`sub-segment-btn${profilSubTab === 'profil' ? ' active' : ''}`}
-                        onClick={() => { setProfilSubTab('profil'); window.location.hash = '#profil'; }}
+                        onClick={() => { setProfilSubTab('profil'); setProfileCategory('potensi'); window.location.hash = '#potensi'; }}
+                        style={{
+                          background: 'var(--color-surface)',
+                          border: '1px solid var(--color-border)',
+                          padding: '8px 16px',
+                          borderRadius: 'var(--radius-full)',
+                          cursor: 'pointer',
+                          fontWeight: 700,
+                          fontSize: '0.85rem',
+                          color: 'var(--color-brand-primary)',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px'
+                        }}
                       >
-                        <Users size={16} />
-                        <span>Profil & Perangkat Desa</span>
-                      </button>
-                      <button
-                        id="subtab-profil-peta"
-                        className={`sub-segment-btn${profilSubTab === 'peta' ? ' active' : ''}`}
-                        onClick={() => { setProfilSubTab('peta'); window.location.hash = '#peta'; }}
-                      >
-                        <MapPin size={16} />
-                        <span>Peta Fasilitas & Proyek</span>
-                      </button>
-                      <button
-                        id="subtab-profil-perdes"
-                        className={`sub-segment-btn${profilSubTab === 'perdes' ? ' active' : ''}`}
-                        onClick={() => { setProfilSubTab('perdes'); window.location.hash = '#perdes'; }}
-                      >
-                        <BookOpen size={16} />
-                        <span>Peraturan Desa</span>
+                        &larr; Kembali ke Profil Desa
                       </button>
                     </div>
-                  </div>
-
-                  {profilSubTab === 'profil' ? (
-                    <ProfileSection />
-                  ) : profilSubTab === 'peta' ? (
-                    <GeoMapSection />
-                  ) : (
                     <PerdesSection />
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <ProfileSection
+                    initialCategory={profileCategory}
+                    initialAparaturSub={profileAparaturSub}
+                  />
+                )}
               </div>
             )}
 

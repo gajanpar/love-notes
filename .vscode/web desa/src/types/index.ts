@@ -319,3 +319,14 @@ export interface VillageOfficial {
   reportTo?: string; // id pejabat atasan
 }
 
+export interface BPDMember {
+  id: string;
+  name: string;
+  role: string;
+  representativeArea: string;
+  avatar: string;
+  phone: string;
+  quote: string;
+  focusArea: string;
+}
+

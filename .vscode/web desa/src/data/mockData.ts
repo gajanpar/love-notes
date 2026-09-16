@@ -12,6 +12,7 @@ import {
   BeritaItem,
   PerdesItem,
   VillageOfficial,
+  BPDMember,
   WeatherData,
   NewsTickerItem,
   WeatherForecastItem
@@ -797,6 +798,80 @@ export const VILLAGE_OFFICIALS: VillageOfficial[] = [
     phone: '+62 815-4455-6677',
     quote: 'Kesejahteraan warga adalah prioritas utama layanan kami setiap hari.',
     reportTo: 'kades'
+  }
+];
+
+// ─── Badan Permusyawaratan Desa (BPD) Sukadana ──────────────────────────────
+export const BPD_MEMBERS: BPDMember[] = [
+  {
+    id: 'bpd-ketua',
+    name: 'Drs. H. Eman Suherman',
+    role: 'Ketua BPD',
+    representativeArea: 'Keterwakilan Tokoh Masyarakat Desa',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80',
+    phone: '+62 812-8899-7766',
+    quote: 'BPD berkomitmen mengawal aspirasi warga, membahas rancangan perdes, dan mengawasi kinerja pemerintahan desa demi kemajuan bersama.',
+    focusArea: 'Pengawasan Kinerja & Harmonisasi Regulasi Desa'
+  },
+  {
+    id: 'bpd-wakil',
+    name: 'Agus Salim, S.Pd.I',
+    role: 'Wakil Ketua BPD',
+    representativeArea: 'Keterwakilan Tokoh Pendidikan & Agama',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80',
+    phone: '+62 813-2233-4455',
+    quote: 'Menampung aspirasi masyarakat dan memperjuangkan program pemberdayaan keagamaan serta generasi muda desa.',
+    focusArea: 'Aspirasi Warga & Pembinaan SDM'
+  },
+  {
+    id: 'bpd-sekretaris',
+    name: 'Yayan Mulyana, S.E',
+    role: 'Sekretaris BPD',
+    representativeArea: 'Keterwakilan Generasi Muda & Profesi',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&auto=format&fit=crop&q=80',
+    phone: '+62 857-9988-1122',
+    quote: 'Tertib administrasi risalah musyawarah BPD dan transparansi penyampaian informasi hasil pengawasan kepada warga.',
+    focusArea: 'Administrasi Risalah & Dokumentasi Kebijakan'
+  },
+  {
+    id: 'bpd-anggota-1',
+    name: 'Dedi Kurniadi',
+    role: 'Ketua Bidang Pemerintahan & Regulasi',
+    representativeArea: 'Perwakilan Wilayah Blok Jingkang',
+    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&auto=format&fit=crop&q=80',
+    phone: '+62 821-4455-8899',
+    quote: 'Mengawal tata kelola pemerintahan yang bersih dan pelayanan prima bagi petani sayur dan warga Blok Jingkang.',
+    focusArea: 'Pengawasan Tata Kelola & Layanan Publik'
+  },
+  {
+    id: 'bpd-anggota-2',
+    name: 'Eka Rahmawati, S.P',
+    role: 'Ketua Bidang Pembangunan & Kesejahteraan',
+    representativeArea: 'Perwakilan Wilayah Blok Panyekran',
+    avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=300&auto=format&fit=crop&q=80',
+    phone: '+62 819-3344-7788',
+    quote: 'Mendorong pembangunan infrastruktur irigasi terasering dan pemberdayaan ekonomi perempuan tani di Blok Panyekran.',
+    focusArea: 'Infrastruktur Tani & Ketahanan Pangan'
+  },
+  {
+    id: 'bpd-anggota-3',
+    name: 'Ujang Sutisna',
+    role: 'Anggota BPD Keterwakilan Wilayah',
+    representativeArea: 'Perwakilan Wilayah Blok Gunung Tengah',
+    avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&auto=format&fit=crop&q=80',
+    phone: '+62 852-6677-2233',
+    quote: 'Menjaga kelestarian lingkungan lereng Ciremai dan memajukan potensi agrowisata perbukitan Blok Gunung Tengah.',
+    focusArea: 'Kelestarian Alam & Agrowisata'
+  },
+  {
+    id: 'bpd-anggota-4',
+    name: 'Asep Suhendar',
+    role: 'Anggota BPD Keterwakilan Wilayah',
+    representativeArea: 'Perwakilan Wilayah Blok Balandongan',
+    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&auto=format&fit=crop&q=80',
+    phone: '+62 878-1122-9900',
+    quote: 'Memastikan suara warga Blok Balandongan didengar dalam musyawarah perencanaan pembangunan desa (Musrenbangdes).',
+    focusArea: 'Pemberdayaan UMKM & Pemukiman'
   }
 ];
 
