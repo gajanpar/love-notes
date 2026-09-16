@@ -234,16 +234,18 @@ export const Header: React.FC<HeaderProps> = ({
     setCurrentDateStr(now.toLocaleDateString('id-ID', options));
   }, []);
 
+  // Hero overlay transparency (Ciburial reference layout)
+  const isHeroTransparent = !isScrolled && activeSection === 'beranda';
+
   // Utility quick links (Left side of top bar)
   const utilityLinks = [
-    { label: 'Beranda', target: 'beranda' },
-    { label: 'Potensi Desa', target: 'potensi' },
-    { label: 'Peta Desa Ciburial', target: 'peta' },
-    { label: 'BPD Sukadana', target: 'bpd' },
-    { label: 'Pemerintah Desa', target: 'pemdes' },
-    { label: 'Visi & Misi', target: 'visi-misi' },
+    { label: 'About', target: 'potensi' },
+    { label: 'Berita Desa', target: 'berita' },
     { label: 'Layanan Mandiri', target: 'layanan' },
-    { label: 'Aspirasi Warga', target: 'lapor' }
+    { label: 'Regulasi', target: 'perdes' },
+    { label: 'Peta Wilayah', target: 'peta' },
+    { label: 'SukadanaTV', target: 'berita' },
+    { label: 'Prestasi', target: 'potensi' }
   ];
 
   return (
@@ -261,9 +263,13 @@ export const Header: React.FC<HeaderProps> = ({
         {/* ── 1. TOP UTILITY BAR (Ciburial Style: Utility Links + Social Media Icons) ── */}
         <div
           style={{
-            background: 'linear-gradient(90deg, #142214 0%, #1e2e1e 50%, #182218 100%)',
-            borderBottom: '1px solid rgba(207, 162, 61, 0.25)',
-            color: 'rgba(255, 255, 255, 0.85)',
+            background: isHeroTransparent
+              ? 'rgba(0, 0, 0, 0.45)'
+              : 'linear-gradient(90deg, #142214 0%, #1e2e1e 50%, #182218 100%)',
+            backdropFilter: isHeroTransparent ? 'blur(8px)' : 'none',
+            WebkitBackdropFilter: isHeroTransparent ? 'blur(8px)' : 'none',
+            borderBottom: isHeroTransparent ? '1px solid rgba(255, 255, 255, 0.15)' : '1px solid rgba(207, 162, 61, 0.25)',
+            color: 'rgba(255, 255, 255, 0.9)',
             fontSize: '0.75rem',
             padding: '6px 0',
             transition: 'all 0.3s ease'
@@ -424,19 +430,23 @@ export const Header: React.FC<HeaderProps> = ({
         {/* ── 2. MAIN STICKY NAVBAR (Brand Logo + Horizontal Menus + Dropdowns) ── */}
         <div
           style={{
-            background: isScrolled
+            background: isHeroTransparent
+              ? 'linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 85%, transparent 100%)'
+              : isScrolled
               ? theme === 'dark'
-                ? 'rgba(20, 30, 20, 0.94)'
-                : 'rgba(255, 255, 255, 0.95)'
+                ? 'rgba(18, 26, 18, 0.95)'
+                : 'rgba(255, 255, 255, 0.96)'
               : theme === 'dark'
               ? 'rgba(18, 25, 18, 0.88)'
               : 'rgba(255, 255, 255, 0.92)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            borderBottom: `1px solid ${isScrolled ? 'var(--color-border)' : 'rgba(207, 162, 61, 0.2)'}`,
-            boxShadow: isScrolled ? '0 8px 32px rgba(0, 0, 0, 0.08)' : 'none',
+            backdropFilter: isHeroTransparent ? 'blur(4px)' : 'blur(16px)',
+            WebkitBackdropFilter: isHeroTransparent ? 'blur(4px)' : 'blur(16px)',
+            borderBottom: isHeroTransparent
+              ? '1px solid rgba(255, 255, 255, 0.15)'
+              : `1px solid ${isScrolled ? 'var(--color-border)' : 'rgba(207, 162, 61, 0.2)'}`,
+            boxShadow: isScrolled ? '0 8px 32px rgba(0, 0, 0, 0.12)' : 'none',
             transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-            padding: isScrolled ? '10px 0' : '14px 0'
+            padding: isScrolled ? '8px 0' : '12px 0'
           }}
         >
           <div
@@ -498,7 +508,8 @@ export const Header: React.FC<HeaderProps> = ({
                     fontWeight: 800,
                     margin: 0,
                     lineHeight: 1.15,
-                    color: 'var(--color-text-primary)',
+                    color: isHeroTransparent ? '#ffffff' : 'var(--color-text-primary)',
+                    textShadow: isHeroTransparent ? '0 2px 8px rgba(0,0,0,0.6)' : 'none',
                     letterSpacing: '-0.02em',
                     transition: 'font-size 0.3s ease'
                   }}
@@ -508,7 +519,8 @@ export const Header: React.FC<HeaderProps> = ({
                 <p
                   style={{
                     fontSize: '0.72rem',
-                    color: 'var(--color-text-muted)',
+                    color: isHeroTransparent ? 'rgba(255, 255, 255, 0.85)' : 'var(--color-text-muted)',
+                    textShadow: isHeroTransparent ? '0 1px 4px rgba(0,0,0,0.6)' : 'none',
                     margin: '2px 0 0 0',
                     fontWeight: 600,
                     fontFamily: 'var(--font-sans)',
@@ -520,38 +532,45 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
 
-            {/* Desktop Navigation Menu (Center) */}
+            {/* Desktop Navigation Menu (Center) - Ciburial Styled */}
             <nav
               className="desktop-nav-menu"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px'
+                gap: '6px'
               }}
               aria-label="Navigasi Utama"
             >
-              {/* 1. HOME / BERANDA */}
+              {/* 1. HOME */}
               <button
                 onClick={() => onNavigateSection('beranda')}
                 className={`nav-header-btn${activeSection === 'beranda' ? ' active' : ''}`}
                 style={{
-                  background: activeSection === 'beranda' ? 'rgba(26, 144, 32, 0.1)' : 'transparent',
-                  color: activeSection === 'beranda' ? 'var(--color-brand-primary)' : 'var(--color-text-primary)',
+                  background: activeSection === 'beranda'
+                    ? isHeroTransparent ? 'rgba(255, 255, 255, 0.18)' : 'rgba(26, 144, 32, 0.1)'
+                    : 'transparent',
+                  color: isHeroTransparent
+                    ? '#ffffff'
+                    : activeSection === 'beranda' ? 'var(--color-brand-primary)' : 'var(--color-text-primary)',
                   border: 'none',
-                  borderRadius: '10px',
+                  borderBottom: activeSection === 'beranda'
+                    ? '2px solid #cfa23d'
+                    : '2px solid transparent',
+                  borderRadius: '8px',
                   padding: '8px 14px',
-                  fontSize: '0.85rem',
+                  fontSize: '0.84rem',
                   fontWeight: 700,
                   cursor: 'pointer',
                   fontFamily: 'var(--font-sans)',
                   transition: 'all 0.2s ease',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px'
+                  gap: '6px',
+                  textShadow: isHeroTransparent ? '0 1px 4px rgba(0,0,0,0.6)' : 'none'
                 }}
               >
-                <Home size={15} />
-                <span>BERANDA</span>
+                <span>HOME</span>
               </button>
 
               {/* 2. PROFIL DESA ▾ (Dropdown) */}
@@ -564,24 +583,29 @@ export const Header: React.FC<HeaderProps> = ({
                   onClick={() => onNavigateSection('profil')}
                   className={`nav-header-btn${activeSection === 'profil' ? ' active' : ''}`}
                   style={{
-                    background: activeSection === 'profil' ? 'rgba(26, 144, 32, 0.1)' : 'transparent',
-                    color: activeSection === 'profil' ? 'var(--color-brand-primary)' : 'var(--color-text-primary)',
+                    background: activeSection === 'profil'
+                      ? isHeroTransparent ? 'rgba(255, 255, 255, 0.18)' : 'rgba(26, 144, 32, 0.1)'
+                      : 'transparent',
+                    color: isHeroTransparent
+                      ? '#ffffff'
+                      : activeSection === 'profil' ? 'var(--color-brand-primary)' : 'var(--color-text-primary)',
                     border: 'none',
-                    borderRadius: '10px',
+                    borderBottom: activeSection === 'profil' ? '2px solid #cfa23d' : '2px solid transparent',
+                    borderRadius: '8px',
                     padding: '8px 14px',
-                    fontSize: '0.85rem',
+                    fontSize: '0.84rem',
                     fontWeight: 700,
                     cursor: 'pointer',
                     fontFamily: 'var(--font-sans)',
                     transition: 'all 0.2s ease',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '6px'
+                    gap: '6px',
+                    textShadow: isHeroTransparent ? '0 1px 4px rgba(0,0,0,0.6)' : 'none'
                   }}
                 >
-                  <Users size={15} />
                   <span>PROFIL DESA</span>
-                  <ChevronDown size={13} style={{ opacity: 0.7, transform: profilDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                  <ChevronDown size={13} style={{ opacity: 0.8, transform: profilDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                 </button>
 
                 {/* Dropdown Menu */}
@@ -596,7 +620,7 @@ export const Header: React.FC<HeaderProps> = ({
                       border: '1px solid var(--color-border)',
                       borderRadius: '16px',
                       padding: '8px',
-                      boxShadow: '0 16px 40px rgba(0,0,0,0.16)',
+                      boxShadow: '0 16px 40px rgba(0,0,0,0.22)',
                       zIndex: 110,
                       display: 'flex',
                       flexDirection: 'column',
@@ -771,7 +795,7 @@ export const Header: React.FC<HeaderProps> = ({
                 )}
               </div>
 
-              {/* 3. LAYANAN WARGA ▾ (Dropdown) */}
+              {/* 3. PPID / LAYANAN WARGA ▾ (Dropdown) */}
               <div
                 style={{ position: 'relative' }}
                 onMouseEnter={() => setLayananDropdownOpen(true)}
@@ -781,24 +805,29 @@ export const Header: React.FC<HeaderProps> = ({
                   onClick={() => onNavigateSection('layanan')}
                   className={`nav-header-btn${activeSection === 'layanan' ? ' active' : ''}`}
                   style={{
-                    background: activeSection === 'layanan' ? 'rgba(26, 144, 32, 0.1)' : 'transparent',
-                    color: activeSection === 'layanan' ? 'var(--color-brand-primary)' : 'var(--color-text-primary)',
+                    background: activeSection === 'layanan'
+                      ? isHeroTransparent ? 'rgba(255, 255, 255, 0.18)' : 'rgba(26, 144, 32, 0.1)'
+                      : 'transparent',
+                    color: isHeroTransparent
+                      ? '#ffffff'
+                      : activeSection === 'layanan' ? 'var(--color-brand-primary)' : 'var(--color-text-primary)',
                     border: 'none',
-                    borderRadius: '10px',
+                    borderBottom: activeSection === 'layanan' ? '2px solid #cfa23d' : '2px solid transparent',
+                    borderRadius: '8px',
                     padding: '8px 14px',
-                    fontSize: '0.85rem',
+                    fontSize: '0.84rem',
                     fontWeight: 700,
                     cursor: 'pointer',
                     fontFamily: 'var(--font-sans)',
                     transition: 'all 0.2s ease',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '6px'
+                    gap: '6px',
+                    textShadow: isHeroTransparent ? '0 1px 4px rgba(0,0,0,0.6)' : 'none'
                   }}
                 >
-                  <FileText size={15} />
-                  <span>LAYANAN WARGA</span>
-                  <ChevronDown size={13} style={{ opacity: 0.7, transform: layananDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+                  <span>PPID / LAYANAN</span>
+                  <ChevronDown size={13} style={{ opacity: 0.8, transform: layananDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                 </button>
 
                 {/* Dropdown Menu */}
@@ -808,12 +837,12 @@ export const Header: React.FC<HeaderProps> = ({
                       position: 'absolute',
                       top: '100%',
                       left: 0,
-                      width: '230px',
+                      width: '240px',
                       background: 'var(--color-surface)',
                       border: '1px solid var(--color-border)',
                       borderRadius: '14px',
                       padding: '8px',
-                      boxShadow: '0 12px 36px rgba(0,0,0,0.14)',
+                      boxShadow: '0 12px 36px rgba(0,0,0,0.22)',
                       zIndex: 110,
                       display: 'flex',
                       flexDirection: 'column',
@@ -864,102 +893,90 @@ export const Header: React.FC<HeaderProps> = ({
                       onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                     >
                       <Search size={14} color="#cfa23d" />
-                      <span>Lacak Status Berkas (Tracking)</span>
+                      <span>Lacak Status Berkas</span>
                     </button>
                   </div>
                 )}
               </div>
 
-              {/* 4. INFORMASI & BERITA */}
+              {/* 4. REDAKSI */}
               <button
                 onClick={() => onNavigateSection('berita')}
                 className="nav-header-btn"
                 style={{
                   background: 'transparent',
-                  color: 'var(--color-text-primary)',
+                  color: isHeroTransparent ? '#ffffff' : 'var(--color-text-primary)',
                   border: 'none',
-                  borderRadius: '10px',
+                  borderBottom: '2px solid transparent',
+                  borderRadius: '8px',
                   padding: '8px 14px',
-                  fontSize: '0.85rem',
+                  fontSize: '0.84rem',
                   fontWeight: 700,
                   cursor: 'pointer',
                   fontFamily: 'var(--font-sans)',
                   transition: 'all 0.2s ease',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px'
+                  gap: '6px',
+                  textShadow: isHeroTransparent ? '0 1px 4px rgba(0,0,0,0.6)' : 'none'
                 }}
               >
-                <Newspaper size={15} />
-                <span>INFORMASI &amp; BERITA</span>
+                <span>REDAKSI</span>
               </button>
 
-              {/* 5. ASPIRASI & LAPOR */}
+              {/* 5. KONTAK KAMI */}
               <button
                 onClick={() => onNavigateSection('lapor')}
                 className={`nav-header-btn${activeSection === 'lapor' ? ' active' : ''}`}
                 style={{
-                  background: activeSection === 'lapor' ? 'rgba(26, 144, 32, 0.1)' : 'transparent',
-                  color: activeSection === 'lapor' ? 'var(--color-brand-primary)' : 'var(--color-text-primary)',
+                  background: activeSection === 'lapor'
+                    ? isHeroTransparent ? 'rgba(255, 255, 255, 0.18)' : 'rgba(26, 144, 32, 0.1)'
+                    : 'transparent',
+                  color: isHeroTransparent
+                    ? '#ffffff'
+                    : activeSection === 'lapor' ? 'var(--color-brand-primary)' : 'var(--color-text-primary)',
                   border: 'none',
-                  borderRadius: '10px',
+                  borderBottom: activeSection === 'lapor' ? '2px solid #cfa23d' : '2px solid transparent',
+                  borderRadius: '8px',
                   padding: '8px 14px',
-                  fontSize: '0.85rem',
+                  fontSize: '0.84rem',
                   fontWeight: 700,
                   cursor: 'pointer',
                   fontFamily: 'var(--font-sans)',
                   transition: 'all 0.2s ease',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px'
+                  gap: '6px',
+                  textShadow: isHeroTransparent ? '0 1px 4px rgba(0,0,0,0.6)' : 'none'
                 }}
               >
-                <MessageSquare size={15} />
-                <span>ASPIRASI &amp; LAPOR</span>
+                <span>KONTAK KAMI</span>
               </button>
             </nav>
 
             {/* Action Buttons (Right: Search, Theme Toggle, Admin Lock, Mobile Menu) */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              {/* Search Button */}
+              {/* Search Icon Button (Ciburial Style) */}
               <button
                 onClick={onOpenSearch}
                 title="Cari Layanan / Berita (Ctrl+K)"
                 style={{
-                  background: 'var(--color-surface-raised)',
-                  border: '1px solid var(--color-border)',
+                  width: '38px',
+                  height: '38px',
                   borderRadius: '10px',
-                  padding: '8px 12px',
+                  border: isHeroTransparent ? '1px solid rgba(255, 255, 255, 0.35)' : '1px solid var(--color-border)',
+                  background: isHeroTransparent ? 'rgba(0, 0, 0, 0.35)' : 'var(--color-surface-raised)',
                   cursor: 'pointer',
-                  color: 'var(--color-text-primary)',
+                  color: isHeroTransparent ? '#ffffff' : 'var(--color-text-primary)',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px',
-                  fontSize: '0.8125rem',
-                  fontWeight: 600,
+                  justifyContent: 'center',
                   transition: 'all 0.2s ease'
                 }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--color-brand-mid)')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--color-border)')}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = '#cfa23d')}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = isHeroTransparent ? 'rgba(255, 255, 255, 0.35)' : 'var(--color-border)')}
               >
-                <Search size={16} color="var(--color-brand-primary)" />
-                <span className="desktop-search-text" style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-                  Cari...
-                </span>
-                <span
-                  className="desktop-search-chip"
-                  style={{
-                    fontSize: '0.65rem',
-                    padding: '2px 5px',
-                    borderRadius: '4px',
-                    background: 'var(--color-surface)',
-                    border: '1px solid var(--color-border)',
-                    color: 'var(--color-text-muted)',
-                    fontFamily: 'var(--font-mono)'
-                  }}
-                >
-                  Ctrl K
-                </span>
+                <Search size={18} color={isHeroTransparent ? '#ffffff' : 'var(--color-brand-primary)'} />
               </button>
 
               {/* Theme Toggle Button */}
@@ -970,17 +987,17 @@ export const Header: React.FC<HeaderProps> = ({
                   width: '38px',
                   height: '38px',
                   borderRadius: '10px',
-                  border: '1px solid var(--color-border)',
-                  background: 'var(--color-surface-raised)',
+                  border: isHeroTransparent ? '1px solid rgba(255, 255, 255, 0.35)' : '1px solid var(--color-border)',
+                  background: isHeroTransparent ? 'rgba(0, 0, 0, 0.35)' : 'var(--color-surface-raised)',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: 'var(--color-text-primary)',
+                  color: isHeroTransparent ? '#ffffff' : 'var(--color-text-primary)',
                   transition: 'all 0.2s ease'
                 }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--color-brand-mid)')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--color-border)')}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = '#cfa23d')}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = isHeroTransparent ? 'rgba(255, 255, 255, 0.35)' : 'var(--color-border)')}
               >
                 {theme === 'light' ? <Moon size={17} color="#6a5724" /> : <Sun size={17} color="#cfa23d" />}
               </button>

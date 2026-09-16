@@ -58,13 +58,7 @@ export const BerandaPage: React.FC<BerandaPageProps> = ({
 
   return (
     <div className="segment-view">
-      {/* 1. Flash News Ticker Bar */}
-      <NewsTicker onNavigateSegment={onNavigateSegment} />
-
-      {/* 2. Top Bar Jadwal Sholat Terpadu (Sinkronisasi Gradasi Emas-Hijau-Coklat Desa) */}
-      <PrayerTimesTopBar />
-
-      {/* 3. Hero Section (Sambutan & Quick Surat Generator) */}
+      {/* 1. Hero Section (Sitting at the top behind transparent header) */}
       <HeroSection
         onSelectService={code => {
           if (code) onSelectService(code);
@@ -76,8 +70,10 @@ export const BerandaPage: React.FC<BerandaPageProps> = ({
             onNavigateSegment('layanan');
           } else if (sectionId === 'perdes') {
             onNavigateSegment('perdes');
-          } else if (sectionId === 'profil' || sectionId === 'peta') {
-            onNavigateSegment('profil');
+          } else if (sectionId === 'profil' || sectionId === 'potensi') {
+            onNavigateSegment('potensi');
+          } else if (sectionId === 'peta') {
+            onNavigateSegment('peta');
           } else if (sectionId === 'lapor') {
             onNavigateSegment('lapor');
           } else {
@@ -85,6 +81,12 @@ export const BerandaPage: React.FC<BerandaPageProps> = ({
           }
         }}
       />
+
+      {/* 2. Flash News Ticker Bar */}
+      <NewsTicker onNavigateSegment={onNavigateSegment} />
+
+      {/* 3. Top Bar Jadwal Sholat Terpadu */}
+      <PrayerTimesTopBar />
 
       {/* 4. Combined Section: Cuaca Realtime Lereng Ciremai & 3 Pilar Utama */}
       <section style={{

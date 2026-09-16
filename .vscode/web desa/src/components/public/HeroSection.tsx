@@ -159,12 +159,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       id="hero"
       style={{
         position: 'relative',
-        minHeight: '88vh',
+        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        paddingTop: '64px',
-        paddingBottom: '64px',
+        alignItems: 'center',
+        marginTop: '-110px',
+        paddingTop: '160px',
+        paddingBottom: '80px',
         backgroundImage: 'url("/hero-bg.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center 35%',
@@ -173,48 +175,50 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         overflow: 'hidden'
       }}
     >
-      {/* Cinematic Gradient Overlays */}
+      {/* 1. Subtle Cinematic Gradient Overlay (letting the real green mountains & sunrise shine through) */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(135deg, rgba(40, 33, 28, 0.93) 0%, rgba(26, 144, 32, 0.85) 55%, rgba(20, 30, 20, 0.94) 100%)',
+          background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.12) 35%, rgba(0, 0, 0, 0.22) 65%, rgba(14, 22, 14, 0.85) 100%)',
           zIndex: 1
         }}
       />
-      {/* Subtle radial light accent */}
+
+      {/* 2. Soft Radial Sun Glow */}
       <div
         style={{
           position: 'absolute',
-          top: '-15%',
-          right: '5%',
-          width: '600px',
-          height: '600px',
+          top: '-10%',
+          right: '8%',
+          width: '550px',
+          height: '550px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(207, 162, 61, 0.25) 0%, transparent 70%)',
-          filter: 'blur(40px)',
+          background: 'radial-gradient(circle, rgba(207, 162, 61, 0.22) 0%, transparent 70%)',
+          filter: 'blur(50px)',
           zIndex: 1,
           pointerEvents: 'none'
         }}
       />
-      {/* Bottom fade into content */}
+
+      {/* 3. Bottom Fade into Ticker */}
       <div
         style={{
           position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
-          height: '100px',
-          background: 'linear-gradient(to top, var(--color-bg), transparent)',
+          height: '120px',
+          background: 'linear-gradient(to top, var(--color-bg) 0%, transparent 100%)',
           zIndex: 2,
           pointerEvents: 'none'
         }}
       />
 
       {/* Hero Content Container */}
-      <div className="container" style={{ position: 'relative', zIndex: 3 }}>
-        <div style={{ maxWidth: '880px', margin: '0 auto', textAlign: 'center' }}>
-          
+      <div className="container" style={{ position: 'relative', zIndex: 3, width: '100%' }}>
+        <div style={{ maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
+
           {/* Welcoming Diurnal Sundanese Greeting Badge */}
           {(() => {
             const h = new Date().getHours();
@@ -232,20 +236,20 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '10px',
-                  background: 'rgba(255, 255, 255, 0.12)',
+                  background: 'rgba(0, 0, 0, 0.35)',
                   backdropFilter: 'blur(12px)',
                   WebkitBackdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(207, 162, 61, 0.5)',
-                  padding: '6px 18px',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  padding: '6px 20px',
                   borderRadius: 'var(--radius-full)',
-                  marginBottom: '24px',
-                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                  marginBottom: '20px',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25)',
                   cursor: 'pointer',
                   transition: 'transform 0.2s ease, border-color 0.2s ease'
                 }}
                 title="Kearifan Sunda Sukadana: Silih Asah, Silih Asih, Silih Asuh"
                 onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)'; e.currentTarget.style.borderColor = 'var(--color-gold-300)'; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.borderColor = 'rgba(207, 162, 61, 0.5)'; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)'; }}
               >
                 <span style={{
                   width: '8px',
@@ -259,7 +263,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   fontSize: '0.8125rem',
                   fontWeight: 700,
                   letterSpacing: '0.04em',
-                  color: 'var(--color-gold-200)',
+                  color: '#ffffff',
                   fontFamily: 'var(--font-sans)'
                 }}>
                   {diurnal.greeting} &bull; {diurnal.context}
@@ -268,201 +272,175 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             );
           })()}
 
-          {/* Main Dignified Municipal Headline (Ciburial Style with Sukadana Identity) */}
+          {/* MAIN DIGNIFIED TITLE (Ciburial Layout Reference) */}
           <h1 style={{
             fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(2.6rem, 5.8vw, 4.4rem)',
+            fontSize: 'clamp(3rem, 6.8vw, 5.2rem)',
             fontWeight: 800,
             lineHeight: 1.1,
-            letterSpacing: '-0.025em',
-            marginBottom: '10px',
+            letterSpacing: '-0.02em',
+            margin: '0 auto 12px',
             color: '#ffffff',
-            textShadow: '0 4px 24px rgba(0, 0, 0, 0.7)'
+            textShadow: '0 4px 28px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.7)'
           }}>
             Desa Sukadana
           </h1>
 
+          {/* SUBTITLE */}
           <div style={{
             fontFamily: 'var(--font-sans)',
-            fontSize: 'clamp(1.1rem, 2.2vw, 1.45rem)',
-            fontWeight: 700,
-            color: 'var(--color-gold-300)',
-            marginBottom: '18px',
-            letterSpacing: '0.02em',
-            textShadow: '0 2px 14px rgba(0, 0, 0, 0.6)'
+            fontSize: 'clamp(1.15rem, 2.4vw, 1.55rem)',
+            fontWeight: 600,
+            color: '#ffffff',
+            marginBottom: '28px',
+            letterSpacing: '0.015em',
+            textShadow: '0 2px 16px rgba(0, 0, 0, 0.9)'
           }}>
             Kec. Argapura Kab. Majalengka Prov. Jawa Barat
           </div>
 
-          {/* Warm, welcoming narrative */}
-          <p style={{
-            fontSize: 'clamp(0.95rem, 1.6vw, 1.08rem)',
-            lineHeight: 1.65,
-            color: 'rgba(255, 255, 255, 0.9)',
-            maxWidth: '68ch',
-            margin: '0 auto 32px',
-            fontFamily: 'var(--font-sans)',
-            fontWeight: 400,
-            textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
-          }}>
-            Portal resmi pelayanan publik digital, agroklimat terasering, warta pembangunan, dan keterbukaan informasi kemasyarakatan Desa Sukadana lereng Gunung Ciremai.
-          </p>
-
-          {/* Search Bar with Glassmorphic styling */}
+          {/* Smart Search Bar (Glassmorphic) */}
           <form
             onSubmit={handleSearchSubmit}
             style={{
               maxWidth: '680px',
-              margin: '0 auto 24px',
+              margin: '0 auto 20px',
               position: 'relative'
             }}
           >
             <div style={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              borderRadius: 'var(--radius-full)',
-              padding: '6px 8px 6px 20px',
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
-              boxShadow: '0 12px 40px rgba(0, 0, 0, 0.35), 0 0 0 2px rgba(207, 162, 61, 0.4)',
-              transition: 'transform var(--transition-normal), box-shadow var(--transition-normal)'
+              background: 'rgba(0, 0, 0, 0.45)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              border: '1.5px solid rgba(255, 255, 255, 0.35)',
+              borderRadius: 'var(--radius-full)',
+              padding: '6px 8px 6px 20px',
+              boxShadow: '0 12px 36px rgba(0, 0, 0, 0.35)',
+              transition: 'all 0.3s ease'
             }}>
-              <Search size={22} style={{ color: 'var(--color-brand-700)', flexShrink: 0 }} />
+              <Search size={20} color="#cfa23d" style={{ flexShrink: 0, marginRight: '12px' }} />
               <input
                 type="text"
                 value={searchInput}
                 onChange={e => setSearchInput(e.target.value)}
-                onClick={() => { if (onOpenSearch) onOpenSearch(searchInput); }}
-                placeholder="Cari layanan surat, bansos, perdes, atau kabar desa..."
+                placeholder="Cari permohonan surat, berita desa, atau regulasi..."
                 style={{
-                  flex: 1,
+                  width: '100%',
+                  background: 'transparent',
                   border: 'none',
                   outline: 'none',
-                  fontSize: '0.9375rem',
-                  fontFamily: 'var(--font-sans)',
-                  color: 'var(--color-text-primary)',
-                  background: 'transparent'
+                  color: '#ffffff',
+                  fontSize: '0.92rem',
+                  fontFamily: 'var(--font-sans)'
                 }}
               />
               <button
-                type="button"
-                onClick={() => {
-                  if (onOpenSearch) onOpenSearch();
-                  else onNavigateSection('layanan');
-                }}
-                className="btn btn-primary"
+                type="submit"
                 style={{
-                  borderRadius: 'var(--radius-full)',
+                  background: 'linear-gradient(135deg, #1a9020 0%, #136918 100%)',
+                  color: '#ffffff',
+                  border: 'none',
                   padding: '10px 22px',
-                  gap: '8px',
+                  borderRadius: 'var(--radius-full)',
+                  fontSize: '0.85rem',
                   fontWeight: 700,
-                  fontSize: '0.875rem',
-                  boxShadow: '0 4px 16px rgba(26, 144, 32, 0.4)',
-                  whiteSpace: 'nowrap'
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  boxShadow: '0 4px 14px rgba(26, 144, 32, 0.4)',
+                  transition: 'transform 0.2s ease'
                 }}
+                onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.02)')}
+                onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
               >
-                <span>Cari Cerdas</span>
-                <ArrowRight size={16} />
+                <span>Cari</span>
+                <ArrowRight size={15} />
               </button>
             </div>
           </form>
 
-          {/* Quick Access Pills (Clean & Elegant Tag Row) */}
+          {/* Quick Access Letter Pills */}
           <div style={{
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
             gap: '8px',
-            marginBottom: '48px'
+            marginBottom: '36px'
           }}>
-            <span style={{
-              fontSize: '0.75rem',
-              color: 'var(--color-gold-300)',
-              fontWeight: 700,
-              fontFamily: 'var(--font-sans)',
-              letterSpacing: '0.04em',
-              marginRight: '4px'
-            }}>
-              SERING DIAJUKAN:
+            <span style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.85)', fontWeight: 600, textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>
+              Layanan Populer:
             </span>
-            {quickPills.map(item => (
+            {quickPills.map(p => (
               <button
-                key={item.code}
-                onClick={() => {
-                  onSelectService(item.code);
-                  onNavigateSection('layanan');
-                }}
+                key={p.code}
+                onClick={() => onSelectService(p.code)}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.12)',
+                  background: 'rgba(0, 0, 0, 0.35)',
                   backdropFilter: 'blur(8px)',
-                  WebkitBackdropFilter: 'blur(8px)',
                   border: '1px solid rgba(255, 255, 255, 0.25)',
                   color: '#ffffff',
-                  padding: '5px 14px',
+                  padding: '5px 13px',
                   borderRadius: 'var(--radius-full)',
-                  fontSize: '0.8125rem',
+                  fontSize: '0.76rem',
                   fontWeight: 600,
-                  fontFamily: 'var(--font-sans)',
                   cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '5px',
-                  transition: 'all var(--transition-fast)'
+                  transition: 'all 0.2s ease',
+                  textShadow: '0 1px 4px rgba(0,0,0,0.8)'
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background = 'rgba(207, 162, 61, 0.3)';
-                  e.currentTarget.style.borderColor = 'var(--color-gold-300)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.background = 'rgba(26, 144, 32, 0.85)';
+                  e.currentTarget.style.borderColor = '#acdbb0';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
+                  e.currentTarget.style.background = 'rgba(0, 0, 0, 0.35)';
                   e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-                  e.currentTarget.style.transform = 'translateY(0)';
                 }}
               >
-                <span>{item.label}</span>
-                <ChevronRight size={13} style={{ opacity: 0.7 }} />
+                {p.label}
               </button>
             ))}
           </div>
 
-          {/* 4 Frosted Glass Stat Counter Cards */}
+          {/* 4 Frosted Stat Cards */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
-            gap: '16px',
-            textAlign: 'left'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '14px',
+            maxWidth: '920px',
+            margin: '0 auto'
           }}>
             <FrostedStatCard
-              value={3842}
+              value={4823}
               suffix="Jiwa"
-              label="Warga Sukadana"
-              sub="5 Blok Definitif Guyub &amp; Rukun"
-              icon={<Users size={16} />}
+              label="Penduduk Terdaftar"
+              sub="1.412 KK dalam SIAK Desa"
+              icon={<Users size={18} />}
             />
             <FrostedStatCard
-              value={1156}
-              suffix="KK"
-              label="Kepala Keluarga"
-              sub="18 Rukun Tetangga (RT)"
-              icon={<Building2 size={16} />}
+              value={1247}
+              suffix="Ha"
+              label="Bentang Luas Wilayah"
+              sub="67,4% Lahan Terasering"
+              icon={<Building2 size={18} />}
             />
             <FrostedStatCard
-              value={98}
-              suffix="%"
-              label="Ketepatan SLA"
-              sub="Rata-rata 1,2 Hari Selesai"
-              icon={<Clock size={16} />}
+              value={950}
+              suffix="mdpl"
+              label="Elevasi Kawasan"
+              sub="Rentang 750–1.200 mdpl"
+              icon={<Clock size={18} />}
             />
             <FrostedStatCard
-              value={480}
-              suffix="+"
-              label="Ulasan Warga"
-              sub="Indeks 99,6% Sangat Puas"
-              icon={<ShieldCheck size={16} />}
+              value={5}
+              suffix="Blok"
+              label="Blok Definitif"
+              sub="Desa, Panyekran, Jingkang, dll"
+              icon={<ShieldCheck size={18} />}
             />
           </div>
 
