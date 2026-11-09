@@ -34,15 +34,15 @@
 
 <!-- Tabel Laporan Sesuai Bab 5.3 Gambar 5.1 SRS -->
 <div class="card" style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-    <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+    <div class="table-responsive">
+        <table style="width: 100%; border-collapse: collapse; text-align: start; font-size: 13px;">
             <thead>
                 <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #475569; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">
                     <th style="padding: 14px 20px; width: 60px;">No</th>
                     <th style="padding: 14px 20px;">Karyawan</th>
                     <th style="padding: 14px 20px;">Jabatan</th>
                     <th style="padding: 14px 20px;">Periode</th>
-                    <th style="padding: 14px 20px;">Total Skor</th>
+                    <th style="padding: 14px 20px; text-align: end;">Total Skor</th>
                     <th style="padding: 14px 20px;">Status</th>
                     <th style="padding: 14px 20px; text-align: center; width: 100px;">Detail</th>
                 </tr>
@@ -54,7 +54,7 @@
                         <td style="padding: 14px 20px; font-weight: 600; color: #0f172a;">{{ $eval->employee->name }}</td>
                         <td style="padding: 14px 20px; color: #475569;">{{ $eval->employee->position ?? '-' }}</td>
                         <td style="padding: 14px 20px; color: #64748b;">{{ $eval->period_label }}</td>
-                        <td style="padding: 14px 20px; font-weight: 700; color: #0f172a;">
+                        <td style="padding: 14px 20px; font-weight: 700; color: #0f172a; text-align: end;" class="tabular-nums">
                             {{ number_format($eval->total_score, 2) }}
                         </td>
                         <td style="padding: 14px 20px;">

@@ -23,17 +23,17 @@
 <div class="card" style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
         <div>
-            <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 4px;">Karyawan</div>
+            <div class="kpi-label" title="Karyawan" tabindex="0" style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 4px;">Karyawan</div>
             <div style="font-size: 16px; font-weight: 700; color: #0f172a;">{{ $evaluation->employee->name }}</div>
             <div style="font-size: 12px; color: #94a3b8;">NIK: {{ $evaluation->employee->nik ?? '-' }}</div>
         </div>
         <div>
-            <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 4px;">Jabatan</div>
+            <div class="kpi-label" title="Jabatan" tabindex="0" style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 4px;">Jabatan</div>
             <div style="font-size: 15px; font-weight: 600; color: #334155;">{{ $evaluation->employee->position ?? '-' }}</div>
             <div style="font-size: 12px; color: #94a3b8;">Divisi: {{ $evaluation->division->name ?? '-' }}</div>
         </div>
         <div>
-            <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 4px;">Total Skor</div>
+            <div class="kpi-label" title="Total Skor" tabindex="0" style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748b; margin-bottom: 4px;">Total Skor</div>
             <div style="display: inline-block;">
                 <span class="badge {{ $evaluation->badge_class }}" style="padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 700;">
                     {{ number_format($evaluation->total_score, 2) }} &mdash; {{ $evaluation->predicate }}
@@ -60,7 +60,7 @@
                 @php
                     $opt = App\Services\EvaluationScoringService::getRatingOptions()[$item->rating] ?? null;
                 @endphp
-                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; border-left: 4px solid {{ $opt['color'] ?? '#0072CE' }};">
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; border-inline-start: 4px solid {{ $opt['color'] ?? '#0072CE' }};">
                     <!-- Pernyataan Butir (Kotak 3) -->
                     <div style="font-size: 14px; font-weight: 600; color: #0f172a; margin-bottom: 8px;">
                         {{ $item->subcategory->name }}

@@ -17,9 +17,9 @@
             <span style="color: #CBD5E1; margin: 0 6px;">&bull;</span>
             <span>Batas Cutoff: <strong style="color: #0F172A;">{{ $slaCutoffDate }}</strong></span>
             @if($isCutoffPassed)
-                <span class="badge-clean badge-clean-neutral" style="margin-left: 4px; font-size: 10px;">Periode Berakhir</span>
+                <span class="badge-clean badge-clean-neutral" style="margin-inline-start: 4px; font-size: 10px;">Periode Berakhir</span>
             @else
-                <span class="badge-clean badge-clean-warning" style="margin-left: 4px; font-size: 10px;">Sisa {{ $slaDaysRemaining }} Hari</span>
+                <span class="badge-clean badge-clean-warning" style="margin-inline-start: 4px; font-size: 10px;">Sisa {{ $slaDaysRemaining }} Hari</span>
             @endif
         </p>
     </div>
@@ -57,7 +57,7 @@
 
 <!-- SLA Countdown Pengingat Tegas Penilai -->
 @if($totalPending > 0 && $periodStatus !== 'closed')
-    <div class="animate-fade-up" style="background: var(--brand-accent-subtle, #EBF5FF); border: 1px solid rgba(0, 114, 206, 0.25); border-left: 4px solid var(--brand-accent, #0072CE); border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+    <div class="animate-fade-up" style="background: var(--brand-accent-subtle, #EBF5FF); border: 1px solid rgba(0, 114, 206, 0.25); border-inline-start: 4px solid var(--brand-accent, #0072CE); border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
         <div style="display: flex; align-items: center; gap: 12px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--brand-accent, #0072CE)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             <div>
@@ -65,14 +65,14 @@
                 <span style="color: #1E3A5F; font-size: 12.5px;">Periode <strong>{{ $monthName }} {{ $year }}</strong> akan dikunci otomatis pada <strong>{{ $slaCutoffDate }}</strong>. Anda masih memiliki <strong>{{ $totalPending }} karyawan</strong> yang perlu dinilai.</span>
             </div>
         </div>
-        <a href="{{ route('penilaian.index', ['month' => $month, 'year' => $year]) }}" class="badge-clean badge-clean-accent" style="text-decoration: none; padding: 6px 12px; font-size: 11.5px;">
+        <a href="{{ route('penilaian.index', ['month' => $month, 'year' => $year]) }}" class="action-chip-link action-chip-accent" style="font-size: 11.5px;">
             Tuntaskan Sekarang &rarr;
         </a>
     </div>
 @endif
 
 @if(\Illuminate\Support\Facades\Hash::check('password123', Auth::user()->password))
-    <div class="animate-fade-up" style="background: var(--semantic-warning-bg, #FFFBEB); border: 1px solid var(--semantic-warning-border, #FDE68A); border-left: 4px solid #D97706; border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+    <div class="animate-fade-up" style="background: var(--semantic-warning-bg, #FFFBEB); border: 1px solid var(--semantic-warning-border, #FDE68A); border-inline-start: 4px solid #D97706; border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
         <div style="display: flex; align-items: center; gap: 12px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <div>
@@ -80,7 +80,7 @@
                 <span style="color: #B45309; font-size: 12.5px;">Akun penilai Anda masih menggunakan kata sandi bawaan sistem. Segera ganti kata sandi Anda.</span>
             </div>
         </div>
-        <a href="{{ route('profile.index') }}" class="badge-clean badge-clean-warning" style="text-decoration: none; padding: 6px 12px; font-size: 11.5px;">
+        <a href="{{ route('profile.index') }}" class="action-chip-link action-chip-warning" style="font-size: 11.5px;">
             Ganti Kata Sandi &rarr;
         </a>
     </div>
@@ -91,7 +91,7 @@
     <!-- 1. Total Karyawan Divisi -->
     <div class="card-interactive animate-fade-up delay-1" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-            <span class="kpi-label" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Total Karyawan Divisi</span>
+            <span class="kpi-label" title="Total Karyawan Divisi" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Total Karyawan Divisi</span>
             <div style="width: 32px; height: 32px; border-radius: 8px; background: #F1F5F9; color: var(--brand-navy, #00223B); display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
@@ -108,7 +108,7 @@
     <!-- 2. Sudah Dinilai -->
     <div class="card-interactive animate-fade-up delay-2" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-            <span class="kpi-label" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Selesai Dinilai</span>
+            <span class="kpi-label" title="Selesai Dinilai" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Selesai Dinilai</span>
             <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--semantic-success-bg, #ECFDF5); color: var(--semantic-success-text, #059669); display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
@@ -116,7 +116,7 @@
         <div style="display: flex; align-items: baseline; gap: 8px;">
             <span class="tabular-nums counter kpi-val" data-target="{{ $totalEvaluated }}" style="font-size: var(--font-scale-hero, 34px); font-weight: 800; color: #0F172A; line-height: 1;">{{ $totalEvaluated }}</span>
             <span style="font-size: 12.5px; color: #64748B;">/ {{ $totalEmployees }} TAD</span>
-            <span class="badge-clean {{ $progressPercentage == 100 ? 'badge-clean-success' : 'badge-clean-accent' }}" style="margin-left: auto;">
+            <span class="badge-clean {{ $progressPercentage == 100 ? 'badge-clean-success' : 'badge-clean-accent' }}" style="margin-inline-start: auto;">
                 {{ $progressPercentage }}%
             </span>
         </div>
@@ -130,7 +130,7 @@
     <!-- 3. Belum Dinilai (Action Trigger) -->
     <div class="card-interactive animate-fade-up delay-3" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-            <span class="kpi-label" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Menunggu Penilaian</span>
+            <span class="kpi-label" title="Menunggu Penilaian" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Menunggu Penilaian</span>
             <div style="width: 32px; height: 32px; border-radius: 8px; background: {{ $totalPending > 0 ? 'var(--semantic-warning-bg, #FFFBEB)' : '#F1F5F9' }}; color: {{ $totalPending > 0 ? 'var(--semantic-warning-text, #D97706)' : '#64748B' }}; display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </div>
@@ -139,9 +139,9 @@
             <span class="tabular-nums counter kpi-val" data-target="{{ $totalPending }}" style="font-size: var(--font-scale-hero, 34px); font-weight: 800; color: {{ $totalPending > 0 ? '#92400E' : '#0F172A' }}; line-height: 1;">{{ $totalPending }}</span>
             <span style="font-size: 12.5px; color: #64748B;">karyawan</span>
             @if($totalPending > 0)
-                <span class="badge-clean badge-clean-warning" style="margin-left: auto;">Perlu Tindakan</span>
+                <span class="badge-clean badge-clean-warning" style="margin-inline-start: auto;">Perlu Tindakan</span>
             @else
-                <span class="badge-clean badge-clean-success" style="margin-left: auto;">Tuntas</span>
+                <span class="badge-clean badge-clean-success" style="margin-inline-start: auto;">Tuntas</span>
             @endif
         </div>
         <div style="margin-top: 10px; font-size: 11.5px; color: #64748B; border-top: 1px solid #F1F5F9; padding-top: 8px;">
@@ -152,7 +152,7 @@
     <!-- 4. Rata-Rata Nilai Divisi (dengan MoM Trend) -->
     <div class="card-interactive animate-fade-up delay-4" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-            <span class="kpi-label" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Rata-Rata Skor Divisi</span>
+            <span class="kpi-label" title="Rata-Rata Skor Divisi" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Rata-Rata Skor Divisi</span>
             <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--brand-accent-subtle, #EBF5FF); color: var(--brand-accent, #0072CE); display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
             </div>
@@ -165,11 +165,11 @@
 
             <!-- MoM Trend Divisi -->
             @if($momDelta !== null)
-                <span class="badge-clean {{ $momDelta >= 0 ? 'badge-clean-success' : 'badge-clean-danger' }}" style="margin-left: auto;" title="Perubahan dibanding bulan {{ $prevMonthName }}">
+                <span class="badge-clean {{ $momDelta >= 0 ? 'badge-clean-success' : 'badge-clean-danger' }}" style="margin-inline-start: auto;" title="Perubahan dibanding bulan {{ $prevMonthName }}">
                     {{ $momDelta >= 0 ? '+' : '' }}{{ $momDelta }} vs {{ $prevMonthName }}
                 </span>
             @else
-                <span class="badge-clean badge-clean-navy" style="margin-left: auto;">
+                <span class="badge-clean badge-clean-navy" style="margin-inline-start: auto;">
                     {{ $periodStatus === 'closed' ? 'Terkunci' : 'Terbuka' }}
                 </span>
             @endif
@@ -251,7 +251,7 @@
                                 <div style="font-weight: 700; color: #0F172A;">{{ $eval->employee->name }}</div>
                                 <div style="font-size: 11px; color: #64748B;">{{ $eval->employee->position }}</div>
                             </td>
-                            <td style="padding: 8px 6px; text-align: right;">
+                            <td style="padding: 8px 6px; text-align: end;">
                                 <span class="tabular-nums" style="font-weight: 800; color: #0F172A;">{{ $eval->total_score }}</span>
                                 <div><span class="badge-clean badge-clean-navy" style="font-size: 9px; padding: 2px 5px;">{{ $eval->predicate }}</span></div>
                             </td>
@@ -275,7 +275,7 @@
                                 <div style="font-weight: 700; color: #0F172A;">{{ $eval->employee->name }}</div>
                                 <div style="font-size: 11px; color: #64748B;">{{ $eval->employee->position }}</div>
                             </td>
-                            <td style="padding: 8px 6px; text-align: right;">
+                            <td style="padding: 8px 6px; text-align: end;">
                                 <span class="tabular-nums" style="font-weight: 800; color: #991B1B;">{{ $eval->total_score }}</span>
                                 <div><span class="badge-clean {{ $eval->predicate === 'Perlu Perhatian' ? 'badge-clean-danger' : 'badge-clean-warning' }}" style="font-size: 9px; padding: 2px 5px;">{{ $eval->predicate }}</span></div>
                             </td>
@@ -292,14 +292,14 @@
 <div class="golden-grid" style="margin-bottom: 28px;">
     <!-- Left Column (62%): Prioritas Antrian Penilaian TAD (High Utility) -->
     <div class="card-interactive animate-fade-up delay-2" style="padding: 24px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid #F1F5F9;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
             <div>
                 <h3 style="font-size: var(--font-scale-subhead, 16px); font-weight: 700; color: #0F172A; margin: 0 0 2px 0;">
                     Antrian Penilaian Karyawan TAD
                 </h3>
                 <p style="font-size: 12.5px; color: #64748B; margin: 0;">Karyawan di divisi Anda yang belum dilakukan input penilaian bulan {{ $monthName }} {{ $year }}</p>
             </div>
-            <a href="{{ route('penilaian.index', ['month' => $month, 'year' => $year]) }}" class="badge-clean badge-clean-accent" style="text-decoration: none;">
+            <a href="{{ route('penilaian.index', ['month' => $month, 'year' => $year]) }}" class="action-chip-link action-chip-accent">
                 Buka Matriks Penilaian &rarr;
             </a>
         </div>
@@ -312,7 +312,7 @@
                 <h4 style="font-size: 16px; font-weight: 800; color: #065F46; margin: 0 0 4px 0;">Divisi 100% Tuntas Dievaluasi</h4>
                 <p style="font-size: 13px; color: #047857; margin: 0 0 16px 0;">Seluruh {{ $totalEmployees }} personel Tenaga Alih Daya telah selesai dinilai untuk periode {{ $monthName }} {{ $year }}.</p>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 16px; text-align: left;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 16px; text-align: start;">
                     <div style="background: #FFFFFF; padding: 10px 14px; border-radius: 8px; border: 1px solid #D1FAE5;">
                         <div style="font-size: 11px; color: #047857; font-weight: 600; text-transform: uppercase;">Rata-Rata Divisi</div>
                         <div style="font-size: 18px; font-weight: 800; color: #065F46;" class="tabular-nums">{{ number_format($averageScore, 1) }}</div>
@@ -327,18 +327,18 @@
                     </div>
                 </div>
 
-                <a href="{{ route('laporan.index', ['month' => $month, 'year' => $year]) }}" class="badge-clean badge-clean-accent" style="text-decoration: none; padding: 8px 18px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                <a href="{{ route('laporan.index', ['month' => $month, 'year' => $year]) }}" class="action-chip-link action-chip-accent" style="padding: 8px 18px; font-size: 13px;">
                     <span>Lihat Rekapitulasi &amp; Cetak Nilai Divisi</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
             </div>
         @else
-            <div class="table-responsive" style="overflow-x: auto;">
+            <div class="table-responsive">
                 <table class="table-interactive" style="width: 100%; border-collapse: collapse; font-size: 13px;">
                     <thead>
                         <tr style="border-bottom: 1px solid #E2E8F0; color: #64748B; font-size: 11.5px; text-transform: uppercase;">
-                            <th style="padding: 10px 12px; text-align: left;">Nama &amp; NIK</th>
-                            <th style="padding: 10px 12px; text-align: left;">Posisi / Jabatan</th>
+                            <th style="padding: 10px 12px; text-align: start;">Nama &amp; NIK</th>
+                            <th style="padding: 10px 12px; text-align: start;">Posisi / Jabatan</th>
                             <th style="padding: 10px 12px; text-align: center;">Tindakan</th>
                         </tr>
                     </thead>
@@ -356,10 +356,10 @@
                                 <td style="padding: 12px; text-align: center;">
                                     @if($periodStatus === 'closed')
                                         <span class="badge-clean badge-clean-neutral" title="Periode divisi telah dikunci oleh administrator">
-                                            Terkunci
+                                             Terkunci
                                         </span>
                                     @else
-                                        <a href="{{ route('penilaian.create', ['employee_id' => $emp->id, 'month' => $month, 'year' => $year]) }}" class="badge-clean badge-clean-accent" style="text-decoration: none; padding: 6px 14px;">
+                                        <a href="{{ route('penilaian.create', ['employee_id' => $emp->id, 'month' => $month, 'year' => $year]) }}" class="action-chip-link action-chip-accent" style="padding: 6px 14px;">
                                             + Input Nilai
                                         </a>
                                     @endif

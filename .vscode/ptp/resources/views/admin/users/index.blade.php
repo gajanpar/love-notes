@@ -17,7 +17,7 @@
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px;">
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12.5px; font-weight: 600; color: #64748b;">Total Akun Terdaftar</span>
+            <span class="kpi-label" title="Total Akun Terdaftar" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748b;">Total Akun Terdaftar</span>
             <div style="width: 34px; height: 34px; border-radius: 8px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
@@ -28,7 +28,7 @@
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12.5px; font-weight: 600; color: #16a34a;">Penilai Aktif (Kepala Divisi)</span>
+            <span class="kpi-label" title="Penilai Aktif (Kepala Divisi)" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #16a34a;">Penilai Aktif (Kepala Divisi)</span>
             <div style="width: 34px; height: 34px; border-radius: 8px; background: #dcfce7; color: #16a34a; display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
             </div>
@@ -39,7 +39,7 @@
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12.5px; font-weight: 600; color: #0369a1;">Administrator SDM / IT</span>
+            <span class="kpi-label" title="Administrator SDM / IT" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #0369a1;">Administrator SDM / IT</span>
             <div style="width: 34px; height: 34px; border-radius: 8px; background: #f0f9ff; color: #0369a1; display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
@@ -50,7 +50,7 @@
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12.5px; font-weight: 600; color: #64748b;">Akun Nonaktif</span>
+            <span class="kpi-label" title="Akun Nonaktif" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748b;">Akun Nonaktif</span>
             <div style="width: 34px; height: 34px; border-radius: 8px; background: #f1f5f9; color: #64748b; display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </div>
@@ -100,7 +100,7 @@
         </button>
 
         @if($search !== '' || $currentRole !== 'all' || $currentDivision !== 'all' || $currentStatus !== 'all')
-            <a href="{{ route('admin.users.index') }}" style="font-size: 12.5px; color: #dc2626; font-weight: 600; text-decoration: none;">
+            <a href="{{ route('admin.users.index') }}" style="font-size: 12.5px; color: #dc2626; font-weight: 600; text-decoration: none; padding: 8px 12px; display: inline-flex; align-items: center;">
                 Reset
             </a>
         @endif
@@ -119,15 +119,15 @@
             Tidak ada akun pengguna yang sesuai dengan filter.
         </div>
     @else
-        <div style="overflow-x: auto;">
+        <div class="table-responsive">
             <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
                 <thead>
                     <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
-                        <th style="padding: 13px 18px; text-align: left; width: 45px;">No</th>
-                        <th style="padding: 13px 18px; text-align: left;">Nama &amp; Jabatan</th>
-                        <th style="padding: 13px 18px; text-align: left;">Username &amp; Email</th>
-                        <th style="padding: 13px 18px; text-align: left;">Peran Sistem</th>
-                        <th style="padding: 13px 18px; text-align: left;">Divisi Wewenang</th>
+                        <th style="padding: 13px 18px; text-align: start; width: 45px;">No</th>
+                        <th style="padding: 13px 18px; text-align: start;">Nama &amp; Jabatan</th>
+                        <th style="padding: 13px 18px; text-align: start;">Username &amp; Email</th>
+                        <th style="padding: 13px 18px; text-align: start;">Peran Sistem</th>
+                        <th style="padding: 13px 18px; text-align: start;">Divisi Wewenang</th>
                         <th style="padding: 13px 18px; text-align: center;">Rekam Evaluasi</th>
                         <th style="padding: 13px 18px; text-align: center;">Status</th>
                         <th style="padding: 13px 18px; text-align: center; width: 255px;">Aksi</th>
@@ -185,7 +185,7 @@
                                 @endif
                             </td>
                             <td style="padding: 13px 18px; text-align: center;">
-                                <div style="display: flex; gap: 6px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                                <div style="display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap;">
                                     <button type="button"
                                             class="js-edit-user"
                                             data-id="{{ $u->id }}"
@@ -249,13 +249,13 @@
 
 <!-- Modal Tambah Pengguna -->
 <div id="createUserModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 540px; padding: 28px;">
+    <div class="modal-box" style="max-width: 540px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 6px 0;">Buat Akun Pengguna Baru</h3>
         <p style="font-size: 13px; color: #64748b; margin-bottom: 20px;">Tambahkan akun Kepala Divisi (Penilai) atau Administrator SDM/IT.</p>
 
         <form method="POST" action="{{ route('admin.users.store') }}">
             @csrf
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="modal-grid-2">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Nama Lengkap <span style="color: #dc2626;">*</span></label>
                     <input type="text" name="name" required placeholder="Contoh: Budi Santoso" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -266,7 +266,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="modal-grid-2">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Peran (Role) <span style="color: #dc2626;">*</span></label>
                     <select name="role" id="create_user_role" onchange="syncDivisionVisibility('create')" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -285,7 +285,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="modal-grid-2">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Jabatan Struktural</label>
                     <input type="text" name="position" placeholder="Contoh: Kepala Divisi Operasi" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -296,7 +296,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px;">
+            <div class="modal-grid-2" style="margin-bottom: 18px;">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Password Awal <span style="color: #dc2626;">*</span></label>
                     <input type="password" name="password" required minlength="8" placeholder="Minimal 8 karakter" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -307,7 +307,7 @@
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+            <div class="modal-actions-sticky">
                 <button type="button" onclick="closeCreateUserModal()" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Batal</button>
                 <button type="submit" style="background: #0072CE; color: #ffffff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Buat Akun</button>
             </div>
@@ -317,14 +317,14 @@
 
 <!-- Modal Edit Pengguna -->
 <div id="editUserModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 540px; padding: 28px;">
+    <div class="modal-box" style="max-width: 540px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 6px 0;">Edit Profil Akun Pengguna</h3>
         <p style="font-size: 13px; color: #64748b; margin-bottom: 20px;">Perbarui informasi profil, peran, atau divisi wewenang penilai.</p>
 
         <form id="editUserForm" method="POST" action="">
             @csrf
             @method('PUT')
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="modal-grid-2">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Nama Lengkap <span style="color: #dc2626;">*</span></label>
                     <input type="text" name="name" id="edit_user_name" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -335,7 +335,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+            <div class="modal-grid-2">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Peran (Role) <span style="color: #dc2626;">*</span></label>
                     <select name="role" id="edit_user_role" onchange="syncDivisionVisibility('edit')" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -354,7 +354,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1.2fr 1.2fr 0.8fr; gap: 12px; margin-bottom: 18px;">
+            <div class="modal-grid-3">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Jabatan Struktural</label>
                     <input type="text" name="position" id="edit_user_position" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -372,7 +372,7 @@
                 </div>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+            <div class="modal-actions-sticky">
                 <button type="button" onclick="closeEditUserModal()" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Batal</button>
                 <button type="submit" style="background: #0072CE; color: #ffffff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Simpan Perubahan</button>
             </div>
@@ -382,7 +382,7 @@
 
 <!-- Modal Reset Password oleh Admin -->
 <div id="resetPasswordModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 450px; padding: 28px;">
+    <div class="modal-box" style="max-width: 450px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;">
             <svg style="color: #d97706;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
             Reset Kata Sandi Pengguna
@@ -403,7 +403,7 @@
                 <input type="password" name="new_password_confirmation" id="reset_new_password_confirmation" required minlength="8" placeholder="Ketik ulang password baru" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+            <div class="modal-actions-sticky">
                 <button type="button" onclick="closeResetPasswordModal()" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Batal</button>
                 <button type="submit" style="background: #d97706; color: #ffffff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Konfirmasi Reset Sandi</button>
             </div>

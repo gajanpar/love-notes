@@ -24,7 +24,7 @@
 
     @if($isDefaultPassword)
         <!-- Peringatan Kata Sandi Bawaan -->
-        <div style="background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #f59e0b; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: flex-start; gap: 14px;">
+        <div style="background: #fffbeb; border: 1px solid #fde68a; border-inline-start: 4px solid #f59e0b; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: flex-start; gap: 14px;">
             <div style="width: 32px; height: 32px; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             </div>
@@ -100,7 +100,7 @@
 
             @if($errors->any())
                 <div role="alert" style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: #991b1b;">
-                    <ul style="margin: 0; padding-left: 20px;">
+                    <ul style="margin: 0; padding-inline-start: 20px;">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -118,9 +118,9 @@
                     </label>
                     <div style="position: relative;">
                         <input type="password" name="current_password" id="current_password" required autocomplete="current-password"
-                            class="form-input" style="width: 100%; padding: 10px 44px 10px 14px; font-size: 13.5px; border: 1px solid #64748b; border-radius: 8px; color: #0f172a;"
+                            class="form-input" style="width: 100%; padding-block: 10px; padding-inline-start: 14px; padding-inline-end: 44px; font-size: 13.5px; border: 1px solid #64748b; border-radius: 8px; color: #0f172a;"
                             placeholder="Masukkan kata sandi lama Anda">
-                        <button type="button" class="table-action-btn" onclick="togglePasswordVisibility('current_password', this)" aria-label="Tampilkan kata sandi saat ini" aria-pressed="false" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #475569; padding: 6px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;">
+                        <button type="button" class="table-action-btn" onclick="togglePasswordVisibility('current_password', this)" aria-label="Tampilkan kata sandi saat ini" aria-pressed="false" style="position: absolute; inset-inline-end: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #475569; padding: 6px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;">
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
                         </button>
                     </div>
@@ -132,9 +132,9 @@
                     </label>
                     <div style="position: relative;">
                         <input type="password" name="password" id="new_password" required minlength="8" autocomplete="new-password"
-                            class="form-input" style="width: 100%; padding: 10px 44px 10px 14px; font-size: 13.5px; border: 1px solid #64748b; border-radius: 8px; color: #0f172a;"
+                            class="form-input" style="width: 100%; padding-block: 10px; padding-inline-start: 14px; padding-inline-end: 44px; font-size: 13.5px; border: 1px solid #64748b; border-radius: 8px; color: #0f172a;"
                             placeholder="Minimal 8 karakter">
-                        <button type="button" class="table-action-btn" onclick="togglePasswordVisibility('new_password', this)" aria-label="Tampilkan kata sandi baru" aria-pressed="false" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #475569; padding: 6px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;">
+                        <button type="button" class="table-action-btn" onclick="togglePasswordVisibility('new_password', this)" aria-label="Tampilkan kata sandi baru" aria-pressed="false" style="position: absolute; inset-inline-end: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #475569; padding: 6px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;">
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
                         </button>
                     </div>
@@ -146,9 +146,9 @@
                     </label>
                     <div style="position: relative;">
                         <input type="password" name="password_confirmation" id="password_confirmation" required minlength="8" autocomplete="new-password"
-                            class="form-input" style="width: 100%; padding: 10px 44px 10px 14px; font-size: 13.5px; border: 1px solid #64748b; border-radius: 8px; color: #0f172a;"
+                            class="form-input" style="width: 100%; padding-block: 10px; padding-inline-start: 14px; padding-inline-end: 44px; font-size: 13.5px; border: 1px solid #64748b; border-radius: 8px; color: #0f172a;"
                             placeholder="Ulangi kata sandi baru">
-                        <button type="button" class="table-action-btn" onclick="togglePasswordVisibility('password_confirmation', this)" aria-label="Tampilkan konfirmasi kata sandi baru" aria-pressed="false" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #475569; padding: 6px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;">
+                        <button type="button" class="table-action-btn" onclick="togglePasswordVisibility('password_confirmation', this)" aria-label="Tampilkan konfirmasi kata sandi baru" aria-pressed="false" style="position: absolute; inset-inline-end: 6px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #475569; padding: 6px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center;">
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
                         </button>
                     </div>
@@ -156,7 +156,7 @@
 
                 <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 12px; color: #475569;">
                     <div style="font-weight: 600; color: #00223B; margin-bottom: 4px;">Ketentuan Keamanan Kata Sandi Pelindo:</div>
-                    <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
+                    <ul style="margin: 0; padding-inline-start: 18px; line-height: 1.5;">
                         <li>Minimal terdiri dari <strong>8 karakter</strong>.</li>
                         <li>Harus berbeda dari kata sandi saat ini.</li>
                         <li>Gunakan kombinasi huruf besar, huruf kecil, dan angka.</li>

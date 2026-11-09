@@ -20,25 +20,25 @@
 <!-- Kartu Metrik Backup & Penyimpanan -->
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px;">
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-        <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Total Arsip Cadangan</div>
+        <div class="kpi-label" title="Total Arsip Cadangan" tabindex="0" style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Total Arsip Cadangan</div>
         <div class="tabular-nums" style="font-size: 28px; font-weight: 800; color: #00223B; margin-top: 4px;">{{ $totalCount }} Berkas</div>
         <div style="font-size: 11.5px; color: #005FA8; margin-top: 2px;">Maksimal 10 snapshot terbaru</div>
     </div>
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-        <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Ukuran Total Cadangan</div>
+        <div class="kpi-label" title="Ukuran Total Cadangan" tabindex="0" style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Ukuran Total Cadangan</div>
         <div class="tabular-nums" style="font-size: 28px; font-weight: 800; color: #0369a1; margin-top: 4px;">{{ $totalSizeFormatted }}</div>
         <div style="font-size: 11.5px; color: #0369a1; margin-top: 2px;">Penyimpanan terkompresi</div>
     </div>
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-        <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Ruang Disk Bebas</div>
+        <div class="kpi-label" title="Ruang Disk Bebas" tabindex="0" style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Ruang Disk Bebas</div>
         <div class="tabular-nums" style="font-size: 28px; font-weight: 800; color: #15803d; margin-top: 4px;">{{ $freeDiskFormatted }}</div>
         <div style="font-size: 11.5px; color: #15803d; margin-top: 2px;">Kapasitas aman server lokal</div>
     </div>
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-        <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Cadangan Terakhir</div>
+        <div class="kpi-label" title="Cadangan Terakhir" tabindex="0" style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Cadangan Terakhir</div>
         <div class="tabular-nums" style="font-size: 17px; font-weight: 800; color: #0f172a; margin-top: 8px;">
             {{ $latestBackup ? $latestBackup['created_at'] : 'Belum Ada' }}
         </div>
@@ -57,15 +57,15 @@
 
     <span id="shaCopyStatus" class="sr-only" role="status" aria-live="polite"></span>
 
-    <div class="table-responsive" style="overflow-x: auto;">
+    <div class="table-responsive">
         <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
             <thead>
                 <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">
                     <th style="padding: 10px 12px; text-align: center; width: 40px;">No</th>
-                    <th style="padding: 10px 12px; text-align: left;">Nama Berkas Snapshot</th>
+                    <th style="padding: 10px 12px; text-align: start;">Nama Berkas Snapshot</th>
                     <th style="padding: 10px 12px; text-align: center; width: 135px;">Waktu Pembuatan</th>
-                    <th style="padding: 10px 12px; text-align: center; width: 85px;">Ukuran</th>
-                    <th style="padding: 10px 12px; text-align: left; width: 220px;">Integritas (SHA-256)</th>
+                    <th style="padding: 10px 12px; text-align: end; width: 85px;">Ukuran</th>
+                    <th style="padding: 10px 12px; text-align: start; width: 220px;">Integritas (SHA-256)</th>
                     <th style="padding: 10px 12px; text-align: center; width: 130px;">Aksi</th>
                 </tr>
             </thead>
@@ -86,7 +86,7 @@
                         <td class="tabular-nums" style="padding: 10px 12px; text-align: center; font-size: 12px; color: #334155;">
                             {{ $bk['created_at'] }} WIB
                         </td>
-                        <td class="tabular-nums" style="padding: 10px 12px; text-align: center; font-weight: 600; color: #0369a1; font-size: 12.5px; white-space: nowrap;">
+                        <td class="tabular-nums" style="padding: 10px 12px; text-align: end; font-weight: 600; color: #0369a1; font-size: 12.5px; white-space: nowrap;">
                             {{ $bk['size_formatted'] }}
                         </td>
                         <td style="padding: 10px 12px;">
@@ -108,7 +108,7 @@
                             </details>
                         </td>
                         <td style="padding: 10px 12px; text-align: center;">
-                            <div style="display: flex; gap: 6px; justify-content: center; align-items: center;">
+                            <div style="display: flex; gap: 8px; justify-content: center; align-items: center;">
                                 <a href="{{ route('admin.backup.download', $bk['filename']) }}"
                                    class="table-action-btn"
                                    title="Unduh file cadangan ke komputer"
@@ -149,7 +149,7 @@
         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#005FA8" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         <span>Prosedur Pemulihan Bencana (Disaster Recovery Protocol) - Tim IT Pelindo</span>
     </h4>
-    <ol style="font-size: 12.5px; color: #334155; line-height: 1.6; margin: 0; padding-left: 20px;">
+    <ol style="font-size: 12.5px; color: #334155; line-height: 1.6; margin: 0; padding-inline-start: 20px;">
         <li><strong>Unduh Arsip:</strong> Unduh snapshot terbaru dari daftar di atas ke media penyimpanan aman terpisah (flashdisk dinas / server backup pelabuhan).</li>
         <li><strong>Hentikan Sesi Aktif:</strong> Hentikan server aplikasi sementara untuk mencegah penulisan data baru saat proses pemulihan.</li>
         <li><strong>Timpa Berkas Database:</strong> Ganti file <code>database/database.sqlite</code> dengan berkas snapshot cadangan yang telah diunduh.</li>
@@ -159,7 +159,7 @@
 </div>
 
 <!-- Modal Konfirmasi Kontekstual Backup & Hapus Snapshot -->
-<dialog id="confirmBackupActionModal" class="modal-dialog" aria-labelledby="confirmBackupTitle" style="text-align: left; max-width: 440px;">
+<dialog id="confirmBackupActionModal" class="modal-dialog" aria-labelledby="confirmBackupTitle" style="text-align: start; max-width: 440px;">
     <h3 id="confirmBackupTitle" style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">Konfirmasi Tindakan Cadangan</h3>
     <p id="confirmBackupDesc" style="font-size: 13.5px; color: #475569; line-height: 1.55; margin: 0 0 20px 0;"></p>
     <div style="display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap;">

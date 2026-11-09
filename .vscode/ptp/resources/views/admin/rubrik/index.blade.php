@@ -21,10 +21,10 @@
 </div>
 
 <!-- Ringkasan Kalibrasi Skor & Skala Rating -->
-<div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; margin-bottom: 24px;">
+<div class="rubrik-overview-grid">
     <!-- Skala Rating 1-6 -->
     <div class="card" style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
             <div>
                 <h3 style="font-size: 15px; font-weight: 700; color: #0f172a; margin: 0;">Matriks Bobot Rating Terstandarisasi</h3>
                 <span style="font-size: 12px; color: #64748b;">{{ $totalCategories }} Kategori &bull; {{ $totalSubcategories }} Butir Indikator &bull; Skor Maksimal {{ number_format($maxTotalScore, 2) }}</span>
@@ -32,7 +32,7 @@
             <span style="background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 700;">SRS v1.0</span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;">
+        <div class="rubrik-rating-grid">
             @foreach($ratingOptions as $opt)
                 <div style="border: 1px solid #e2e8f0; border-top: 3px solid {{ $opt['color'] }}; border-radius: 8px; padding: 10px 8px; text-align: center; background: #fafafa;">
                     <div style="font-size: 16px; font-weight: 800; color: {{ $opt['color'] }};">R{{ $opt['rating'] }}</div>
@@ -46,7 +46,7 @@
     <!-- Ambang Predikat Kinerja -->
     <div class="card" style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
         <h3 style="font-size: 15px; font-weight: 700; color: #0f172a; margin: 0 0 12px 0;">Ambang Batas Predikat Total Skor (0&ndash;100)</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12.5px;">
+        <div class="rubrik-threshold-grid">
             <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 10px 12px; border-radius: 8px;">
                 <div style="font-weight: 700; color: #15803d;">Sangat Baik</div>
                 <div style="color: #166534; font-size: 12px;">Total Skor &ge; 85.00</div>
@@ -71,7 +71,7 @@
 <div style="display: flex; flex-direction: column; gap: 18px;">
     @foreach($categories as $cat)
         <div class="card" style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="padding: 15px 22px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="padding: 15px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <span style="background: #00223B; color: #38bdf8; width: 32px; height: 32px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 800;">
                         {{ $cat->order_index }}
@@ -112,69 +112,71 @@
             </div>
 
             @if($cat->subcategories->isEmpty())
-                <div style="padding: 20px 24px; color: #94a3b8; font-size: 13px; font-style: italic;">
+                <div style="padding: 20px 20px; color: #94a3b8; font-size: 13px; font-style: italic;">
                     Belum ada butir indikator perilaku pada kategori ini.
                 </div>
             @else
-                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                    <thead>
-                        <tr style="border-bottom: 1px solid #f1f5f9; color: #64748b; font-size: 11px; text-transform: uppercase;">
-                            <th style="padding: 10px 22px; text-align: left; width: 70px;">Urutan</th>
-                            <th style="padding: 10px 18px; text-align: left;">Pernyataan Indikator Objektif</th>
-                            <th style="padding: 10px 18px; text-align: left; width: 32%;">Template Alasan Default</th>
-                            <th style="padding: 10px 18px; text-align: center; width: 110px;">Digunakan</th>
-                            <th style="padding: 10px 22px; text-align: right; width: 140px;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($cat->subcategories as $sub)
-                            <tr style="border-bottom: 1px solid #f8fafc;">
-                                <td style="padding: 13px 22px; font-weight: 700; color: #0284c7;">
-                                    #{{ $sub->order_index }}
-                                </td>
-                                <td style="padding: 13px 18px; color: #0f172a; font-weight: 600; line-height: 1.45;">
-                                    {{ $sub->name }}
-                                    @if($sub->description)
-                                        <div style="font-size: 11.5px; color: #64748b; font-weight: 400; margin-top: 2px;">{{ $sub->description }}</div>
-                                    @endif
-                                </td>
-                                <td style="padding: 13px 18px; color: #475569; font-size: 12px; line-height: 1.45;">
-                                    {{ $sub->default_reason ?: '-' }}
-                                </td>
-                                <td style="padding: 13px 18px; text-align: center;">
-                                    <span style="background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;">
-                                        {{ $sub->evaluation_details_count }} data
-                                    </span>
-                                </td>
-                                <td style="padding: 13px 22px; text-align: right;">
-                                    <div style="display: inline-flex; gap: 6px; align-items: center;">
-                                        <button type="button"
-                                                class="js-edit-subcategory"
-                                                data-id="{{ $sub->id }}"
-                                                data-category-id="{{ $sub->category_id }}"
-                                                data-name="{{ $sub->name }}"
-                                                data-description="{{ $sub->description }}"
-                                                data-default-reason="{{ $sub->default_reason }}"
-                                                data-order="{{ $sub->order_index }}"
-                                                style="background: #eff6ff; color: #0284c7; border: 1px solid #bae6fd; padding: 5px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 600; cursor: pointer;">
-                                            Edit Butir
-                                        </button>
-
-                                        @if($sub->evaluation_details_count === 0)
-                                            <form method="POST" action="{{ route('admin.rubrik.subcategories.destroy', $sub->id) }}" style="margin: 0;" onsubmit="return confirm('Hapus butir indikator yang belum memiliki riwayat penilaian ini?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" title="Hapus indikator tanpa riwayat" style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 5px 8px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                                                </button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                </td>
+                <div class="table-responsive">
+                    <table class="data-table data-table-rubrik" style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <thead>
+                            <tr style="border-bottom: 1px solid #f1f5f9; color: #64748b; font-size: 11px; text-transform: uppercase;">
+                                <th style="padding: 10px 20px; text-align: start; width: 70px;">Urutan</th>
+                                <th style="padding: 10px 16px; text-align: start;">Pernyataan Indikator Objektif</th>
+                                <th style="padding: 10px 16px; text-align: start; width: 32%;">Template Alasan Default</th>
+                                <th style="padding: 10px 16px; text-align: end; width: 110px;">Digunakan</th>
+                                <th style="padding: 10px 20px; text-align: end; width: 140px;">Aksi</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach($cat->subcategories as $sub)
+                                <tr style="border-bottom: 1px solid #f8fafc;">
+                                    <td style="padding: 13px 20px; font-weight: 700; color: #0284c7; text-align: start;">
+                                        #{{ $sub->order_index }}
+                                    </td>
+                                    <td style="padding: 13px 16px; color: #0f172a; font-weight: 600; line-height: 1.45; text-align: start;">
+                                        {{ $sub->name }}
+                                        @if($sub->description)
+                                            <div style="font-size: 11.5px; color: #64748b; font-weight: 400; margin-top: 2px;">{{ $sub->description }}</div>
+                                        @endif
+                                    </td>
+                                    <td style="padding: 13px 16px; color: #475569; font-size: 12px; line-height: 1.45; text-align: start;">
+                                        {{ $sub->default_reason ?: '-' }}
+                                    </td>
+                                    <td style="padding: 13px 16px; text-align: end;">
+                                        <span class="tabular-nums" style="background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;">
+                                            {{ $sub->evaluation_details_count }} data
+                                        </span>
+                                    </td>
+                                    <td style="padding: 13px 20px; text-align: end;">
+                                        <div style="display: inline-flex; gap: 8px; align-items: center;">
+                                            <button type="button"
+                                                    class="js-edit-subcategory"
+                                                    data-id="{{ $sub->id }}"
+                                                    data-category-id="{{ $sub->category_id }}"
+                                                    data-name="{{ $sub->name }}"
+                                                    data-description="{{ $sub->description }}"
+                                                    data-default-reason="{{ $sub->default_reason }}"
+                                                    data-order="{{ $sub->order_index }}"
+                                                    style="background: #eff6ff; color: #0284c7; border: 1px solid #bae6fd; padding: 5px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 600; cursor: pointer;">
+                                                Edit Butir
+                                            </button>
+
+                                            @if($sub->evaluation_details_count === 0)
+                                                <form method="POST" action="{{ route('admin.rubrik.subcategories.destroy', $sub->id) }}" style="margin: 0;" onsubmit="return confirm('Hapus butir indikator yang belum memiliki riwayat penilaian ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" title="Hapus indikator tanpa riwayat" style="background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 5px 8px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center;">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             @endif
         </div>
     @endforeach
@@ -182,13 +184,13 @@
 
 <!-- Modal Tambah Kategori -->
 <div id="createCategoryModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 460px; padding: 28px;">
+    <div class="modal-box" style="max-width: 460px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 6px 0;">Tambah Kategori Rubrik</h3>
         <p style="font-size: 13px; color: #64748b; margin-bottom: 18px;">Buat kelompok aspek evaluasi baru.</p>
 
         <form method="POST" action="{{ route('admin.rubrik.categories.store') }}">
             @csrf
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div class="modal-grid-2">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Nama Kategori <span style="color: #dc2626;">*</span></label>
                     <input type="text" name="name" required placeholder="Contoh: Integritas K3" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -204,7 +206,7 @@
                 <textarea name="description" rows="2" placeholder="Penjelasan aspek kategori (opsional)" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;"></textarea>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+            <div class="modal-actions-sticky">
                 <button type="button" onclick="closeModalById('createCategoryModal')" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Batal</button>
                 <button type="submit" style="background: #0072CE; color: #ffffff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Simpan Kategori</button>
             </div>
@@ -214,14 +216,14 @@
 
 <!-- Modal Edit Kategori -->
 <div id="editCategoryModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 460px; padding: 28px;">
+    <div class="modal-box" style="max-width: 460px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 6px 0;">Edit Kategori Rubrik</h3>
         <p style="font-size: 13px; color: #64748b; margin-bottom: 18px;">Perbarui nama, urutan tampil, atau deskripsi kategori.</p>
 
         <form id="editCategoryForm" method="POST" action="">
             @csrf
             @method('PUT')
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div class="modal-grid-2">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Nama Kategori <span style="color: #dc2626;">*</span></label>
                     <input type="text" name="name" id="edit_cat_name" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -237,7 +239,7 @@
                 <textarea name="description" id="edit_cat_description" rows="2" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;"></textarea>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+            <div class="modal-actions-sticky">
                 <button type="button" onclick="closeModalById('editCategoryModal')" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Batal</button>
                 <button type="submit" style="background: #0072CE; color: #ffffff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Simpan Perubahan</button>
             </div>
@@ -247,13 +249,13 @@
 
 <!-- Modal Tambah Subkategori -->
 <div id="createSubcategoryModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 540px; padding: 28px;">
+    <div class="modal-box" style="max-width: 540px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 6px 0;">Tambah Butir Indikator Penilaian</h3>
         <p style="font-size: 13px; color: #64748b; margin-bottom: 18px;">Tambahkan pernyataan perilaku objektif ke dalam kategori rubrik.</p>
 
         <form method="POST" action="{{ route('admin.rubrik.subcategories.store') }}">
             @csrf
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div class="modal-grid-2">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Kategori Induk <span style="color: #dc2626;">*</span></label>
                     <select name="category_id" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -278,7 +280,7 @@
                 <textarea name="default_reason" rows="2" placeholder="Contoh: Melaksanakan SOP keselamatan kerja secara konsisten." style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;"></textarea>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+            <div class="modal-actions-sticky">
                 <button type="button" onclick="closeModalById('createSubcategoryModal')" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Batal</button>
                 <button type="submit" style="background: #0072CE; color: #ffffff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Simpan Indikator</button>
             </div>
@@ -288,14 +290,14 @@
 
 <!-- Modal Edit Subkategori -->
 <div id="editSubcategoryModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 540px; padding: 28px;">
+    <div class="modal-box" style="max-width: 540px;">
         <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 6px 0;">Edit Butir Indikator AKHLAK</h3>
         <p style="font-size: 13px; color: #64748b; margin-bottom: 18px;">Perbarui redaksi pernyataan perilaku objektif atau template alasan default.</p>
 
         <form id="editSubcategoryForm" method="POST" action="">
             @csrf
             @method('PUT')
-            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div class="modal-grid-2">
                 <div>
                     <label style="display: block; font-size: 12.5px; font-weight: 600; color: #334155; margin-bottom: 6px;">Kategori Induk <span style="color: #dc2626;">*</span></label>
                     <select name="category_id" id="edit_sub_category" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
@@ -325,7 +327,7 @@
                 <textarea name="default_reason" id="edit_sub_reason" rows="2" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;"></textarea>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+            <div class="modal-actions-sticky">
                 <button type="button" onclick="closeModalById('editSubcategoryModal')" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Batal</button>
                 <button type="submit" style="background: #0072CE; color: #ffffff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Simpan Perubahan</button>
             </div>

@@ -17,9 +17,9 @@
             <span style="color: #CBD5E1; margin: 0 6px;">&bull;</span>
             <span>Batas Waktu Pengisian: <strong style="color: #0F172A;">{{ $slaCutoffDate }}</strong></span>
             @if($isCutoffPassed)
-                <span class="badge-clean badge-clean-neutral" style="margin-left: 4px; font-size: 10px;">Cutoff Berakhir</span>
+                <span class="badge-clean badge-clean-neutral" style="margin-inline-start: 4px; font-size: 10px;">Cutoff Berakhir</span>
             @else
-                <span class="badge-clean badge-clean-warning" style="margin-left: 4px; font-size: 10px;">Sisa {{ $slaDaysRemaining }} Hari</span>
+                <span class="badge-clean badge-clean-warning" style="margin-inline-start: 4px; font-size: 10px;">Sisa {{ $slaDaysRemaining }} Hari</span>
             @endif
         </p>
     </div>
@@ -56,7 +56,7 @@
 </div>
 
 @if(\Illuminate\Support\Facades\Hash::check('password123', Auth::user()->password))
-    <div class="animate-fade-up" style="background: var(--semantic-warning-bg, #FFFBEB); border: 1px solid var(--semantic-warning-border, #FDE68A); border-left: 4px solid #D97706; border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+    <div class="animate-fade-up" style="background: var(--semantic-warning-bg, #FFFBEB); border: 1px solid var(--semantic-warning-border, #FDE68A); border-inline-start: 4px solid #D97706; border-radius: 8px; padding: 12px 18px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
         <div style="display: flex; align-items: center; gap: 12px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <div>
@@ -64,7 +64,7 @@
                 <span style="color: #B45309; font-size: 12.5px;">Akun Super Administrator Anda masih menggunakan kata sandi bawaan sistem. Segera perbarui di menu profil.</span>
             </div>
         </div>
-        <a href="{{ route('profile.index') }}" class="badge-clean badge-clean-warning" style="text-decoration: none; padding: 6px 12px; font-size: 11.5px;">
+        <a href="{{ route('profile.index') }}" class="action-chip-link action-chip-warning" style="font-size: 11.5px;">
             Ganti Kata Sandi &rarr;
         </a>
     </div>
@@ -75,7 +75,7 @@
     <!-- 1. Total TAD -->
     <div class="card-interactive animate-fade-up delay-1" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-            <span class="kpi-label" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Total Tenaga Alih Daya</span>
+            <span class="kpi-label" title="Total Tenaga Alih Daya" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Total Tenaga Alih Daya</span>
             <div style="width: 32px; height: 32px; border-radius: 8px; background: #F1F5F9; color: var(--brand-navy, #00223B); display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
@@ -84,7 +84,7 @@
             <span class="tabular-nums counter kpi-val" data-target="{{ $totalEmployees }}" style="font-size: var(--font-scale-hero, 34px); font-weight: 800; color: #0F172A; line-height: 1;">{{ $totalEmployees }}</span>
             <span style="font-size: 12.5px; color: #64748B; font-weight: 500;">karyawan</span>
         </div>
-        <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: #64748B; border-top: 1px solid #F1F5F9; padding-top: 8px;">
+        <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: #64748B; padding-top: 4px;">
             <span>Mitra: <strong>PT PDS</strong></span>
             <span class="badge-clean badge-clean-neutral" style="font-size: 10.5px;">{{ $totalDivisions }} Divisi</span>
         </div>
@@ -93,7 +93,7 @@
     <!-- 2. Progres Evaluasi Cabang -->
     <div class="card-interactive animate-fade-up delay-2" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-            <span class="kpi-label" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Kelengkapan Evaluasi</span>
+            <span class="kpi-label" title="Kelengkapan Evaluasi" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Kelengkapan Evaluasi</span>
             <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--semantic-success-bg, #ECFDF5); color: var(--semantic-success-text, #059669); display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
@@ -101,7 +101,7 @@
         <div style="display: flex; align-items: baseline; gap: 8px;">
             <span class="tabular-nums counter kpi-val" data-target="{{ $branchProgress }}" style="font-size: var(--font-scale-hero, 34px); font-weight: 800; color: #0F172A; line-height: 1;">{{ $branchProgress }}</span>
             <span style="font-size: 18px; font-weight: 700; color: #0F172A;">%</span>
-            <span class="badge-clean {{ $branchProgress == 100 ? 'badge-clean-success' : 'badge-clean-accent' }}" style="margin-left: auto;">
+            <span class="badge-clean {{ $branchProgress == 100 ? 'badge-clean-success' : 'badge-clean-accent' }}" style="margin-inline-start: auto;">
                 {{ $branchProgress == 100 ? 'Lengkap' : 'Berjalan' }}
             </span>
         </div>
@@ -119,7 +119,7 @@
     <!-- 3. Rata-Rata Skor Kinerja Cabang (dengan MoM Trend) -->
     <div class="card-interactive animate-fade-up delay-3" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-            <span class="kpi-label" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Rata-Rata Skor Kinerja</span>
+            <span class="kpi-label" title="Rata-Rata Skor Kinerja" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Rata-Rata Skor Kinerja</span>
             <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--brand-accent-subtle, #EBF5FF); color: var(--brand-accent, #0072CE); display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
             </div>
@@ -132,16 +132,16 @@
 
             <!-- MoM Trend Badge -->
             @if($momDelta !== null)
-                <span class="badge-clean {{ $momDelta >= 0 ? 'badge-clean-success' : 'badge-clean-danger' }}" style="margin-left: auto;" title="Perubahan dibanding bulan {{ $prevMonthName }}">
+                <span class="badge-clean {{ $momDelta >= 0 ? 'badge-clean-success' : 'badge-clean-danger' }}" style="margin-inline-start: auto;" title="Perubahan dibanding bulan {{ $prevMonthName }}">
                     {{ $momDelta >= 0 ? '+' : '' }}{{ $momDelta }} vs {{ $prevMonthName }}
                 </span>
             @else
-                <span class="badge-clean badge-clean-navy" style="margin-left: auto;">
+                <span class="badge-clean badge-clean-navy" style="margin-inline-start: auto;">
                     {{ $averagePredicate }}
                 </span>
             @endif
         </div>
-        <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: #64748B; border-top: 1px solid #F1F5F9; padding-top: 8px;">
+        <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: #64748B; padding-top: 4px;">
             <span>Predikat: <strong>{{ $averagePredicate }}</strong></span>
             <span>Rentang: <strong>{{ $lowestScore }} &mdash; {{ $highestScore }}</strong></span>
         </div>
@@ -150,7 +150,7 @@
     <!-- 4. Kepatuhan & Status Penguncian -->
     <div class="card-interactive animate-fade-up delay-4" style="padding: 20px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
-            <span class="kpi-label" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Kepatuhan Periode</span>
+            <span class="kpi-label" title="Kepatuhan Periode" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 0.3px;">Kepatuhan Periode</span>
             <div style="width: 32px; height: 32px; border-radius: 8px; background: #F1F5F9; color: #475569; display: flex; align-items: center; justify-content: center;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </div>
@@ -159,14 +159,14 @@
             <span class="tabular-nums kpi-val" style="font-size: var(--font-scale-hero, 34px); font-weight: 800; color: #0F172A; line-height: 1;">{{ $lockedDivisionsCount }}</span>
             <span style="font-size: 15px; color: #64748B; font-weight: 600;">/ {{ $totalDivisions }} Divisi</span>
             @if($pendingRequestsCount > 0)
-                <a href="{{ route('admin.requests.index') }}" class="badge-clean badge-clean-warning" style="margin-left: auto; text-decoration: none;" title="Tinjau Permohonan">
+                <a href="{{ route('admin.requests.index') }}" class="action-chip-link action-chip-warning" style="margin-inline-start: auto;" title="Tinjau Permohonan">
                     {{ $pendingRequestsCount }} Pending
                 </a>
             @else
-                <span class="badge-clean badge-clean-neutral" style="margin-left: auto;">Terkunci</span>
+                <span class="badge-clean badge-clean-neutral" style="margin-inline-start: auto;">Terkunci</span>
             @endif
         </div>
-        <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: #64748B; border-top: 1px solid #F1F5F9; padding-top: 8px;">
+        <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between; font-size: 11.5px; color: #64748B; padding-top: 4px;">
             <span>Batas SLA: <strong>25 {{ $monthName }} {{ $year }}, 23:59 WIB</strong></span>
             <a href="{{ route('admin.periods.index') }}" style="color: var(--brand-accent, #0072CE); text-decoration: none; font-weight: 600;">Kelola &rarr;</a>
         </div>
@@ -325,13 +325,13 @@
                     <span style="width: 8px; height: 8px; border-radius: 50%; background: #059669;"></span>
                     <strong style="font-size: 13px; color: #0F172A; text-transform: uppercase; letter-spacing: 0.3px;">5 Kinerja Tertinggi (High Performers)</strong>
                 </div>
-                <div style="overflow-x: auto;">
+                <div class="table-responsive">
                     <table class="table-interactive" style="width: 100%; border-collapse: collapse; font-size: 12.5px;">
                         <thead>
                             <tr style="border-bottom: 1px solid #E2E8F0; color: #64748B; font-size: 11px; text-transform: uppercase;">
-                                <th style="padding: 8px 10px; text-align: left;">Karyawan</th>
-                                <th style="padding: 8px 10px; text-align: left;">Divisi</th>
-                                <th style="padding: 8px 10px; text-align: right;">Skor</th>
+                                <th style="padding: 8px 10px; text-align: start;">Karyawan</th>
+                                <th style="padding: 8px 10px; text-align: start;">Divisi</th>
+                                <th style="padding: 8px 10px; text-align: end;">Skor</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -344,7 +344,7 @@
                                     <td style="padding: 10px 10px; color: #475569; font-size: 11.5px;">
                                         {{ $eval->division->name ?? '-' }}
                                     </td>
-                                    <td style="padding: 10px 10px; text-align: right;">
+                                    <td style="padding: 10px 10px; text-align: end;">
                                         <span class="tabular-nums" style="font-weight: 800; color: #0F172A; font-size: 13px;">{{ $eval->total_score }}</span>
                                         <div><span class="badge-clean badge-clean-navy" style="font-size: 9.5px; padding: 2px 6px;">{{ $eval->predicate }}</span></div>
                                     </td>
@@ -361,13 +361,13 @@
                     <span style="width: 8px; height: 8px; border-radius: 50%; background: #DC2626;"></span>
                     <strong style="font-size: 13px; color: #0F172A; text-transform: uppercase; letter-spacing: 0.3px;">5 Kinerja Terendah (Perlu Pembinaan)</strong>
                 </div>
-                <div style="overflow-x: auto;">
+                <div class="table-responsive">
                     <table class="table-interactive" style="width: 100%; border-collapse: collapse; font-size: 12.5px;">
                         <thead>
                             <tr style="border-bottom: 1px solid #E2E8F0; color: #64748B; font-size: 11px; text-transform: uppercase;">
-                                <th style="padding: 8px 10px; text-align: left;">Karyawan</th>
-                                <th style="padding: 8px 10px; text-align: left;">Divisi</th>
-                                <th style="padding: 8px 10px; text-align: right;">Skor</th>
+                                <th style="padding: 8px 10px; text-align: start;">Karyawan</th>
+                                <th style="padding: 8px 10px; text-align: start;">Divisi</th>
+                                <th style="padding: 8px 10px; text-align: end;">Skor</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -380,7 +380,7 @@
                                     <td style="padding: 10px 10px; color: #475569; font-size: 11.5px;">
                                         {{ $eval->division->name ?? '-' }}
                                     </td>
-                                    <td style="padding: 10px 10px; text-align: right;">
+                                    <td style="padding: 10px 10px; text-align: end;">
                                         <span class="tabular-nums" style="font-weight: 800; color: #991B1B; font-size: 13px;">{{ $eval->total_score }}</span>
                                         <div><span class="badge-clean {{ $eval->predicate === 'Perlu Perhatian' ? 'badge-clean-danger' : 'badge-clean-warning' }}" style="font-size: 9.5px; padding: 2px 6px;">{{ $eval->predicate }}</span></div>
                                     </td>
@@ -398,25 +398,25 @@
 <div class="golden-grid" style="margin-bottom: 28px;">
     <!-- Left Column (62%): Ringkasan Progres & Kinerja per Divisi -->
     <div class="card-interactive animate-fade-up delay-2" style="padding: 24px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid #F1F5F9;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px;">
             <div>
                 <h3 style="font-size: var(--font-scale-subhead, 16px); font-weight: 700; color: #0F172A; margin: 0 0 2px 0;">
                     Progres Penilaian per Divisi
                 </h3>
                 <p style="font-size: 12.5px; color: #64748B; margin: 0;">Status pengisian evaluasi kinerja oleh masing-masing Kepala Divisi</p>
             </div>
-            <a href="{{ route('admin.periods.index') }}" class="badge-clean badge-clean-neutral" style="text-decoration: none;">
+            <a href="{{ route('admin.periods.index') }}" class="action-chip-link action-chip-neutral">
                 Kelola Periode &rarr;
             </a>
         </div>
 
-        <div class="table-responsive" style="overflow-x: auto;">
+        <div class="table-responsive">
             <table class="table-interactive" style="width: 100%; border-collapse: collapse; font-size: 13px;">
                 <thead>
                     <tr style="border-bottom: 1px solid #E2E8F0; color: #64748B; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.5px;">
-                        <th style="padding: 10px 12px; text-align: left;">Divisi Operasional</th>
-                        <th style="padding: 10px 12px; text-align: left;">Progres Penyelesaian</th>
-                        <th style="padding: 10px 12px; text-align: center;">Rata-Rata</th>
+                        <th style="padding: 10px 12px; text-align: start;">Divisi Operasional</th>
+                        <th style="padding: 10px 12px; text-align: start;">Progres Penyelesaian</th>
+                        <th style="padding: 10px 12px; text-align: end;">Rata-Rata</th>
                         <th style="padding: 10px 12px; text-align: center;">Status Periode</th>
                     </tr>
                 </thead>
@@ -438,7 +438,7 @@
                                     <div style="width: {{ $stat['progress'] }}%; height: 100%; background: {{ $stat['progress'] == 100 ? 'var(--semantic-success-text, #059669)' : 'var(--brand-accent, #0072CE)' }}; border-radius: 999px;"></div>
                                 </div>
                             </td>
-                            <td style="padding: 14px 12px; text-align: center;">
+                            <td style="padding: 14px 12px; text-align: end;">
                                 <span class="tabular-nums" style="font-weight: 700; color: #0F172A; font-size: 13.5px;">
                                     {{ $stat['average_score'] > 0 ? number_format($stat['average_score'], 1) : '-' }}
                                 </span>
@@ -573,7 +573,7 @@
                     </span>
                     <span style="display: flex; align-items: center; gap: 8px;">
                         <span class="tabular-nums" style="font-size: 12px; color: #64748B;">{{ $pct }}%</span>
-                        <span class="tabular-nums" style="font-size: 13px; font-weight: 700; color: #0F172A; min-width: 24px; text-align: right;">{{ $predCount }}</span>
+                        <span class="tabular-nums" style="font-size: 13px; font-weight: 700; color: #0F172A; min-width: 24px; text-align: end;">{{ $predCount }}</span>
                     </span>
                 </button>
             @endforeach
@@ -601,16 +601,16 @@
             Seluruh periode penilaian cabang terkendali. Tidak ada permohonan akses berstatus pending.
         </div>
     @else
-        <div style="overflow-x: auto;">
+        <div class="table-responsive">
             <table class="table-interactive" style="width: 100%; border-collapse: collapse; font-size: 13px;">
                 <thead>
                     <tr style="background: #F8FAFC; border-bottom: 1px solid #E2E8F0; color: #64748B; font-size: 11px; text-transform: uppercase;">
-                        <th style="padding: 10px 16px; text-align: left;">Tanggal</th>
-                        <th style="padding: 10px 16px; text-align: left;">Pemohon (Penilai)</th>
-                        <th style="padding: 10px 16px; text-align: left;">Divisi</th>
-                        <th style="padding: 10px 16px; text-align: left;">Tipe Permohonan</th>
-                        <th style="padding: 10px 16px; text-align: left;">Subjek / Periode</th>
-                        <th style="padding: 10px 16px; text-align: left;">Alasan</th>
+                        <th style="padding: 10px 16px; text-align: start;">Tanggal</th>
+                        <th style="padding: 10px 16px; text-align: start;">Pemohon (Penilai)</th>
+                        <th style="padding: 10px 16px; text-align: start;">Divisi</th>
+                        <th style="padding: 10px 16px; text-align: start;">Tipe Permohonan</th>
+                        <th style="padding: 10px 16px; text-align: start;">Subjek / Periode</th>
+                        <th style="padding: 10px 16px; text-align: start;">Alasan</th>
                     </tr>
                 </thead>
                 <tbody>

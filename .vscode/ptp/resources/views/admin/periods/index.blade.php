@@ -19,7 +19,7 @@
 </div>
 
 <!-- Informasi SOP Keamanan & Integritas Data -->
-<div style="background: #f0fdf4; border-left: 4px solid #16a34a; padding: 14px 18px; border-radius: 8px; margin-bottom: 24px; display: flex; align-items: flex-start; gap: 14px;">
+<div style="background: #f0fdf4; border-inline-start: 4px solid #16a34a; padding: 14px 18px; border-radius: 8px; margin-bottom: 24px; display: flex; align-items: flex-start; gap: 14px;">
     <svg style="color: #16a34a; flex-shrink: 0; margin-top: 2px;" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
     <div style="font-size: 13px; color: #166534; line-height: 1.5;">
         <strong>Ketentuan Periode Penilaian (SRS v1.0):</strong>
@@ -39,7 +39,7 @@
 
         <div style="display: flex; align-items: center; gap: 8px;">
             <label for="bulk_month" style="font-size: 13px; font-weight: 600; color: #334155;">Pilih Bulan:</label>
-            <select name="month" id="bulk_month" class="form-control-custom" style="padding: 7px 12px; font-size: 13px; width: 170px;">
+            <select name="month" id="bulk_month" class="form-control-custom" style="padding: 7px 12px; font-size: 13px; width: 170px; max-width: 100%; min-width: 0;">
                 @foreach($monthNames as $m => $mName)
                     <option value="{{ $m }}" {{ $m == $currentMonth ? 'selected' : '' }}>
                         {{ $mName }}
@@ -54,7 +54,7 @@
                 Buka Semua Divisi
             </button>
 
-            <button type="submit" name="action" value="close_all" onclick="return confirm('Apakah Anda yakin ingin MENUTUP akses penilaian untuk SEMUA divisi pada bulan terpilih?')" style="background: #dc2626; color: #ffffff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+            <button type="submit" name="action" value="close_all" onclick="return confirm('Apakah Anda yakin ingin MENUTUP akses penilaian untuk SEMUA divisi pada bulan terpilih?')" style="background: #ffffff; color: #dc2626; border: 1.5px solid #fca5a5; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                 Tutup Semua Divisi
             </button>
@@ -81,11 +81,11 @@
         </div>
     </div>
 
-    <div style="overflow-x: auto;">
+    <div class="table-responsive">
         <table style="width: 100%; border-collapse: collapse; font-size: 12.5px; text-align: center;">
             <thead>
                 <tr style="background: #f1f5f9; border-bottom: 2px solid #cbd5e1; color: #334155; font-size: 11.5px; text-transform: uppercase;">
-                    <th style="padding: 14px 18px; text-align: left; width: 220px; position: sticky; left: 0; background: #f1f5f9; z-index: 2;">
+                    <th style="padding: 14px 18px; text-align: start; width: 220px; position: sticky; inset-inline-start: 0; background: #f1f5f9; z-index: 2; border-inline-end: 1px solid #cbd5e1;">
                         Divisi
                     </th>
                     @for($m = 1; $m <= 12; $m++)
@@ -104,7 +104,7 @@
             <tbody>
                 @foreach($divisions as $div)
                     <tr style="border-bottom: 1px solid #e2e8f0;">
-                        <td style="padding: 14px 18px; text-align: left; font-weight: 700; color: #0f172a; position: sticky; left: 0; background: #ffffff; z-index: 1; border-right: 1px solid #e2e8f0;">
+                        <td style="padding: 14px 18px; text-align: start; font-weight: 700; color: #0f172a; position: sticky; inset-inline-start: 0; background: #ffffff; z-index: 1; border-inline-end: 1px solid #e2e8f0;">
                             <div>{{ $div->name }}</div>
                             <span style="font-size: 11px; color: #64748b; font-weight: 400;">PTP Cirebon</span>
                         </td>

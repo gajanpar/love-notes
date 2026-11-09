@@ -60,7 +60,7 @@
 
         <div style="display: flex; align-items: center; gap: 8px;">
             <label style="font-size: 13px; font-weight: 600; color: #475569;">Tipe Permohonan:</label>
-            <select name="type" onchange="this.form.submit()" class="form-control-custom" style="padding: 6px 12px; font-size: 13px; width: auto;">
+            <select name="type" onchange="this.form.submit()" class="form-control-custom" style="padding: 6px 12px; font-size: 13px; width: auto; max-width: 100%; min-width: 0;">
                 <option value="all" {{ $currentType === 'all' ? 'selected' : '' }}>Semua Tipe</option>
                 <option value="division_access" {{ $currentType === 'division_access' ? 'selected' : '' }}>Akses Buka Periode Divisi</option>
                 <option value="individual_edit" {{ $currentType === 'individual_edit' ? 'selected' : '' }}>Edit Nilai Karyawan</option>
@@ -69,7 +69,7 @@
 
         <div style="display: flex; align-items: center; gap: 8px;">
             <label style="font-size: 13px; font-weight: 600; color: #475569;">Divisi:</label>
-            <select name="division_id" onchange="this.form.submit()" class="form-control-custom" style="padding: 6px 12px; font-size: 13px; width: auto;">
+            <select name="division_id" onchange="this.form.submit()" class="form-control-custom" style="padding: 6px 12px; font-size: 13px; width: auto; max-width: 100%; min-width: 0;">
                 <option value="all" {{ $currentDivision === 'all' ? 'selected' : '' }}>Semua Divisi</option>
                 @foreach($divisions as $div)
                     <option value="{{ $div->id }}" {{ $currentDivision == $div->id ? 'selected' : '' }}>{{ $div->name }}</option>
@@ -78,7 +78,7 @@
         </div>
 
         @if($currentType !== 'all' || $currentDivision !== 'all' || $currentStatus !== 'all')
-            <a href="{{ route('admin.requests.index') }}" style="font-size: 12px; color: #ef4444; font-weight: 600; text-decoration: none; margin-left: auto;">
+            <a href="{{ route('admin.requests.index') }}" style="font-size: 12px; color: #ef4444; font-weight: 600; text-decoration: none; margin-inline-start: auto;">
                 Reset Filter
             </a>
         @endif
@@ -102,19 +102,19 @@
             Tidak ada permohonan yang sesuai dengan filter saat ini.
         </div>
     @else
-        <div style="overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <div class="table-responsive">
+            <table class="data-table data-table-requests" style="width: 100%; border-collapse: collapse; font-size: 13px;">
                 <thead>
-                    <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
-                        <th style="padding: 14px 18px; text-align: left; width: 40px;">No</th>
-                        <th style="padding: 14px 18px; text-align: left;">Waktu Pengajuan</th>
-                        <th style="padding: 14px 18px; text-align: left;">Pemohon &amp; Divisi</th>
-                        <th style="padding: 14px 18px; text-align: left;">Tipe Permohonan</th>
-                        <th style="padding: 14px 18px; text-align: left;">Target / Periode</th>
-                        <th style="padding: 14px 18px; text-align: left;">Alasan Pemohon</th>
-                        <th style="padding: 14px 18px; text-align: left;">Status</th>
-                        <th style="padding: 14px 18px; text-align: left;">Verifikator &amp; Catatan</th>
-                        <th style="padding: 14px 18px; text-align: center; width: 140px;">Aksi</th>
+                    <tr style="border-bottom: 2px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
+                        <th style="padding: 14px 18px; text-align: start; width: 40px;">No</th>
+                        <th style="padding: 14px 18px; text-align: start;">Waktu Pengajuan</th>
+                        <th style="padding: 14px 18px; text-align: start;">Pemohon &amp; Divisi</th>
+                        <th style="padding: 14px 18px; text-align: start;">Tipe Permohonan</th>
+                        <th style="padding: 14px 18px; text-align: start;">Target / Periode</th>
+                        <th style="padding: 14px 18px; text-align: start;">Alasan Pemohon</th>
+                        <th style="padding: 14px 18px; text-align: start;">Status</th>
+                        <th style="padding: 14px 18px; text-align: start;">Verifikator &amp; Catatan</th>
+                        <th style="padding: 14px 18px; text-align: center; width: 140px; white-space: nowrap;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -196,7 +196,7 @@
                             </td>
                             <td style="padding: 14px 18px; text-align: center;">
                                 @if($req->status === 'pending')
-                                    <div style="display: flex; gap: 6px; justify-content: center;">
+                                    <div style="display: flex; gap: 8px; justify-content: center;">
                                         <button type="button" 
                                                 onclick="openApproveModal({{ $req->id }}, '{{ addslashes($req->requester->name ?? '') }}', '{{ $req->request_type === 'division_access' ? 'Akses Divisi ' . addslashes($req->division->name ?? '') : 'Edit Nilai ' . addslashes($req->employee->name ?? '') }}')"
                                                 title="Setujui permohonan ini" 
@@ -231,7 +231,7 @@
 
 <!-- Modal Konfirmasi Setujui -->
 <div id="approveModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 460px;">
+    <div class="modal-box" style="max-width: 460px;">
         <h3 style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;">
             <svg style="color: #16a34a;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
             Persetujuan Permohonan Akses
@@ -249,7 +249,7 @@
                 <textarea name="admin_note" id="approve_admin_note" rows="3" class="form-control-custom" style="width: 100%; box-sizing: border-box; font-size: 13px; padding: 8px 12px;" placeholder="Contoh: Disetujui untuk perbaikan nilai AKHLAK"></textarea>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <div class="modal-actions-sticky">
                 <button type="button" onclick="closeApproveModal()" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
                     Batal
                 </button>
@@ -264,7 +264,7 @@
 
 <!-- Modal Konfirmasi Tolak -->
 <div id="rejectModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 460px;">
+    <div class="modal-box" style="max-width: 460px;">
         <h3 style="font-size: 17px; font-weight: 700; color: #dc2626; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;">
             <svg style="color: #dc2626;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
             Tolak Permohonan Akses
@@ -282,7 +282,7 @@
                 <textarea name="admin_note" id="reject_admin_note" rows="3" required class="form-control-custom" style="width: 100%; box-sizing: border-box; font-size: 13px; padding: 8px 12px;" placeholder="Contoh: Periode evaluasi kuartal telah final dan ditutup oleh manajemen"></textarea>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+            <div class="modal-actions-sticky">
                 <button type="button" onclick="closeRejectModal()" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">
                     Batal
                 </button>

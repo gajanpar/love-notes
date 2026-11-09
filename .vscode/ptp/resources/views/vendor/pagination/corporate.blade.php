@@ -4,7 +4,7 @@
             Menampilkan <strong style="color: #0f172a;">{{ $paginator->firstItem() }}</strong> s.d. <strong style="color: #0f172a;">{{ $paginator->lastItem() }}</strong> dari <strong style="color: #0f172a;">{{ $paginator->total() }}</strong> entri
         </div>
 
-        <div style="display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+        <div style="display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;">
             {{-- Tombol Sebelumnya (Previous) --}}
             @if ($paginator->onFirstPage())
                 <span class="pagination-disabled" aria-disabled="true" style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 6px; border: 1px solid #cbd5e1; background: #f8fafc; color: #64748b; cursor: not-allowed;" title="Halaman Pertama">

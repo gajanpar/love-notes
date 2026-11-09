@@ -24,7 +24,7 @@
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px;">
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12.5px; font-weight: 600; color: #64748b;">Total TAD Terdaftar</span>
+            <span class="kpi-label" title="Total TAD Terdaftar" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748b;">Total TAD Terdaftar</span>
             <div style="width: 34px; height: 34px; border-radius: 8px; background: #e0f2fe; color: #0369a1; display: flex; align-items: center; justify-content: center;">
                 <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
@@ -35,7 +35,7 @@
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12.5px; font-weight: 600; color: #15803d;">Personel TAD Aktif</span>
+            <span class="kpi-label" title="Personel TAD Aktif" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #15803d;">Personel TAD Aktif</span>
             <div style="width: 34px; height: 34px; border-radius: 8px; background: #dcfce7; color: #15803d; display: flex; align-items: center; justify-content: center;">
                 <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
@@ -46,7 +46,7 @@
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12.5px; font-weight: 600; color: #64748b;">Personel Nonaktif</span>
+            <span class="kpi-label" title="Personel Nonaktif" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748b;">Personel Nonaktif</span>
             <div style="width: 34px; height: 34px; border-radius: 8px; background: #f1f5f9; color: #475569; display: flex; align-items: center; justify-content: center;">
                 <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
             </div>
@@ -57,7 +57,7 @@
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span style="font-size: 12.5px; font-weight: 600; color: #64748b;">Divisi Operasional Aktif</span>
+            <span class="kpi-label" title="Divisi Operasional Aktif" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748b;">Divisi Operasional Aktif</span>
             <div style="width: 34px; height: 34px; border-radius: 8px; background: #f3e8ff; color: #7e22ce; display: flex; align-items: center; justify-content: center;">
                 <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
             </div>
@@ -68,7 +68,7 @@
 </div>
 
 <!-- Info Integritas Riwayat -->
-<div style="background: #eff6ff; border-left: 4px solid #0369a1; padding: 12px 18px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
+<div style="background: #eff6ff; border-inline-start: 4px solid #0369a1; padding: 12px 18px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">
     <svg aria-hidden="true" style="color: #0369a1; flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
     <div style="font-size: 12.5px; color: #1e3a8a; line-height: 1.5;">
         <strong>Perlindungan Arsip Penilaian:</strong> Karyawan TAD yang sudah purna tugas atau mutasi sebaiknya diubah statusnya menjadi <strong>Nonaktif</strong> agar seluruh rekapitulasi nilai historis bulanan tetap utuh dan teraudit. Penghapusan permanen hanya diizinkan bagi entri baru yang belum memiliki riwayat evaluasi.
@@ -84,7 +84,7 @@
 
         <div style="display: flex; align-items: center; gap: 8px;">
             <label for="empFilterDivision" style="font-size: 13px; font-weight: 600; color: #475569;">Divisi:</label>
-            <select id="empFilterDivision" name="division_id" onchange="this.form.submit()" class="form-control-custom" style="padding: 8px 12px; font-size: 13px; border: 1px solid #64748b; border-radius: 8px; width: auto;">
+            <select id="empFilterDivision" name="division_id" onchange="this.form.submit()" class="form-control-custom" style="padding: 8px 12px; font-size: 13px; border: 1px solid #64748b; border-radius: 8px; width: auto; max-width: 100%; min-width: 0;">
                 <option value="all" {{ $currentDivision === 'all' ? 'selected' : '' }}>Semua Divisi</option>
                 @foreach($divisions as $div)
                     <option value="{{ $div->id }}" {{ (string) $currentDivision === (string) $div->id ? 'selected' : '' }}>{{ $div->name }}</option>
@@ -94,7 +94,7 @@
 
         <div style="display: flex; align-items: center; gap: 8px;">
             <label for="empFilterStatus" style="font-size: 13px; font-weight: 600; color: #475569;">Status:</label>
-            <select id="empFilterStatus" name="status" onchange="this.form.submit()" class="form-control-custom" style="padding: 8px 12px; font-size: 13px; border: 1px solid #64748b; border-radius: 8px; width: auto;">
+            <select id="empFilterStatus" name="status" onchange="this.form.submit()" class="form-control-custom" style="padding: 8px 12px; font-size: 13px; border: 1px solid #64748b; border-radius: 8px; width: auto; max-width: 100%; min-width: 0;">
                 <option value="all" {{ $currentStatus === 'all' ? 'selected' : '' }}>Semua Status</option>
                 <option value="active" {{ $currentStatus === 'active' ? 'selected' : '' }}>Aktif</option>
                 <option value="inactive" {{ $currentStatus === 'inactive' ? 'selected' : '' }}>Nonaktif</option>
@@ -106,7 +106,7 @@
         </button>
 
         @if($search !== '' || $currentDivision !== 'all' || $currentStatus !== 'all')
-            <a href="{{ route('admin.employees.index') }}" style="font-size: 12.5px; color: #b91c1c; font-weight: 600; text-decoration: none;">
+            <a href="{{ route('admin.employees.index') }}" style="font-size: 12.5px; color: #b91c1c; font-weight: 600; text-decoration: none; padding: 8px 12px; display: inline-flex; align-items: center;">
                 Reset
             </a>
         @endif
@@ -126,16 +126,16 @@
             Tidak ditemukan data karyawan TAD sesuai kriteria pencarian.
         </div>
     @else
-        <div style="overflow-x: auto;">
+        <div class="table-responsive">
             <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
                 <thead>
                     <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
-                        <th style="padding: 13px 18px; text-align: left; width: 48px;">No</th>
-                        <th style="padding: 13px 18px; text-align: left;">NIK / ID</th>
-                        <th style="padding: 13px 18px; text-align: left;">Nama Karyawan TAD</th>
-                        <th style="padding: 13px 18px; text-align: left;">Jabatan / Posisi</th>
-                        <th style="padding: 13px 18px; text-align: left;">Divisi Penempatan</th>
-                        <th style="padding: 13px 18px; text-align: left;">Mitra Vendor</th>
+                        <th style="padding: 13px 18px; text-align: start; width: 48px;">No</th>
+                        <th style="padding: 13px 18px; text-align: start;">NIK / ID</th>
+                        <th style="padding: 13px 18px; text-align: start;">Nama Karyawan TAD</th>
+                        <th style="padding: 13px 18px; text-align: start;">Jabatan / Posisi</th>
+                        <th style="padding: 13px 18px; text-align: start;">Divisi Penempatan</th>
+                        <th style="padding: 13px 18px; text-align: start;">Mitra Vendor</th>
                         <th style="padding: 13px 18px; text-align: center;">Arsip Nilai</th>
                         <th style="padding: 13px 18px; text-align: center;">Status</th>
                         <th style="padding: 13px 18px; text-align: center; width: 190px;">Aksi</th>
@@ -183,7 +183,7 @@
                                 @endif
                             </td>
                             <td style="padding: 13px 18px; text-align: center;">
-                                <div style="display: flex; gap: 6px; justify-content: center; align-items: center;">
+                                <div style="display: flex; gap: 8px; justify-content: center; align-items: center;">
                                     <button type="button"
                                             class="js-edit-employee table-action-btn"
                                             data-id="{{ $emp->id }}"
@@ -248,7 +248,7 @@
 </div>
 
 <!-- Modal Tambah Karyawan TAD (Native Dialog) -->
-<dialog id="createEmployeeModal" class="modal-dialog" aria-labelledby="createEmpModalTitle" style="text-align: left; max-width: 520px;">
+<dialog id="createEmployeeModal" class="modal-dialog" aria-labelledby="createEmpModalTitle" style="text-align: start; max-width: 520px;">
     <h3 id="createEmpModalTitle" style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 6px 0;">Tambah Karyawan TAD Baru</h3>
     <p style="font-size: 13px; color: #475569; margin: 0 0 20px 0;">Masukkan profil lengkap personel Tenaga Alih Daya sesuai penempatan divisi.</p>
 
@@ -293,7 +293,7 @@
 </dialog>
 
 <!-- Modal Edit Karyawan TAD (Native Dialog) -->
-<dialog id="editEmployeeModal" class="modal-dialog" aria-labelledby="editEmpModalTitle" style="text-align: left; max-width: 520px;">
+<dialog id="editEmployeeModal" class="modal-dialog" aria-labelledby="editEmpModalTitle" style="text-align: start; max-width: 520px;">
     <h3 id="editEmpModalTitle" style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0 0 6px 0;">Edit Profil Karyawan TAD</h3>
     <p style="font-size: 13px; color: #475569; margin: 0 0 20px 0;">Perbarui informasi jabatan, penempatan divisi, atau kode identitas personel.</p>
 
@@ -347,7 +347,7 @@
 </dialog>
 
 <!-- Modal Kelola Divisi (Native Dialog, Overflow-Safe) -->
-<dialog id="divisionModal" class="modal-dialog" aria-labelledby="divisionModalTitle" style="text-align: left; max-width: 600px;">
+<dialog id="divisionModal" class="modal-dialog" aria-labelledby="divisionModalTitle" style="text-align: start; max-width: 600px;">
     <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px;">
         <div>
             <h3 id="divisionModalTitle" style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0;">Master Divisi Operasional</h3>
@@ -389,7 +389,7 @@
 </dialog>
 
 <!-- Modal Konfirmasi Kontekstual Tindakan Personel (Nonaktifkan / Hapus Permanen) -->
-<dialog id="confirmEmployeeActionModal" class="modal-dialog" aria-labelledby="confirmEmpActionTitle" style="text-align: left; max-width: 440px;">
+<dialog id="confirmEmployeeActionModal" class="modal-dialog" aria-labelledby="confirmEmpActionTitle" style="text-align: start; max-width: 440px;">
     <h3 id="confirmEmpActionTitle" style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">Konfirmasi Tindakan Personel</h3>
     <p id="confirmEmpActionDesc" style="font-size: 13.5px; color: #475569; line-height: 1.55; margin: 0 0 20px 0;"></p>
     <div style="display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap;">

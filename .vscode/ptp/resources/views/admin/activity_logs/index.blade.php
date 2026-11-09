@@ -11,25 +11,25 @@
 <!-- Kartu Statistik Aktivitas -->
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px;">
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-        <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Total Jejak Rekam</div>
+        <div class="kpi-label" title="Total Jejak Rekam" tabindex="0" style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Total Jejak Rekam</div>
         <div style="font-size: 28px; font-weight: 800; color: #00223B; margin-top: 4px;">{{ number_format($counts['total']) }}</div>
         <div style="font-size: 11.5px; color: #0072CE; margin-top: 2px;">Seluruh peristiwa tercatat</div>
     </div>
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-        <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Aktivitas Hari Ini</div>
+        <div class="kpi-label" title="Aktivitas Hari Ini" tabindex="0" style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Aktivitas Hari Ini</div>
         <div style="font-size: 28px; font-weight: 800; color: #16a34a; margin-top: 4px;">{{ number_format($counts['today']) }}</div>
         <div style="font-size: 11.5px; color: #15803d; margin-top: 2px;">Tanggal {{ now()->format('d/m/Y') }}</div>
     </div>
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-        <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Perubahan Periode</div>
+        <div class="kpi-label" title="Perubahan Periode" tabindex="0" style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Perubahan Periode</div>
         <div style="font-size: 28px; font-weight: 800; color: #0284c7; margin-top: 4px;">{{ number_format($counts['period']) }}</div>
         <div style="font-size: 11.5px; color: #0369a1; margin-top: 2px;">Buka &amp; tutup akses divisi</div>
     </div>
 
     <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-        <div style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Persetujuan / Penolakan</div>
+        <div class="kpi-label" title="Persetujuan / Penolakan" tabindex="0" style="font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase;">Persetujuan / Penolakan</div>
         <div style="font-size: 28px; font-weight: 800; color: #f59e0b; margin-top: 4px;">{{ number_format($counts['requests']) }}</div>
         <div style="font-size: 11.5px; color: #b45309; margin-top: 2px;">Verifikasi izin edit &amp; periode</div>
     </div>
@@ -78,14 +78,14 @@
 
 <!-- Tabel Log Audit -->
 <div class="card" style="background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-    <div style="overflow-x: auto;">
+    <div class="table-responsive">
         <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
             <thead>
                 <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">
-                    <th style="padding: 12px 16px; text-align: left; width: 155px;">Waktu (WIB)</th>
-                    <th style="padding: 12px 16px; text-align: left; width: 170px;">Pelaku (Actor)</th>
-                    <th style="padding: 12px 16px; text-align: left; width: 150px;">Aksi</th>
-                    <th style="padding: 12px 16px; text-align: left;">Deskripsi Aktivitas</th>
+                    <th style="padding: 12px 16px; text-align: start; width: 155px;">Waktu (WIB)</th>
+                    <th style="padding: 12px 16px; text-align: start; width: 170px;">Pelaku (Actor)</th>
+                    <th style="padding: 12px 16px; text-align: start; width: 150px;">Aksi</th>
+                    <th style="padding: 12px 16px; text-align: start;">Deskripsi Aktivitas</th>
                     <th style="padding: 12px 16px; text-align: center; width: 120px;">IP Address</th>
                     <th style="padding: 12px 16px; text-align: center; width: 85px;">Rincian</th>
                 </tr>
@@ -150,7 +150,7 @@
 
 <!-- Modal Rincian Log Audit -->
 <div id="logDetailModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 580px; padding: 24px;">
+    <div class="modal-box" style="max-width: 580px;">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px;">
             <h3 style="font-size: 16px; font-weight: 700; color: #0f172a; margin: 0;">Rincian Properti Log Audit</h3>
             <button type="button" onclick="closeLogModal()" style="background: none; border: none; font-size: 20px; color: #64748b; cursor: pointer;">&times;</button>
@@ -166,7 +166,7 @@
             <pre id="modalLogProps" style="background: #0f172a; color: #38bdf8; padding: 14px; border-radius: 8px; font-size: 11.5px; font-family: monospace; overflow-x: auto; margin-top: 6px; max-height: 240px;"></pre>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+        <div class="modal-actions-sticky">
             <button type="button" onclick="closeLogModal()" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;">Tutup</button>
         </div>
     </div>

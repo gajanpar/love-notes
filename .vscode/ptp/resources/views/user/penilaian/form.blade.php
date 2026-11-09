@@ -45,14 +45,14 @@
             </div>
 
             <!-- Tabel Butir Subkategori -->
-            <div style="overflow-x: auto;">
-                <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+            <div class="table-responsive">
+                <table style="width: 100%; border-collapse: collapse; text-align: start; font-size: 13px;">
                     <thead>
                         <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
                             <th style="padding: 10px 16px; width: 45px; text-align: center;">No</th>
-                            <th style="padding: 10px 16px;">Aspek Penilaian</th>
+                            <th style="padding: 10px 16px; text-align: start;">Aspek Penilaian</th>
                             <th style="padding: 10px 16px; width: 280px; text-align: center;">Skor (1 &ndash; 6)</th>
-                            <th style="padding: 10px 16px; width: 340px;">Alasan / Keterangan</th>
+                            <th style="padding: 10px 16px; width: 340px; text-align: start;">Alasan / Keterangan</th>
                         </tr>
                     </thead>
                     <tbody>

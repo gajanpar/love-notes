@@ -62,20 +62,25 @@
             font-weight: 800;
             padding: 2px 7px;
             border-radius: 999px;
-            margin-left: auto;
+            margin-inline-start: auto;
         }
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 22, 40, 0.6);
+            background: rgba(10, 22, 40, 0.65);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             z-index: 9999;
-            align-items: center;
+            align-items: safe center;
             justify-content: center;
+            padding: 16px;
+            overflow-y: auto;
+            box-sizing: border-box;
         }
         .modal-overlay.active {
             display: flex;
@@ -83,12 +88,69 @@
         .modal-box {
             background: #ffffff;
             border-radius: 12px;
-            width: 90%;
-            max-width: 400px;
+            width: 100%;
+            max-width: 540px;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            text-align: center;
+            overflow-y: auto;
+            max-height: min(90dvh, calc(100dvh - 32px));
+            text-align: start;
             padding: 24px;
+            margin: auto;
+            box-sizing: border-box;
+        }
+        .modal-box input,
+        .modal-box select,
+        .modal-box textarea {
+            scroll-margin-bottom: 72px;
+        }
+        .modal-actions-sticky {
+            position: sticky;
+            bottom: 0 !important;
+            background: #ffffff;
+            padding-top: 14px;
+            padding-bottom: 8px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            z-index: 10;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 480px) {
+            .modal-box {
+                padding: 16px !important;
+            }
+            .modal-actions-sticky {
+                bottom: 0 !important;
+                flex-direction: column-reverse;
+                gap: 8px;
+                width: 100%;
+            }
+            .modal-actions-sticky > *,
+            .modal-actions-sticky form,
+            .modal-actions-sticky button,
+            .modal-actions-sticky a {
+                width: 100% !important;
+                box-sizing: border-box;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+        @media (max-height: 520px) {
+            .modal-overlay {
+                padding: 8px;
+            }
+            .modal-box {
+                padding: 12px 16px !important;
+                margin: 8px auto;
+                max-height: calc(100dvh - 16px) !important;
+            }
+            .modal-actions-sticky {
+                margin-top: 10px;
+                padding-top: 8px;
+                padding-bottom: 6px;
+            }
         }
 
         /* Pelindo Anti-Giant Icon & Pagination Guard */
@@ -198,7 +260,7 @@
             </div>
 
             <div class="sidebar-footer" style="margin-top: auto; padding: 20px 24px; border-top: 1px solid rgba(255,255,255,0.08);">
-                <button type="button" class="nav-item logout-btn" onclick="openLogoutModal()" style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; color: #fca5a5; font-size: 14px; font-weight: 600;">
+                <button type="button" class="nav-item logout-btn" onclick="openLogoutModal()" style="width: 100%; border: none; background: transparent; cursor: pointer; text-align: start; display: flex; align-items: center; gap: 12px; color: #fca5a5; font-size: 14px; font-weight: 600;">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                     <span>Keluar Sesi</span>
                 </button>
@@ -216,8 +278,8 @@
                         <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
                     </button>
                     <div class="topbar-left">
-                        <h2 style="font-size: 16.5px; font-weight: 700; color: #0f172a; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Portal Administrator SDM / IT</h2>
-                        <p style="font-size: 12.5px; color: #64748b; margin: 0;" class="topbar-subtitle">PTP Terminal Nonpetikemas Branch Cirebon</p>
+                        <h2 title="Portal Administrator SDM / IT" tabindex="0" style="font-size: 16.5px; font-weight: 700; color: #0f172a; margin: 0; overflow-wrap: anywhere;">Portal Administrator SDM / IT</h2>
+                        <p title="PTP Terminal Nonpetikemas Branch Cirebon" tabindex="0" style="font-size: 12.5px; color: #64748b; margin: 0; overflow-wrap: anywhere;" class="topbar-subtitle">PTP Terminal Nonpetikemas Branch Cirebon</p>
                     </div>
                 </div>
                 <div class="topbar-right" style="display: flex; align-items: center; gap: 12px;">
@@ -230,9 +292,9 @@
                     </div>
 
                     <a href="{{ route('profile.index') }}" class="user-topbar-profile" style="text-decoration: none; cursor: pointer;" aria-label="Profil {{ Auth::user()->name }} - Super Administrator">
-                        <div style="text-align: right;">
-                            <div style="font-size: 13.5px; font-weight: 600; color: #0f172a;">{{ Auth::user()->name }}</div>
-                            <div style="font-size: 11.5px; color: #0369a1; font-weight: 600;">Super Administrator</div>
+                        <div style="text-align: end;">
+                            <div title="{{ Auth::user()->name }}" tabindex="0" style="font-size: 13.5px; font-weight: 600; color: #0f172a;">{{ Auth::user()->name }}</div>
+                            <div title="Super Administrator" tabindex="0" style="font-size: 11.5px; color: #0369a1; font-weight: 600;">Super Administrator</div>
                         </div>
                         <div class="admin-avatar-circle" aria-hidden="true">
                             A
@@ -277,7 +339,7 @@
                 @if($errors->any())
                     <div class="alert alert-danger" role="alert" style="margin-bottom: 20px; padding: 14px 20px; border-radius: 8px; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b;">
                         <div style="font-weight: 700; font-size: 13.5px; margin-bottom: 6px;">Mohon periksa kembali isian formulir:</div>
-                        <ul style="margin: 0; padding-left: 20px; font-size: 13px;">
+                        <ul style="margin: 0; padding-inline-start: 20px; font-size: 13px;">
                             @foreach($errors->all() as $err)
                                 <li>{{ $err }}</li>
                             @endforeach

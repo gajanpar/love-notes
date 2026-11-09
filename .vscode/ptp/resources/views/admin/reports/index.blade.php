@@ -90,7 +90,7 @@
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px;">
         <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span style="font-size: 12.5px; font-weight: 600; color: #64748b;">Evaluasi Selesai</span>
+                <span class="kpi-label" title="Evaluasi Selesai" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748b;">Evaluasi Selesai</span>
                 <div style="width: 34px; height: 34px; border-radius: 8px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 </div>
@@ -101,7 +101,7 @@
 
         <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span style="font-size: 12.5px; font-weight: 600; color: #64748b;">Rata-Rata Skor Cabang</span>
+                <span class="kpi-label" title="Rata-Rata Skor Cabang" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748b;">Rata-Rata Skor Cabang</span>
                 <div style="width: 34px; height: 34px; border-radius: 8px; background: #f0fdf4; color: #16a34a; display: flex; align-items: center; justify-content: center;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
                 </div>
@@ -112,7 +112,7 @@
 
         <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                <span style="font-size: 12.5px; font-weight: 600; color: #64748b;">Skor Tertinggi</span>
+                <span class="kpi-label" title="Skor Tertinggi" tabindex="0" style="font-size: 12.5px; font-weight: 600; color: #64748b;">Skor Tertinggi</span>
                 <div style="width: 34px; height: 34px; border-radius: 8px; background: #fefce8; color: #a16207; display: flex; align-items: center; justify-content: center;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
@@ -120,13 +120,13 @@
             <div style="font-size: 26px; font-weight: 800; color: #0f172a;">
                 {{ $metrics['highest'] ? number_format($metrics['highest']->total_score, 2) : '-' }}
             </div>
-            <div style="font-size: 11.5px; color: #64748b; margin-top: 2px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+            <div style="font-size: 11.5px; color: #64748b; margin-top: 2px; overflow-wrap: anywhere; line-height: 1.3;" title="{{ $metrics['highest'] ? $metrics['highest']->employee->name : '' }}">
                 {{ $metrics['highest'] ? $metrics['highest']->employee->name : 'Belum ada data' }}
             </div>
         </div>
 
         <div class="card" style="background: #ffffff; padding: 18px 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-            <div style="font-size: 12px; font-weight: 700; color: #334155; text-transform: uppercase; margin-bottom: 8px;">Distribusi Predikat</div>
+            <div class="kpi-label" title="Distribusi Predikat" tabindex="0" style="font-size: 12px; font-weight: 700; color: #334155; text-transform: uppercase; margin-bottom: 8px;">Distribusi Predikat</div>
             <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
                 <span style="color: #15803d; font-weight: 600;">Sangat Baik:</span>
                 <span style="font-weight: 700;">{{ $metrics['predicates']['Sangat Baik'] }}</span>
@@ -176,18 +176,18 @@
                 Belum ada rekaman penilaian pada periode bulan dan tahun ini.
             </div>
         @else
-            <div style="overflow-x: auto;">
+            <div class="table-responsive">
                 <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
                     <thead>
                         <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
                             <th style="padding: 13px 18px; text-align: center; width: 45px;">Rank</th>
-                            <th style="padding: 13px 18px; text-align: left;">NIK TAD</th>
-                            <th style="padding: 13px 18px; text-align: left;">Nama Karyawan TAD</th>
-                            <th style="padding: 13px 18px; text-align: left;">Divisi Penempatan</th>
-                            <th style="padding: 13px 18px; text-align: left;">Jabatan / Posisi</th>
-                            <th style="padding: 13px 18px; text-align: center;">Total Skor</th>
+                            <th style="padding: 13px 18px; text-align: start;">NIK TAD</th>
+                            <th style="padding: 13px 18px; text-align: start;">Nama Karyawan TAD</th>
+                            <th style="padding: 13px 18px; text-align: start;">Divisi Penempatan</th>
+                            <th style="padding: 13px 18px; text-align: start;">Jabatan / Posisi</th>
+                            <th style="padding: 13px 18px; text-align: end;">Total Skor</th>
                             <th style="padding: 13px 18px; text-align: center;">Predikat</th>
-                            <th style="padding: 13px 18px; text-align: left;">Pejabat Penilai</th>
+                            <th style="padding: 13px 18px; text-align: start;">Pejabat Penilai</th>
                             <th style="padding: 13px 18px; text-align: center; width: 140px;">Aksi</th>
                         </tr>
                     </thead>
@@ -211,7 +211,7 @@
                                 <td style="padding: 13px 18px; color: #334155;">
                                     {{ $eval->employee->position }}
                                 </td>
-                                <td style="padding: 13px 18px; text-align: center; font-size: 15px; font-weight: 800; color: #0f172a;">
+                                <td style="padding: 13px 18px; text-align: end; font-size: 15px; font-weight: 800; color: #0f172a;">
                                     {{ number_format($eval->total_score, 2) }}
                                 </td>
                                 <td style="padding: 13px 18px; text-align: center;">
@@ -229,7 +229,7 @@
                                     {{ $eval->evaluator->name ?? '-' }}
                                 </td>
                                 <td style="padding: 13px 18px; text-align: center;">
-                                    <div style="display: flex; gap: 6px; justify-content: center;">
+                                    <div style="display: flex; gap: 8px; justify-content: center;">
                                         <a href="{{ route('admin.reports.print-single', $eval->id) }}" target="_blank" title="Cetak form resmi" style="background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; padding: 5px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
                                         </a>
@@ -284,19 +284,19 @@
             <span style="font-size: 12px; color: #64748b;">Menampilkan seluruh personel TAD terdaftar</span>
         </div>
 
-        <div style="overflow-x: auto;">
+        <div class="table-responsive">
             <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
                 <thead>
                     <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #475569; font-size: 11px; text-transform: uppercase;">
                         <th style="padding: 12px 14px; text-align: center; width: 40px;">No</th>
-                        <th style="padding: 12px 14px; text-align: left;">NIK</th>
-                        <th style="padding: 12px 14px; text-align: left; min-width: 160px;">Nama Karyawan TAD</th>
-                        <th style="padding: 12px 14px; text-align: left;">Divisi</th>
+                        <th style="padding: 12px 14px; text-align: start;">NIK</th>
+                        <th style="padding: 12px 14px; text-align: start; min-width: 160px;">Nama Karyawan TAD</th>
+                        <th style="padding: 12px 14px; text-align: start;">Divisi</th>
                         @for($m = 1; $m <= 12; $m++)
                             <th style="padding: 10px 6px; text-align: center; min-width: 48px;">{{ substr($monthNames[$m], 0, 3) }}</th>
                         @endfor
-                        <th style="padding: 12px 14px; text-align: center;">Bulan</th>
-                        <th style="padding: 12px 14px; text-align: center;">Rata-Rata</th>
+                        <th style="padding: 12px 14px; text-align: end;">Bulan</th>
+                        <th style="padding: 12px 14px; text-align: end;">Rata-Rata</th>
                         <th style="padding: 12px 14px; text-align: center;">Predikat Akhir</th>
                     </tr>
                 </thead>
@@ -326,10 +326,10 @@
                                     @endif
                                 </td>
                             @endfor
-                            <td style="padding: 11px 14px; text-align: center; font-weight: 700; color: #0284c7;">
+                            <td style="padding: 11px 14px; text-align: end; font-weight: 700; color: #0284c7;">
                                 {{ $row['evaluated_count'] }}/12
                             </td>
-                            <td style="padding: 11px 14px; text-align: center; font-size: 13.5px; font-weight: 800; color: #0f172a;">
+                            <td style="padding: 11px 14px; text-align: end; font-size: 13.5px; font-weight: 800; color: #0f172a;">
                                 {{ $row['annual_average'] > 0 ? number_format($row['annual_average'], 2) : '-' }}
                             </td>
                             <td style="padding: 11px 14px; text-align: center;">
@@ -355,7 +355,7 @@
 
 <!-- Modal Detail Evaluasi (17 Aspek AKHLAK) -->
 <div id="evaluationDetailModal" class="modal-overlay">
-    <div class="modal-box" style="text-align: left; max-width: 720px; padding: 28px; max-height: 85vh; overflow-y: auto;">
+    <div class="modal-box" style="max-width: 720px;">
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px; margin-bottom: 16px;">
             <div>
                 <h3 style="font-size: 18px; font-weight: 700; color: #0f172a; margin: 0;" id="modalEmployeeName">Rincian Penilaian Karyawan</h3>
@@ -368,7 +368,7 @@
             <div style="text-align: center; padding: 30px; color: #64748b;">Memuat data...</div>
         </div>
 
-        <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #e2e8f0; padding-top: 16px; margin-top: 20px;">
+        <div class="modal-actions-sticky">
             <a id="modalPrintBtn" href="#" target="_blank" style="background: #0072CE; color: #ffffff; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
                 Cetak Lembar Resmi
@@ -417,12 +417,12 @@
                      + '<div style="font-size: 12px; color: #64748b;">Penilai: <strong>' + escapeHtml(ev.evaluator ? ev.evaluator.name : '-') + '</strong></div>'
                      + '</div>';
 
-            html += '<table style="width: 100%; border-collapse: collapse; font-size: 12px;">'
+            html += '<div class="table-responsive"><table style="width: 100%; border-collapse: collapse; font-size: 12px;">'
                   + '<thead><tr style="background: #f1f5f9; color: #475569; text-transform: uppercase; font-size: 10.5px;">'
-                  + '<th style="padding: 8px 12px; text-align: left;">No / Indikator</th>'
+                  + '<th style="padding: 8px 12px; text-align: start;">No / Indikator</th>'
                   + '<th style="padding: 8px 12px; text-align: center; width: 80px;">Rating</th>'
-                  + '<th style="padding: 8px 12px; text-align: center; width: 80px;">Skor</th>'
-                  + '<th style="padding: 8px 12px; text-align: left; width: 40%;">Alasan Penilai</th>'
+                  + '<th style="padding: 8px 12px; text-align: end; width: 80px;">Skor</th>'
+                  + '<th style="padding: 8px 12px; text-align: start; width: 40%;">Alasan Penilai</th>'
                   + '</tr></thead><tbody>';
 
             var itemCounter = 1;
@@ -434,14 +434,14 @@
                     html += '<tr style="border-bottom: 1px solid #f1f5f9;">'
                           + '<td style="padding: 8px 12px; color: #334155;"><strong>#' + itemCounter + '.</strong> ' + escapeHtml(item.subcategory.name) + '</td>'
                           + '<td style="padding: 8px 12px; text-align: center;"><span style="background: #e0f2fe; color: #0369a1; padding: 2px 7px; border-radius: 4px; font-weight: 700;">R' + item.rating + '</span></td>'
-                          + '<td style="padding: 8px 12px; text-align: center; font-weight: 700;">' + parseFloat(item.score).toFixed(2) + '</td>'
+                          + '<td style="padding: 8px 12px; text-align: end; font-weight: 700;">' + parseFloat(item.score).toFixed(2) + '</td>'
                           + '<td style="padding: 8px 12px; color: #64748b; font-size: 11.5px;">' + (item.reason ? escapeHtml(item.reason) : '-') + '</td>'
                           + '</tr>';
                     itemCounter++;
                 });
             }
 
-            html += '</tbody></table>';
+            html += '</tbody></table></div>';
             content.innerHTML = html;
         })
         .catch(err => {

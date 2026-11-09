@@ -29,7 +29,7 @@
     </div>
 
     <!-- Main Form & Live Preview Grid -->
-    <div style="display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.1fr); gap: 24px; align-items: start;">
+    <div class="settings-grid">
         <!-- Left: Configuration Form -->
         <div>
             <form action="{{ route('admin.settings.update') }}" method="POST" id="settingsForm">
@@ -37,7 +37,7 @@
 
                 <!-- Seksi 1: Identitas & Legalitas Pelabuhan -->
                 <div class="settings-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #f1f5f9;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
                         <div style="width: 38px; height: 38px; border-radius: 8px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-3"/></svg>
                         </div>
@@ -47,7 +47,7 @@
                         </div>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="settings-form-row-2">
                         <div>
                             <label style="display: block; font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 6px;">
                                 Nama BUMN Induk <span style="color: #ef4444;">*</span>
@@ -68,7 +68,7 @@
                         </div>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                    <div class="settings-form-row-2">
                         <div>
                             <label style="display: block; font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 6px;">
                                 Nama Cabang / Unit Operasi <span style="color: #ef4444;">*</span>
@@ -98,7 +98,7 @@
                             placeholder="Jl. Pelabuhan II No. 1, Pasirjambak, Kec. Lemahwungkuk, Kota Cirebon, Jawa Barat 45111">{{ old('branch_address', $settings['branch_address']->value ?? 'Jl. Pelabuhan II No. 1, Pasirjambak, Kec. Lemahwungkuk, Kota Cirebon, Jawa Barat 45111') }}</textarea>
                     </div>
 
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+                    <div class="settings-form-row-3">
                         <div>
                             <label style="display: block; font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 6px;">
                                 Kode Pos
@@ -131,7 +131,7 @@
 
                 <!-- Seksi 2: Pejabat Penandatangan Resmi (Executive Signatories) -->
                 <div class="settings-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #f1f5f9;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
                         <div style="width: 38px; height: 38px; border-radius: 8px; background: #ecfdf5; color: #059669; display: flex; align-items: center; justify-content: center;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m19 8 2 2-6 6-2-2z"/></svg>
                         </div>
@@ -150,7 +150,7 @@
                             </span>
                             <span style="font-size: 11px; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px; font-weight: 600;">Otorisator Eksekutif</span>
                         </div>
-                        <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 14px;">
+                        <div class="settings-form-row-3">
                             <div>
                                 <label style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 5px;">
                                     Nama Lengkap &amp; Gelar <span style="color: #ef4444;">*</span>
@@ -190,7 +190,7 @@
                             </span>
                             <span style="font-size: 11px; background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 4px; font-weight: 600;">Verifikator Human Capital</span>
                         </div>
-                        <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 14px;">
+                        <div class="settings-form-row-3">
                             <div>
                                 <label style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 5px;">
                                     Nama Lengkap &amp; Gelar <span style="color: #ef4444;">*</span>
@@ -224,7 +224,7 @@
 
                 <!-- Seksi 3: Disclaimer Legal Dokumen -->
                 <div class="settings-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
-                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #f1f5f9;">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
                         <div style="width: 38px; height: 38px; border-radius: 8px; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                         </div>
@@ -246,7 +246,7 @@
                 </div>
 
                 <!-- Form Submit Action Bar -->
-                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: space-between;">
+                <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
                     <div style="font-size: 12.5px; color: #64748b;">
                         Perubahan akan langsung tercermin pada seluruh berkas cetak dinas &amp; laporan cabang.
                     </div>
@@ -261,7 +261,7 @@
         </div>
 
         <!-- Right: Interactive Live Preview (Visual Validator / UI-UX Delight) -->
-        <div style="position: sticky; top: 20px;">
+        <div class="settings-preview-container" style="position: sticky; top: calc(var(--topbar-height) + 20px);">
             <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                 <div style="background: #00223B; color: #ffffff; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between;">
                     <div style="display: flex; align-items: center; gap: 8px;">
@@ -295,7 +295,7 @@
                         <div style="font-size: 11px; font-weight: 700; color: #475569; text-transform: uppercase; margin-bottom: 12px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 6px;">
                             Pratinjau Blok Pengesahan &amp; Tanda Tangan
                         </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div class="settings-form-row-2" style="gap: 12px;">
                             <!-- Kolom SDM -->
                             <div style="border: 1px solid #e2e8f0; border-radius: 6px; padding: 10px; text-align: center; background: #fdfdfd;">
                                 <div style="font-size: 9.5px; color: #475569;">Mengetahui,</div>
@@ -356,10 +356,10 @@
 </div>
 
 <!-- Modal Konfirmasi Reset Standar -->
-<div id="resetModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: center; justify-content: center;">
-    <div style="background: #ffffff; border-radius: 12px; width: 100%; max-width: 440px; padding: 24px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);">
+<div id="resetModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 440px;">
         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-            <div style="width: 40px; height: 40px; border-radius: 50%; background: #fef2f2; color: #dc2626; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: #fef2f2; color: #dc2626; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             </div>
             <div>
@@ -370,7 +370,7 @@
         <p style="font-size: 13px; color: #334155; line-height: 1.5; margin-bottom: 20px;">
             Apakah Anda yakin ingin mengembalikan seluruh identitas cabang dan nama pejabat penandatangan ke parameter standar awal Pelindo Cirebon?
         </p>
-        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <div class="modal-actions-sticky">
             <button type="button" onclick="closeResetModal()" style="padding: 9px 16px; font-size: 13px; font-weight: 600; color: #475569; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer;">
                 Batal
             </button>
@@ -441,13 +441,11 @@
     });
 
     function openResetModal() {
-        const modal = document.getElementById('resetModal');
-        modal.style.display = 'flex';
+        document.getElementById('resetModal').classList.add('active');
     }
 
     function closeResetModal() {
-        const modal = document.getElementById('resetModal');
-        modal.style.display = 'none';
+        document.getElementById('resetModal').classList.remove('active');
     }
 </script>
 @endsection

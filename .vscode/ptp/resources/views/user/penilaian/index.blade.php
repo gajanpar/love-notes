@@ -30,7 +30,7 @@
 
 <!-- Banner Oranye Sesuai Gambar 4.2 SRS Bila Periode Tertutup -->
 @if(!$isPeriodOpen && !$hasApprovedDivisionAccess)
-<div style="background: #fff7ed; border: 1px solid #fed7aa; border-left: 4px solid #c2410c; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+<div style="background: #fff7ed; border: 1px solid #fed7aa; border-inline-start: 4px solid #c2410c; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
     <div style="display: flex; align-items: flex-start; gap: 12px;">
         <span aria-hidden="true" style="color: #c2410c; font-size: 20px;">⚠</span>
         <div>
@@ -76,15 +76,15 @@
         Karyawan &mdash; {{ $monthNames[$month] ?? '' }} {{ $year }}
     </div>
 
-    <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+    <div class="table-responsive">
+        <table style="width: 100%; border-collapse: collapse; text-align: start; font-size: 13px;">
             <thead>
                 <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #475569; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">
                     <th style="padding: 14px 20px; width: 60px;">No</th>
                     <th style="padding: 14px 20px;">Nama</th>
                     <th style="padding: 14px 20px;">Jabatan</th>
                     <th style="padding: 14px 20px;">Status</th>
-                    <th style="padding: 14px 20px;">Total Skor</th>
+                    <th style="padding: 14px 20px; text-align: end;">Total Skor</th>
                     <th style="padding: 14px 20px; text-align: center; width: 140px;">Aksi</th>
                 </tr>
             </thead>
@@ -100,7 +100,7 @@
                                     Belum Dinilai
                                 </span>
                             </td>
-                            <td style="padding: 14px 20px; color: #64748b;">&mdash;</td>
+                            <td style="padding: 14px 20px; color: #64748b; text-align: end;">&mdash;</td>
                             <td style="padding: 14px 20px; text-align: center;">
                                 @if($item['can_evaluate'])
                                     <a href="{{ route('penilaian.create', ['employee_id' => $item['employee']->id, 'month' => $month, 'year' => $year]) }}" 
@@ -133,13 +133,13 @@
                                     Sudah Dinilai
                                 </span>
                             </td>
-                            <td style="padding: 14px 20px; font-weight: 700; color: #0f172a;">
+                            <td style="padding: 14px 20px; font-weight: 700; color: #0f172a; text-align: end;">
                                 <span class="badge tabular-nums {{ $item['evaluation']->badge_class }}" style="padding: 4px 8px; border-radius: 4px; font-size: 12px;">
                                     {{ number_format($item['evaluation']->total_score, 2) }}
                                 </span>
                             </td>
                             <td style="padding: 14px 20px; text-align: center;">
-                                <div style="display: flex; justify-content: center; gap: 6px;">
+                                <div style="display: flex; justify-content: center; gap: 8px;">
                                     @if($item['can_edit'])
                                         <a href="{{ route('penilaian.edit', ['id' => $item['evaluation']->id]) }}" 
                                            class="table-action-btn"
@@ -174,7 +174,7 @@
 </div>
 
 <!-- Modal Ajukan Akses Divisi (Native Dialog) -->
-<dialog id="divisionRequestModal" class="modal-dialog" aria-labelledby="divReqModalTitle" style="text-align: left; max-width: 480px;">
+<dialog id="divisionRequestModal" class="modal-dialog" aria-labelledby="divReqModalTitle" style="text-align: start; max-width: 480px;">
     <h3 id="divReqModalTitle" style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">Permohonan Pembukaan Akses Periode</h3>
     <p style="font-size: 13px; color: #475569; margin: 0 0 16px 0;">
         Ajukan permohonan ke Admin SPKTAD untuk membuka periode <strong>{{ $monthNames[$month] ?? '' }} {{ $year }}</strong>.
@@ -198,7 +198,7 @@
 </dialog>
 
 <!-- Modal Ajukan Edit Individual (Native Dialog) -->
-<dialog id="individualRequestModal" class="modal-dialog" aria-labelledby="indReqModalTitle" style="text-align: left; max-width: 480px;">
+<dialog id="individualRequestModal" class="modal-dialog" aria-labelledby="indReqModalTitle" style="text-align: start; max-width: 480px;">
     <h3 id="indReqModalTitle" style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">Permohonan Edit Nilai Karyawan</h3>
     <p style="font-size: 13px; color: #475569; margin: 0 0 16px 0;">
         Karyawan: <strong id="reqEmployeeName" style="color: #0f172a;"></strong> &mdash; Periode: <strong>{{ $monthNames[$month] ?? '' }} {{ $year }}</strong>
