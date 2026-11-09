@@ -17,14 +17,15 @@ foreach ($tmpDirs as $dir) {
 }
 
 // Copy pre-seeded production SQLite database into writable /tmp
-$sourceDb = __DIR__ . '/../.vscode/ptp/database/database.sqlite';
+$sourceDb = __DIR__ . '/../database/database.sqlite';
+if (!file_exists($sourceDb) || filesize($sourceDb) === 0) {
+    $sourceDb = __DIR__ . '/../.vscode/ptp/database/database.sqlite';
+}
 $targetDb = '/tmp/database.sqlite';
 
-if (!file_exists($targetDb)) {
+if (!file_exists($targetDb) || filesize($targetDb) === 0) {
     if (file_exists($sourceDb) && filesize($sourceDb) > 0) {
         @copy($sourceDb, $targetDb);
-    } elseif (file_exists(__DIR__ . '/../database/database.sqlite') && filesize(__DIR__ . '/../database/database.sqlite') > 0) {
-        @copy(__DIR__ . '/../database/database.sqlite', $targetDb);
     } else {
         @touch($targetDb);
     }
@@ -44,8 +45,8 @@ putenv('APP_SERVICES_CACHE=/tmp/services.php');
 putenv('APP_PACKAGES_CACHE=/tmp/packages.php');
 
 // Delegate execution to Laravel public index
-if (file_exists(__DIR__ . '/../.vscode/ptp/public/index.php')) {
-    require __DIR__ . '/../.vscode/ptp/public/index.php';
-} elseif (file_exists(__DIR__ . '/../public/index.php')) {
+if (file_exists(__DIR__ . '/../public/index.php')) {
     require __DIR__ . '/../public/index.php';
+} elseif (file_exists(__DIR__ . '/../.vscode/ptp/public/index.php')) {
+    require __DIR__ . '/../.vscode/ptp/public/index.php';
 }

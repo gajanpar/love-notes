@@ -11,11 +11,11 @@
     "routes": [
         {
             "src": "/assets/(.*)",
-            "dest": "/.vscode/ptp/public/assets/$1"
+            "dest": "/public/assets/$1"
         },
         {
             "src": "/favicon.png",
-            "dest": "/.vscode/ptp/public/assets/img/favicon.png"
+            "dest": "/public/assets/img/favicon.png"
         },
         {
             "src": "/(.*)",
