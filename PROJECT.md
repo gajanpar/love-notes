@@ -10,7 +10,7 @@
   - Healthcheck: Native Laravel `/up` endpoint.
 - **Target Hosting Platform**:
   - **Render.com Free Web Service** (Docker runtime, $0/month, zero credit card requirement, 750 free hrs/mo, automatic HTTPS `*.onrender.com`).
-  - Deployment mechanism: GitHub integration from public repository `https://github.com/gajanpar/love-notes.git` (branch `prepare_real_data_transition`), with monorepo root `rootDir: .vscode/ptp` or root `render.yaml` blueprint.
+  - Deployment mechanism: GitHub integration from repository `https://github.com/gajanpar/ptp.git` (branch `prepare_real_data_transition` / `main`), with monorepo root `rootDir: .vscode/ptp` or root `render.yaml` blueprint.
 - **Public Verification & Forensics Architecture**:
   - Multi-tier automated verification suite: TLS handshake, HTTP 302 root redirect, HTTP 200 `/login`, DOM branding/CSRF checks, `system_settings` database query checks, zero 500/SQLSTATE error checks, SVG captcha streaming, and `/up` healthcheck.
   - Independent Reviewer validation, Challenger adversarial verification, and Forensic Integrity Audit.
@@ -34,8 +34,8 @@
 |---|------|-------|-------------|--------|
 | M1 | Deployment Configuration & Infrastructure Setup | Implement `Dockerfile`, `docker-entrypoint.sh`, `.dockerignore`, `render.yaml`, and `DEPLOYMENT.md`. | none | DONE |
 | E2E | Public Verification Test Suite | Implement automated verification harness (`verify_public_deploy.ps1`) for comprehensive live URL testing. | none | DONE |
-| M2 | Git Synchronization & Cloud Deployment Execution | Commit, push to GitHub, provision Render Web Service, and configure environment variables. | M1 | IN_PROGRESS |
-| M3 | Live Verification, Adversarial Hardening & Forensic Audit | Execute live E2E verification, review, challenge, and forensic integrity audit. | M2, E2E | PLANNED |
+| M2 | Git Synchronization & Cloud Deployment Execution | Commit, push to GitHub, provision Render Web Service, and configure environment variables. | M1 | DONE |
+| M3 | Live Verification, Adversarial Hardening & Forensic Audit | Execute live E2E verification, review, challenge, and forensic integrity audit. | M2, E2E | IN_PROGRESS |
 
 ## Interface Contracts
 ### Docker Container ↔ Render Cloud Runtime
@@ -46,8 +46,8 @@
 - Login Interface: `GET /login` returns HTTP 200 OK with CSRF token, SPKTAD branding, Pelindo branch settings from database, and SVG captcha stream.
 
 ### Git Repository ↔ Render Build Automation
-- Remote URL: `https://github.com/gajanpar/love-notes.git`
-- Branch: `prepare_real_data_transition`
+- Remote URL: `https://github.com/gajanpar/ptp.git`
+- Branch: `prepare_real_data_transition` (and/or `main`)
 - Monorepo Context: Root `render.yaml` or `rootDir: .vscode/ptp`.
 
 ## Code Layout

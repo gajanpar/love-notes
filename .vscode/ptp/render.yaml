@@ -4,8 +4,7 @@ services:
     runtime: docker
     plan: free
     region: singapore
-    branch: prepare_real_data_transition
-    rootDir: .vscode/ptp
+    branch: main
     dockerfilePath: Dockerfile
     dockerContext: .
     healthCheckPath: /up
