@@ -1,192 +1,268 @@
-# Production Deployment Guide: SPKTAD Pelindo Cirebon
+# Panduan Deployment 100% Pure Free (Zero Credit Card)
+## SPKTAD PT Pelindo Multi Terminal Branch Cirebon
 
-This guide outlines the production deployment options for **SPKTAD** (Sistem Penilaian Kinerja Tenaga Alih Daya) of **PT Pelindo Multi Terminal Branch Cirebon**.
+Panduan resmi ini mendokumentasikan strategi dan langkah implementasi deployment aplikasi **SPKTAD** (Sistem Penilaian Kinerja Tenaga Alih Daya) yang **100% MURNI GRATIS TANPA KARTU KREDIT (Strictly ZERO Credit Card / Zero Billing)**.
 
----
+Setelah evaluasi komprehensif terhadap kebijakan cloud terbaru:
+- **Render.com**: Sekarang mewajibkan verifikasi kartu kredit saat pembuatan Web Service.
+- **Hugging Face Spaces**: Docker SDK sekarang berbayar/memerlukan metode pembayaran.
 
-## Deployment Platform Matrix
-
-| Platform | Cost | Credit Card Required? | Free Tier Specs | Compatibility | Status |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Hugging Face Spaces (Docker SDK)** | **$0 / month** | **Strictly ZERO (No Card Needed)** | **2 vCPU · 16 GB RAM · 50 GB Disk** | Native Docker, SQLite, FrankenPHP | **#1 Recommended Primary** |
-| **Render Web Service** | $0 / month | **Yes (Credit/Debit Card Enforced)** | 0.1 vCPU · 512 MB RAM · Ephemeral | Docker, FrankenPHP, SQLite | Secondary Alternative |
+Repositori ini telah dioptimalkan secara universal untuk **3 Platform Pure Free** yang terbukti dapat diakses tanpa biaya dan tanpa kartu kredit sama sekali.
 
 ---
 
-## 1. Primary Option: Hugging Face Spaces (100% Pure Free, Zero Credit Card)
+## 1. Matriks Perbandingan 3 Platform Pure Free
 
-Hugging Face Spaces provides a fully isolated Docker container environment on the **free CPU tier (2 vCPU / 16 GB RAM)** with **zero credit card or payment information required**.
-
-### 1.1 Quick 2-Minute Setup
-
-1. **Create Free Hugging Face Account**:
-   - Register at [https://huggingface.co/join](https://huggingface.co/join).
-   - Only email verification is required — **no credit card, no debit card, no billing info**.
-
-2. **Create New Space**:
-   - Navigate to [https://huggingface.co/new-space](https://huggingface.co/new-space).
-   - **Space Name**: e.g., `spktad-pelindo` (or preferred name).
-   - **License**: `mit` or `apache-2.0`.
-   - **Space SDK**: Select **Docker** (Blank template).
-   - **Space Hardware**: Select **CPU basic · 2 vCPU · 16 GB RAM (Free)**.
-   - **Visibility**: `Public` (or `Private`).
-   - Click **Create Space**.
-
-3. **Deploy from GitHub Repository**:
-   Clone your Space or add it as a Git remote, then push the code:
-   ```bash
-   # Add your Hugging Face Space as a remote
-   git remote add hf https://huggingface.co/spaces/<YOUR_HF_USERNAME>/spktad-pelindo
-
-   # Push main branch to your Space
-   git push hf main
-   ```
-   *(When prompted for password, use your Hugging Face Access Token generated from Settings → Access Tokens).*
-
-4. **Live Access & Verification**:
-   - Hugging Face automatically detects the root `Dockerfile` and `README.md` frontmatter (`sdk: docker`, `app_port: 7860`).
-   - Build completes in ~2 minutes.
-   - Your application will be live at:  
-     `https://<YOUR_HF_USERNAME>-spktad-pelindo.hf.space`  
-     or directly via the Space view:  
-     `https://huggingface.co/spaces/<YOUR_HF_USERNAME>/spktad-pelindo`
-
-### 1.2 Hugging Face Architecture & Non-Root Execution
-
-- **Non-Root User**: Hugging Face Spaces runs containers as `UID 1000`. The root and subfolder Dockerfiles pre-configure ownership (`1000:1000`) and `777` permissions across:
-  - `/config/caddy` and `/data/caddy` (FrankenPHP runtime state)
-  - `/var/www/html/storage` and `/var/www/html/bootstrap/cache`
-  - `/var/www/html/database` and SQLite file
-- **Port Routing**: Internal container listens on `PORT=7860`, matching `app_port: 7860` in `README.md`.
-- **Database Self-Healing**: On boot, `docker-entrypoint.sh` initializes `database.sqlite`, applies migrations, and seeds official Pelindo master data via `ProductionSeeder`.
-
----
-
-## 2. Environment Variables Reference
-
-Configure environment variables in Hugging Face (Space Settings → Variables and secrets) or Render (Environment Variables):
-
-| Variable | Recommended Production Value | Description |
-| :--- | :--- | :--- |
-| `APP_NAME` | `"SPKTAD PTP Cirebon"` | Application title displayed in headers and pages |
-| `APP_ENV` | `production` | Enforces production optimizations and security rules |
-| `APP_DEBUG` | `false` | Disables debug stack traces for public visitors |
-| `APP_KEY` | *(Generate via `php artisan key:generate --show`)* | 32-character AES-256 base64 encryption key |
-| `APP_TIMEZONE` | `Asia/Jakarta` | Western Indonesia Time (WIB) for evaluations |
-| `APP_LOCALE` | `id` | Indonesian locale formatting for dates and labels |
-| `PORT` | `7860` | Web server listening port (7860 for HF Spaces, 10000 for Render) |
-| `DB_CONNECTION` | `sqlite` | Database engine driver |
-| `DB_DATABASE` | `/var/www/html/database/database.sqlite` | Path to container SQLite database |
-| `SESSION_DRIVER` | `file` | Session storage engine |
-| `CACHE_STORE` | `file` | Application cache storage engine |
-| `QUEUE_CONNECTION` | `sync` | Synchronous queue processing |
-| `LOG_CHANNEL` | `stderr` | Aggregates application logs to container runtime logs |
-| `TRUSTED_PROXIES` | `*` | Trusts reverse proxy for HTTPS termination |
-| `FORCE_HTTPS` | `true` | Enforces HTTPS scheme across redirects and asset links |
-
----
-
-## 3. Public Healthcheck & Acceptance Verification
-
-Once deployed, verify public accessibility and application integrity:
-
-### 3.1 Automated Verification Script (PowerShell)
-```powershell
-powershell -ExecutionPolicy Bypass -File tests/verify_public_deploy.ps1 -TargetUrl "https://<YOUR_APP_URL>"
-```
-
-### 3.2 Manual CLI Verification Checks
-
-1. **Root Redirect (GET / → 302 to /login)**:
-   ```bash
-   curl -I https://<YOUR_APP_URL>/
-   # Expected: HTTP/2 302 Found, Location: /login
-   ```
-
-2. **Primary Login Interface & Database Query (GET /login)**:
-   ```bash
-   curl -sL https://<YOUR_APP_URL>/login | grep -E "(SPKTAD|Branch Cirebon|_token)"
-   # Expected: Matches SPKTAD branding, dynamic branch settings from DB, and CSRF token
-   ```
-
-3. **Zero Runtime / Database Errors**:
-   ```bash
-   curl -sL https://<YOUR_APP_URL>/login | grep -Ei "(500 Internal|SQLSTATE|no such table|Fatal error)"
-   # Expected: Zero matches (clean exit code 1)
-   ```
-
-4. **Framework Internal Healthcheck (GET /up)**:
-   ```bash
-   curl -s -w "\nHTTP_STATUS: %{http_code}\n" https://<YOUR_APP_URL>/up
-   # Expected: HTTP_STATUS: 200
-   ```
-
-5. **Dynamic Captcha SVG Stream (GET /captcha-image)**:
-   ```bash
-   curl -sI https://<YOUR_APP_URL>/captcha-image | grep "content-type"
-   # Expected: content-type: image/svg+xml
-   ```
-
-6. **Static CSS Asset Delivery (GET /assets/css/style.css)**:
-   ```bash
-   curl -sI https://<YOUR_APP_URL>/assets/css/style.css | grep "content-type"
-   # Expected: content-type: text/css
-   ```
-
----
-
-## 4. Default Seeded Credentials
-
-When deployed, the database is pre-seeded with official master data:
-
-| Role | Username | Password | Access Level |
+| Dimensi Evaluasi | Alwaysdata (Pilihan Utama) | Vercel Serverless (Demo Cepat) | InfinityFree (cPanel Tradisional) |
 | :--- | :--- | :--- | :--- |
-| **Super Admin** | `admin` | `password` | Full system administration & configuration |
-| **Branch Manager** | `dwi.priyono` | `password` | Pelindo Branch Cirebon oversight & approval |
-| **Ops Supervisor** | `budi.santoso` | `password` | Operasional division evaluation scoring |
-| **Teknik Supervisor** | `eko.prasetyo` | `password` | Teknik division evaluation scoring |
+| **Biaya & Kartu Kredit** | **100% Pure Free ($0)** · Tanpa Kartu | **100% Pure Free ($0)** · Tanpa Kartu | **100% Pure Free ($0)** · Tanpa Kartu |
+| **Metode Registrasi** | Verifikasi email (30 detik) | GitHub OAuth (1 klik) | Verifikasi email (1 menit) |
+| **Ketahanan Data SQLite** | **PERMANEN** (SSD persistent disk) | **EPHEMERAL** (/tmp Lambda container) | **PERMANEN** (Shared persistent disk) |
+| **Versi PHP Runtime** | **PHP 8.4** (Natif & Kompatibel Penuh) | **PHP 8.3 / 8.4** (`vercel-php`) | **PHP 8.4** (Server-wide) |
+| **Dukungan Document Root** | **Natif**: Arahkan ke `ptp/public` | **Natif**: Otomatis via `vercel.json` | **Virtual**: Otomatis via root `.htaccess` |
+| **Akses Terminal / SSH** | **Lengkap**: SSH & Web Console Browser | **Tidak ada** (Serverless execution) | **Tidak ada** (Hanya FTP / File Manager) |
+| **Artisan & Composer CLI** | **Bisa**: Eksekusi langsung di server | **Tidak**: Pre-packaged di repositori | **Tidak**: Dijalankan lokal sebelum upload |
+| **Kecepatan Deployment** | ~3 Menit via Git Clone | ~60 Detik via 1-Click Import | ~15 Menit via FTP upload |
+| **Sertifikat SSL / HTTPS** | **Otomatis**: Let's Encrypt 1-Klik | **Otomatis**: Vercel Global Edge SSL | **Otomatis**: Let's Encrypt via Client Area |
+| **Rekomendasi Peran** | **#1 UTAMA: Operasional Penuh & Staging** | **#1 ALTERNATIF: Demo Cepat & Presentasi** | **CADANGAN: Shared Hosting cPanel Klasik** |
 
 ---
 
-## 5. Secondary Alternative: Render Free Web Service
+## 2. Opsi 1 (Sangat Direkomendasikan): Alwaysdata Setup Guide
 
-> **Notice**: Render now requires adding a valid credit card or debit card upon account creation or service spin-up. If you already have a verified Render account, you can deploy using the instructions below.
+Alwaysdata adalah solusi terbaik untuk menjalankan SPKTAD Laravel 13 secara penuh dengan database SQLite persisten, akses SSH, CLI Artisan, dan konsumsi penyimpanan yang sangat hemat (~38 MB dari kuota gratis 100 MB).
 
-### 5.1 1-Click Deployment Blueprint
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/gajanpar/ptp)
+### Langkah 1: Pendaftaran Akun Gratis (30 Detik)
+1. Buka [https://admin.alwaysdata.com/register/](https://admin.alwaysdata.com/register/).
+2. Masukkan nama akun (contoh: `spktad-cirebon`), alamat email, dan password.
+3. Klik link verifikasi di email Anda. **Tidak ada permintaan kartu kredit atau informasi penagihan apa pun.**
 
-**1-Click Deploy URL:**  
-`https://render.com/deploy?repo=https://github.com/gajanpar/ptp`
+### Langkah 2: Konfigurasi PHP & Web Site
+1. Di panel Alwaysdata, buka **Environment > PHP**:
+   - Pilih default version: **8.4** (atau 8.3).
+   - Di bagian konfigurasi PHP (`php.ini`), pastikan ekstensi SQLite aktif:
+     ```ini
+     extension = pdo_sqlite.so
+     extension = sqlite3.so
+     ```
+2. Buka menu **Web > Sites**:
+   - Edit situs default (`<account>.alwaysdata.net`).
+   - **Type**: `PHP`
+   - **PHP Version**: `8.4`
+   - **Working directory**: `/home/<account>/ptp`
+   - **Root directory**: `ptp/public`
+   - Centang **Force SSL redirect** (HTTPS).
+   - Klik **Submit**.
 
-### 5.2 Manual Render Configuration
-- **Repository**: `https://github.com/gajanpar/ptp.git`
-- **Branch**: `main`
-- **Runtime**: `Docker`
-- **Instance Type**: `Free` (0.1 vCPU, 512 MB RAM)
-- **Environment Variable**: `PORT=10000` (Render defaults to 10000)
+### Langkah 3: Deployment & Setup Aplikasi via SSH
+Buka terminal desktop (`ssh <account>@ssh-<account>.alwaysdata.net`) atau gunakan **Web SSH Console** bawaan Alwaysdata di `https://ssh-<account>.alwaysdata.net`, lalu jalankan baris perintah berikut:
+
+```bash
+# 1. Clone repositori SPKTAD dari GitHub (shallow clone menghemat kuota disk)
+git clone --depth 1 https://github.com/gajanpar/ptp.git ~/ptp
+
+# 2. Masuk ke direktori proyek
+cd ~/ptp
+
+# 3. Install dependency produksi (ringan & cepat, ~32MB)
+composer install --no-dev --optimize-autoloader
+
+# 4. Bersihkan cache composer untuk membebaskan ~25MB ruang disk
+composer clear-cache
+
+# 5. Salin dan konfigurasikan file environment produksi
+cp .env.example .env
+sed -i 's|APP_ENV=local|APP_ENV=production|g' .env
+sed -i 's|APP_DEBUG=true|APP_DEBUG=false|g' .env
+sed -i 's|APP_URL=http://localhost:8000|APP_URL=https://'"$USER"'.alwaysdata.net|g' .env
+
+# 6. Generate application key
+php artisan key:generate --force
+
+# 7. Siapkan database SQLite dan hak akses direktori
+touch database/database.sqlite
+chmod 664 database/database.sqlite
+chmod 775 database
+chmod -R 775 storage bootstrap/cache
+
+# 8. Jalankan migrasi skema dan seeder master data resmi Pelindo
+php artisan migrate --force
+php artisan db:seed --class="Database\\Seeders\\ProductionSeeder" --force
+
+# 9. Buat symbolic link storage
+php artisan storage:link
+
+# 10. Cache konfigurasi dan route untuk performa produksi maksimal
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+### Template `.env` Alwaysdata
+```ini
+APP_NAME="SPKTAD PTP Cirebon"
+APP_ENV=production
+APP_KEY=base64:b09RorjNGclUrkvfbCC7cOEzN1n7VWP9KUZf/sLMcz8=
+APP_DEBUG=false
+APP_URL=https://<your-account>.alwaysdata.net
+APP_TIMEZONE=Asia/Jakarta
+APP_LOCALE=id
+APP_FALLBACK_LOCALE=en
+
+LOG_CHANNEL=daily
+LOG_LEVEL=error
+
+DB_CONNECTION=sqlite
+DB_DATABASE=/home/<your-account>/ptp/database/database.sqlite
+
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+CACHE_STORE=file
+QUEUE_CONNECTION=sync
+
+TRUSTED_PROXIES=*
+FORCE_HTTPS=true
+```
 
 ---
 
-## 6. Local Docker Testing
+## 3. Opsi 2 (Instan 1-Klik): Vercel Serverless Setup Guide
 
-To test the container packaging locally before pushing:
+Vercel sangat cocok untuk keperluan demo cepat, presentasi stakeholder, dan pengujian publik tanpa perlu mengelola server.
 
-### Root Packaging Test (Hugging Face Spaces layout)
-```bash
-# Build container from repository root
-docker build -t spktad-ptp-root -f Dockerfile .
+### Langkah 1: Import Repositori di Vercel (1 Menit)
+1. Kunjungi [https://vercel.com](https://vercel.com) dan login menggunakan akun **GitHub**.
+2. Klik tombol **Add New... > Project**.
+3. Pilih repositori **`gajanpar/ptp`** dari daftar repositori Anda dan klik **Import**.
 
-# Run container on port 7860
-docker run -p 7860:7860 -e APP_KEY=base64:b09RorjNGclUrkvfbCC7cOEzN1n7VWP9KUZf/sLMcz8= spktad-ptp-root
+### Langkah 2: Konfigurasi Build & Environment
+Repositori ini telah dilengkapi dengan file konfigurasi serverless otomatis:
+- `vercel.json`: Mengatur runtime `vercel-php@0.7.2`, rute static CDN untuk `/assets/*`, dan rewrite API ke `api/index.php`.
+- `api/index.php`: Menginisiasi direktori writable di `/tmp`, menyalin database SQLite pre-seeded, dan menyediakan self-healing auto-migration fallback.
+- `package.json`: Build step di-bypass secara otomatis karena seluruh aset CSS/JS telah pre-compiled di `public/assets/`.
 
-# Test local healthcheck
-curl -I http://localhost:7860/
-curl -s http://localhost:7860/up
+Pada halaman konfigurasi Vercel:
+1. **Framework Preset**: Pilih `Other`.
+2. **Root Directory**: Biarkan `./` (default).
+3. **Build Command**: Biarkan kosong / override dimatikan.
+4. **Environment Variables**:
+   Tambahkan variabel berikut:
+   - `APP_KEY`: `base64:b09RorjNGclUrkvfbCC7cOEzN1n7VWP9KUZf/sLMcz8=`
+   - `APP_ENV`: `production`
+   - `APP_DEBUG`: `false`
+   - `FORCE_HTTPS`: `true`
+5. Klik tombol **Deploy**. Aplikasi akan live dalam ~60 detik di domain `https://<project-name>.vercel.app`.
+
+### Karakteristik Serverless Vercel
+- Database SQLite pre-seeded (294 KB) disalin secara otomatis ke `/tmp/database.sqlite` saat container Lambda aktif.
+- Jika database belum ada, skrip `api/index.php` akan menjalankan migrasi dan seeder `ProductionSeeder` secara mandiri (*self-healing*).
+- Disk `/tmp` bersifat ephemeral (akan reset saat cold boot/inaktivitas ~15 menit). Sangat ideal untuk demo dan review antarmuka.
+
+---
+
+## 4. Opsi 3 (Shared Hosting): InfinityFree Setup Guide
+
+InfinityFree adalah layanan hosting cPanel gratis berbasis Apache PHP yang telah mendukung **PHP 8.4** secara server-wide tanpa kartu kredit.
+
+### Langkah 1: Buat Akun InfinityFree
+1. Buka [https://www.infinityfree.com](https://www.infinityfree.com) dan klik **Register Now**.
+2. Masukkan email dan verifikasi akun.
+3. Di Client Area, buat akun hosting baru dan pilih subdomain gratis (contoh: `spktad-cirebon.infinityfreeapp.com`).
+4. Catat kredensial FTP yang diberikan (Host: `ftpupload.net`, Username: `epiz_XXXXX`, Password cPanel).
+
+### Langkah 2: Pilihan Strategi Database
+- **Opsi A (SQLite Pre-Seeded - Instan)**: Repositori sudah menyertakan `database/database.sqlite` yang telah berisi data awal. Tidak memerlukan konfigurasi database server tambahan.
+- **Opsi B (MySQL Gratis - Rekomendasi cPanel)**:
+  1. Buka **Control Panel (cPanel) > MySQL Databases**.
+  2. Buat database baru bernama `spktad`.
+  3. Buka **phpMyAdmin**, pilih database tersebut, dan klik tab **Import**.
+  4. Upload file SQL dump aplikasi (`database/spktad_pelindo_cirebon.sql`) dan klik **Go**.
+
+### Langkah 3: Konfigurasi File `.env`
+Sesuaikan file `.env` untuk InfinityFree:
+```ini
+APP_NAME="SPKTAD PTP Cirebon"
+APP_ENV=production
+APP_KEY=base64:b09RorjNGclUrkvfbCC7cOEzN1n7VWP9KUZf/sLMcz8=
+APP_DEBUG=false
+APP_URL=https://<subdomain>.infinityfreeapp.com
+
+APP_TIMEZONE=Asia/Jakarta
+APP_LOCALE=id
+
+LOG_CHANNEL=daily
+LOG_LEVEL=error
+
+# Jika menggunakan SQLite:
+DB_CONNECTION=sqlite
+
+# Jika menggunakan MySQL:
+# DB_CONNECTION=mysql
+# DB_HOST=sqlXXX.epizy.com
+# DB_PORT=3306
+# DB_DATABASE=epiz_XXXXX_spktad
+# DB_USERNAME=epiz_XXXXX
+# DB_PASSWORD=your_cpanel_password
+
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+CACHE_STORE=file
+QUEUE_CONNECTION=sync
+
+TRUSTED_PROXIES=*
+FORCE_HTTPS=true
 ```
 
-### Subfolder Packaging Test
-```bash
-cd .vscode/ptp
-docker build -t spktad-ptp-subfolder -f Dockerfile .
-docker run -p 7860:7860 -e APP_KEY=base64:b09RorjNGclUrkvfbCC7cOEzN1n7VWP9KUZf/sLMcz8= spktad-ptp-subfolder
+### Langkah 4: Upload via FTP (FileZilla)
+1. Buka FileZilla, hubungkan ke `ftpupload.net` dengan akun InfinityFree Anda.
+2. Masuk ke direktori **`htdocs/`**.
+3. Upload seluruh file repositori ke dalam `htdocs/`.
+4. Pastikan file root `.htaccess` terunggah. File ini bertindak sebagai firewall dan me-route trafik secara transparan ke folder `public/`.
+5. Beri izin tulis (*File permissions* `777`) untuk folder:
+   - `storage` dan subfolder-nya.
+   - `bootstrap/cache`.
+   - `database/database.sqlite` (`666`).
+
+### Langkah 5: Keamanan & Akses
+Root `.htaccess` aplikasi secara otomatis:
+- Menolak akses langsung ke `.env*`, `*.sqlite`, `*.log`, folder `app`, `bootstrap`, `config`, `database`, `storage`, `vendor`.
+- Melakukan redirect aman HTTPS dengan memeriksa header `X-Forwarded-Proto` (mencegah loop redirect di InfinityFree).
+- Me-rewrite seluruh rute publik ke `public/index.php`.
+
+*Catatan: InfinityFree menggunakan sistem anti-bot `aes.js` yang menyaring bot otomatis. Browser web (Chrome/Edge/Firefox) akan melewatinya secara instan dan memuat halaman login SPKTAD secara transparan.*
+
+---
+
+## 5. Akun Resmi Master Data (Pelindo Cirebon)
+
+Aplikasi telah di-seed dengan struktur organisasi resmi PT Pelindo Multi Terminal Branch Cirebon dan 35 pegawai Tenaga Alih Daya (TAD):
+
+| No | Username | Password Default | Nama Pengguna | Peran / Jabatan | Divisi |
+| :-: | :--- | :--- | :--- | :--- | :--- |
+| 1 | **`admin`** | `password123` | Administrator SPKTAD | **Super Administrator** | Pengelola Sistem |
+| 2 | **`rudy`** | `password123` | Rudy Hartono | **Kepala Divisi** | Operasi |
+| 3 | **`mansur`** | `password123` | Mansur S. | **Kepala Divisi** | Perencanaan & Pengendalian |
+| 4 | **`rindam`** | `password123` | Rindam Nugraha | **Kepala Divisi** | Keuangan & Umum |
+
+---
+
+## 6. Verifikasi Penerimaan Publik (E2E Test Suite)
+
+Gunakan script pengujian automated end-to-end yang telah disediakan di dalam repositori untuk memvalidasi kesehatan deployment publik secara komprehensif:
+
+```powershell
+# Verifikasi Alwaysdata
+powershell -ExecutionPolicy Bypass -File tests/verify_public_deploy.ps1 -TargetUrl "https://<account>.alwaysdata.net"
+
+# Verifikasi Vercel
+powershell -ExecutionPolicy Bypass -File tests/verify_public_deploy.ps1 -TargetUrl "https://<project-name>.vercel.app"
+
+# Verifikasi InfinityFree / Custom Domain
+powershell -ExecutionPolicy Bypass -File tests/verify_public_deploy.ps1 -TargetUrl "https://<domain-anda>"
 ```
+
+### Cakupan 4-Tier Automated Verification:
+- **Tier 1: TLS Handshake & DNS Resolution** — Memastikan koneksi HTTPS aktif dan sertifikat SSL valid.
+- **Tier 2: HTTP 302 Root Redirect** — Memverifikasi akses root `/` diarahkan secara aman ke `/login`.
+- **Tier 3: Login DOM & Corporate Assets** — Memvalidasi respon HTTP 200, keberadaan CSRF token, branding SPKTAD Pelindo Cirebon dari database, CSS stylesheet, dan stream visual SVG captcha.
+- **Tier 4: System Health & Zero Database Errors** — Memeriksa endpoint `/up` mengembalikan status OK dan memastikan halaman bebas dari runtime error atau `SQLSTATE` database error.

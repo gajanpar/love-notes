@@ -1,7 +1,7 @@
 {
     "version": 2,
     "framework": null,
-    "buildCommand": null,
+    "outputDirectory": "dist",
     "functions": {
         "api/index.php": {
             "runtime": "vercel-php@0.7.2",
@@ -12,11 +12,11 @@
     "routes": [
         {
             "src": "/assets/(.*)",
-            "dest": "/public/assets/$1"
+            "dest": "/assets/$1"
         },
         {
             "src": "/favicon.png",
-            "dest": "/public/assets/img/favicon.png"
+            "dest": "/assets/img/favicon.png"
         },
         {
             "src": "/(.*)",
