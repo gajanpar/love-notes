@@ -35,3 +35,5 @@ services:
         value: stderr
       - key: TRUSTED_PROXIES
         value: "*"
+      - key: FORCE_HTTPS
+        value: "true"

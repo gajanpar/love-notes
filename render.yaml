@@ -4,7 +4,7 @@ services:
     runtime: docker
     plan: free
     region: singapore
-    branch: prepare_real_data_transition
+    branch: main
     rootDir: .vscode/ptp
     dockerfilePath: Dockerfile
     dockerContext: .
@@ -36,3 +36,5 @@ services:
         value: stderr
       - key: TRUSTED_PROXIES
         value: "*"
+      - key: FORCE_HTTPS
+        value: "true"

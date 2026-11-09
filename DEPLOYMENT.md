@@ -8,10 +8,10 @@ This guide outlines the deployment process for the **SPKTAD** (Sistem Penilaian 
 
 Deploy directly using Render's Infrastructure-as-Code Blueprint:
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/gajanpar/love-notes/tree/prepare_real_data_transition)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/gajanpar/ptp)
 
 **1-Click Deploy URL:**  
-`https://render.com/deploy?repo=https://github.com/gajanpar/love-notes/tree/prepare_real_data_transition`
+`https://render.com/deploy?repo=https://github.com/gajanpar/ptp`
 
 ---
 
@@ -37,8 +37,8 @@ If configuring the service manually instead of using the 1-click button:
    Click **New +** → **Web Service** → **Build and deploy from a Git repository**.
 
 3. **Select Repository**:  
-   - Connect or paste public repository URL: `https://github.com/gajanpar/love-notes.git`
-   - Branch: `prepare_real_data_transition`
+   - Connect or paste public repository URL: `https://github.com/gajanpar/ptp.git`
+   - Branch: `main` (or `prepare_real_data_transition`)
 
 4. **Configure Service Settings**:
    - **Name**: `spktad-ptp-cirebon` (or your preferred name)
@@ -74,6 +74,7 @@ If configuring the service manually instead of using the 1-click button:
 | `QUEUE_CONNECTION` | `sync` | Synchronous queue processing (zero external workers) |
 | `LOG_CHANNEL` | `stderr` | Aggregates application logs directly to Render log viewer |
 | `TRUSTED_PROXIES` | `*` | Trusts Render's edge reverse proxy for HTTPS headers |
+| `FORCE_HTTPS` | `true` | Enforces HTTPS scheme across all redirects, URLs, and asset helpers |
 
 ---
 
