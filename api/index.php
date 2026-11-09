@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+// Remove server software/version disclosure headers
+if (function_exists('header_remove')) {
+    @header_remove('X-Powered-By');
+}
+@ini_set('expose_php', 'off');
+
 // 1. Vercel Serverless Writable Environment Initialization
 $tmpDirs = [
     '/tmp/views',

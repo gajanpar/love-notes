@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
 
-    // Public Authentication Endpoint
-    Route::post('/auth/login', [AuthController::class, 'login']);
+    // Public Authentication Endpoint with Brute Force Protection (max 6 attempts per minute)
+    Route::post('/auth/login', [AuthController::class, 'login'])->middleware('throttle:6,1');
 
     // Protected Enterprise Endpoints (Sanctum Authenticated)
     Route::middleware(['auth:sanctum'])->group(function () {

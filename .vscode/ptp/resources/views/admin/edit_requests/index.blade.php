@@ -198,7 +198,10 @@
                                 @if($req->status === 'pending')
                                     <div style="display: flex; gap: 8px; justify-content: center;">
                                         <button type="button" 
-                                                onclick="openApproveModal({{ $req->id }}, '{{ addslashes($req->requester->name ?? '') }}', '{{ $req->request_type === 'division_access' ? 'Akses Divisi ' . addslashes($req->division->name ?? '') : 'Edit Nilai ' . addslashes($req->employee->name ?? '') }}')"
+                                                data-id="{{ $req->id }}"
+                                                data-requester="{{ $req->requester->name ?? '' }}"
+                                                data-target="{{ $req->request_type === 'division_access' ? 'Akses Divisi ' . ($req->division->name ?? '') : 'Edit Nilai ' . ($req->employee->name ?? '') }}"
+                                                onclick="openApproveModalFromBtn(this)"
                                                 title="Setujui permohonan ini" 
                                                 style="background: #16a34a; color: #ffffff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -206,7 +209,9 @@
                                         </button>
                                         
                                         <button type="button" 
-                                                onclick="openRejectModal({{ $req->id }}, '{{ addslashes($req->requester->name ?? '') }}')"
+                                                data-id="{{ $req->id }}"
+                                                data-requester="{{ $req->requester->name ?? '' }}"
+                                                onclick="openRejectModalFromBtn(this)"
                                                 title="Tolak permohonan ini" 
                                                 style="background: #dc2626; color: #ffffff; border: none; padding: 6px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -296,6 +301,19 @@
 </div>
 
 <script>
+    function openApproveModalFromBtn(btn) {
+        var id = btn.getAttribute('data-id');
+        var requester = btn.getAttribute('data-requester');
+        var target = btn.getAttribute('data-target');
+        openApproveModal(id, requester, target);
+    }
+
+    function openRejectModalFromBtn(btn) {
+        var id = btn.getAttribute('data-id');
+        var requester = btn.getAttribute('data-requester');
+        openRejectModal(id, requester);
+    }
+
     function openApproveModal(id, requester, target) {
         document.getElementById('approveModalRequester').innerText = requester;
         document.getElementById('approveModalTarget').innerText = target;

@@ -121,7 +121,7 @@
                         </td>
                         <td style="padding: 12px 16px; text-align: center;">
                             @if(!empty($log->properties))
-                                <button type="button" onclick="showLogDetail({{ json_encode($log) }})"
+                                <button type="button" data-log="{{ htmlspecialchars(json_encode($log), ENT_QUOTES, 'UTF-8') }}" onclick="showLogDetailFromButton(this)"
                                         style="background: #f1f5f9; color: #0072CE; border: 1px solid #cbd5e1; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;">
                                     Detail
                                 </button>
@@ -174,6 +174,15 @@
 
 @push('scripts')
 <script>
+    function showLogDetailFromButton(btn) {
+        try {
+            var log = JSON.parse(btn.getAttribute('data-log'));
+            showLogDetail(log);
+        } catch(e) {
+            console.error('Failed to parse log payload', e);
+        }
+    }
+
     function showLogDetail(log) {
         document.getElementById('modalLogDesc').textContent = log.description;
         document.getElementById('modalLogProps').textContent = JSON.stringify(log.properties, null, 2);

@@ -30,7 +30,7 @@
 
 <!-- Banner Oranye Sesuai Gambar 4.2 SRS Bila Periode Tertutup -->
 @if(!$isPeriodOpen && !$hasApprovedDivisionAccess)
-<div style="background: #fff7ed; border: 1px solid #fed7aa; border-inline-start: 4px solid #c2410c; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+<div style="background: #fff7ed; border: 1px solid #fed7aa; border-left: 4px solid #c2410c; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
     <div style="display: flex; align-items: flex-start; gap: 12px;">
         <span aria-hidden="true" style="color: #c2410c; font-size: 20px;">⚠</span>
         <div>
@@ -77,7 +77,7 @@
     </div>
 
     <div class="table-responsive">
-        <table style="width: 100%; border-collapse: collapse; text-align: start; font-size: 13px;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
             <thead>
                 <tr style="background: #f8fafc; border-bottom: 1px solid #e2e8f0; color: #475569; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">
                     <th style="padding: 14px 20px; width: 60px;">No</th>
@@ -147,7 +147,7 @@
                                             Edit
                                         </a>
                                     @else
-                                        <button type="button" class="table-action-btn" onclick="openIndividualRequestModal({{ $item['employee']->id }}, '{{ addslashes($item['employee']->name) }}')" 
+                                        <button type="button" class="table-action-btn" data-id="{{ $item['employee']->id }}" data-name="{{ $item['employee']->name }}" onclick="openIndividualRequestModalFromBtn(this)" 
                                                 style="background: #c2410c; color: #ffffff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;">
                                             Ajukan Edit
                                         </button>
@@ -174,7 +174,7 @@
 </div>
 
 <!-- Modal Ajukan Akses Divisi (Native Dialog) -->
-<dialog id="divisionRequestModal" class="modal-dialog" aria-labelledby="divReqModalTitle" style="text-align: start; max-width: 480px;">
+<dialog id="divisionRequestModal" class="modal-dialog" aria-labelledby="divReqModalTitle" style="text-align: left; max-width: 480px;">
     <h3 id="divReqModalTitle" style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">Permohonan Pembukaan Akses Periode</h3>
     <p style="font-size: 13px; color: #475569; margin: 0 0 16px 0;">
         Ajukan permohonan ke Admin SPKTAD untuk membuka periode <strong>{{ $monthNames[$month] ?? '' }} {{ $year }}</strong>.
@@ -198,7 +198,7 @@
 </dialog>
 
 <!-- Modal Ajukan Edit Individual (Native Dialog) -->
-<dialog id="individualRequestModal" class="modal-dialog" aria-labelledby="indReqModalTitle" style="text-align: start; max-width: 480px;">
+<dialog id="individualRequestModal" class="modal-dialog" aria-labelledby="indReqModalTitle" style="text-align: left; max-width: 480px;">
     <h3 id="indReqModalTitle" style="font-size: 17px; font-weight: 700; color: #0f172a; margin: 0 0 8px 0;">Permohonan Edit Nilai Karyawan</h3>
     <p style="font-size: 13px; color: #475569; margin: 0 0 16px 0;">
         Karyawan: <strong id="reqEmployeeName" style="color: #0f172a;"></strong> &mdash; Periode: <strong>{{ $monthNames[$month] ?? '' }} {{ $year }}</strong>
@@ -239,6 +239,12 @@
     }
     function closeDivisionRequestModal() {
         closeModalEl('divisionRequestModal');
+    }
+
+    function openIndividualRequestModalFromBtn(btn) {
+        var id = btn.getAttribute('data-id');
+        var name = btn.getAttribute('data-name');
+        openIndividualRequestModal(id, name);
     }
 
     function openIndividualRequestModal(id, name) {
