@@ -2,7 +2,7 @@
     "version": 2,
     "framework": null,
     "functions": {
-        ".vscode/ptp/api/index.php": {
+        "api/index.php": {
             "runtime": "vercel-php@0.7.2",
             "memory": 1024,
             "maxDuration": 15
@@ -19,7 +19,7 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/.vscode/ptp/api/index.php"
+            "dest": "/api/index.php"
         }
     ],
     "env": {
