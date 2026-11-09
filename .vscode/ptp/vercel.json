@@ -1,21 +1,31 @@
 {
     "version": 2,
     "framework": null,
+    "outputDirectory": "dist",
     "functions": {
         "api/index.php": {
-            "runtime": "vercel-php@0.7.2",
+            "runtime": "vercel-php@0.8.0",
             "memory": 1024,
-            "maxDuration": 15
+            "maxDuration": 30,
+            "excludeFiles": "{.vscode/**,docs/**,scratch/**,tests/**,dist/**,node_modules/**}"
         }
     },
     "routes": [
         {
             "src": "/assets/(.*)",
-            "dest": "/public/assets/$1"
+            "dest": "/assets/$1"
         },
         {
             "src": "/favicon.png",
-            "dest": "/public/assets/img/favicon.png"
+            "dest": "/assets/img/favicon.png"
+        },
+        {
+            "src": "/favicon.ico",
+            "dest": "/favicon.ico"
+        },
+        {
+            "src": "/robots.txt",
+            "dest": "/robots.txt"
         },
         {
             "src": "/(.*)",
@@ -23,11 +33,19 @@
         }
     ],
     "env": {
+        "VERCEL": "1",
         "APP_NAME": "SPKTAD Pelindo Cirebon",
         "APP_ENV": "production",
         "APP_DEBUG": "false",
+        "APP_KEY": "base64:8qV7p9K2mX4nL6rT1wY3zB5vC8dF0gH2jK4lM6nP8qR=",
         "APP_TIMEZONE": "Asia/Jakarta",
         "APP_LOCALE": "id",
+        "DB_CONNECTION": "sqlite",
+        "DB_DATABASE": "/tmp/database.sqlite",
+        "VIEW_COMPILED_PATH": "/tmp/views",
+        "SESSION_DRIVER": "cookie",
+        "CACHE_STORE": "array",
+        "LOG_CHANNEL": "stderr",
         "TRUSTED_PROXIES": "*"
     }
 }
