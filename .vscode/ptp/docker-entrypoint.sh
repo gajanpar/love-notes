@@ -3,8 +3,8 @@ set -e
 
 echo "==> [SPKTAD Boot] Initializing SPKTAD Pelindo Cirebon container..."
 
-# 1. Resolve dynamic listening port (default to 10000 for Render)
-export PORT="${PORT:-10000}"
+# 1. Resolve dynamic listening port (default to 7860 for Hugging Face Spaces / cloud containers)
+export PORT="${PORT:-7860}"
 
 # 2. Ensure .env exists for Laravel initialization
 if [ ! -f .env ]; then
@@ -43,8 +43,8 @@ if [ -z "$DB_CONNECTION" ] || [ "$DB_CONNECTION" = "sqlite" ]; then
         touch "$DB_PATH"
     fi
     
-    chmod 664 "$DB_PATH"
-    chmod 775 "$DB_DIR"
+    chmod 666 "$DB_PATH" 2>/dev/null || true
+    chmod 777 "$DB_DIR" 2>/dev/null || true
     chown -R www-data:www-data "$DB_DIR" 2>/dev/null || true
 fi
 
@@ -56,7 +56,7 @@ mkdir -p \
     storage/logs \
     bootstrap/cache
 
-chmod -R 775 storage bootstrap/cache
+chmod -R 777 storage bootstrap/cache 2>/dev/null || true
 chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
 
 # 5. Clear stale caches to reflect active container environment variables

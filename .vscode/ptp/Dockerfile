@@ -49,8 +49,7 @@ RUN mkdir -p \
     storage/logs \
     bootstrap/cache \
     database \
-    && chown -R www-data:www-data storage bootstrap/cache database \
-    && chmod -R 775 storage bootstrap/cache database
+    && chmod -R 777 storage bootstrap/cache database
 
 # 8. Copy and configure entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
@@ -60,8 +59,8 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 ENV APP_ENV="production" \
     APP_DEBUG="false" \
     LOG_CHANNEL="stderr" \
-    PORT="10000"
+    PORT="7860"
 
-EXPOSE 10000
+EXPOSE 7860 10000 8080
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
