@@ -1,0 +1,33 @@
+{
+    "version": 2,
+    "framework": null,
+    "functions": {
+        ".vscode/ptp/api/index.php": {
+            "runtime": "vercel-php@0.7.2",
+            "memory": 1024,
+            "maxDuration": 15
+        }
+    },
+    "routes": [
+        {
+            "src": "/assets/(.*)",
+            "dest": "/.vscode/ptp/public/assets/$1"
+        },
+        {
+            "src": "/favicon.png",
+            "dest": "/.vscode/ptp/public/assets/img/favicon.png"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/.vscode/ptp/api/index.php"
+        }
+    ],
+    "env": {
+        "APP_NAME": "SPKTAD Pelindo Cirebon",
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "APP_TIMEZONE": "Asia/Jakarta",
+        "APP_LOCALE": "id",
+        "TRUSTED_PROXIES": "*"
+    }
+}
